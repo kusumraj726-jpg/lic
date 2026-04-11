@@ -62,8 +62,8 @@ class RegisteredUserController extends Controller
             return back()->with('success', "Admin account created successfully with ID: {$uniqueId}");
         }
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('login'))->with('status', 'Registration successful! Please login.');
     }
 }
