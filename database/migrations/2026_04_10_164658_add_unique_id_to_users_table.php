@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('unique_id')->nullable()->unique()->after('id');
-        });
+        if (!Schema::hasColumn('users', 'unique_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('unique_id')->nullable()->unique()->after('id');
+            });
+        }
     }
 
     /**

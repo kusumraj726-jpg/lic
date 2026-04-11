@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->after('email')->default('advisor'); // advisor, staff, admin
-            $table->string('avatar')->after('password')->nullable();
+            if (!Schema::hasColumn('users', 'role')) {
+                $table->string('role')->after('email')->default('advisor'); // advisor, staff, admin
+            }
+            if (!Schema::hasColumn('users', 'avatar')) {
+                $table->string('avatar')->after('password')->nullable();
+            }
         });
     }
 
