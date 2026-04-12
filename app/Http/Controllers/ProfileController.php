@@ -31,8 +31,8 @@ class ProfileController extends Controller
         $user->fill($request->validated());
 
         if ($request->hasFile('avatar')) {
-            // Force S3 if credentials are found, otherwise fallback to public
-            $disk = env('AWS_ACCESS_KEY_ID') ? 's3' : 'public';
+            // Check config directly for S3 credentials
+            $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
             
             // Delete old avatar if exists
             if ($user->avatar) {

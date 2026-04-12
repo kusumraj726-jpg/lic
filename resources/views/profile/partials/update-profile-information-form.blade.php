@@ -37,7 +37,7 @@
                     <div class="h-full w-full rounded-[20px] bg-white flex items-center justify-center overflow-hidden" x-show="!photoPreview">
                         @if($user->avatar)
                             @php
-                                $disk = env('AWS_ACCESS_KEY_ID') ? 's3' : config('filesystems.default');
+                                $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
                             @endphp
                             <img src="{{ Storage::disk($disk)->url($user->avatar) }}" class="h-full w-full object-cover">
                         @else
