@@ -18,12 +18,19 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(): RedirectResponse|View
     {
-        // Block registration if payment has not been completed first
+        // If someone is already logged in (e.g. superadmin testing), send them to dashboard
+        // The only logged-in users allowed to /register are admins creating staff — but that uses a different internal form
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
+        // Block guest registration if payment has not been completed first
         if (!session('velora_payment_done')) {
             return redirect()->route('get.started')->with('error', 'Please complete payment first to create your account.');
         }
+
         return view('auth.register');
     }
 
@@ -71,15 +78,26 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // If an admin is creating a staff member from within the portal (already logged in)
+        // ── PAYMENT FLOW (highest priority) ──────────────────────────────
+        // If this registration came from the /get-started payment flow,
+        // clear the one-time session immediately — no second account can be made
+        if (session('velora_payment_done')) {
+            session()->forget([
+                'velora_payment_done',
+                'velora_payment_plan',
+                'velora_payment_id',
+                'velora_payment_order_id',
+            ]);
+            return redirect()->route('login')
+                ->with('status', 'Registration complete! Please login to access your workspace.');
+        }
+
+        // ── INTERNAL FLOW (admin creating staff from inside portal) ───────
         if (Auth::check()) {
             return back()->with('success', "Account created successfully with ID: {$uniqueId}");
         }
 
-        // Clear the one-time payment session so the same payment cannot be reused
-        session()->forget(['velora_payment_done', 'velora_payment_plan', 'velora_payment_id', 'velora_payment_order_id']);
-
-        // Don't auto-login — redirect to login page so they can consciously log in
-        return redirect()->route('login')->with('status', 'Registration complete! Please login to access your workspace.');
+        return redirect()->route('login')
+            ->with('status', 'Registration complete! Please login to access your workspace.');
     }
 }
