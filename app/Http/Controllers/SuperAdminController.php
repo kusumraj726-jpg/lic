@@ -10,12 +10,39 @@ class SuperAdminController extends Controller
 {
     public function index()
     {
-        try {
-            $count = User::count();
-            return "Control Panel Debug: Connection OK. Total Users: " . $count;
-        } catch (\Exception $e) {
-            return "Database Error: " . $e->getMessage();
+        // 1. Fetch all relevant users
+        $tenants = User::whereIn('role', ['admin', 'superadmin'])->get();
+
+        // 2. Safe Stats Calculation
+        $stats = [
+            'total'   => $tenants->where('role', 'admin')->count(),
+            'active'  => 0,
+            'expired' => 0,
+            'monthly_mrr'   => 0,
+            'yearly_arr'    => 0,
+            'trial_revenue' => 0,
+            'total_revenue' => 0,
+        ];
+
+        foreach ($tenants as $tenant) {
+            if ($tenant->role !== 'admin') continue;
+
+            $isActive = $tenant->hasActiveSubscription();
+            
+            if ($isActive) {
+                $stats['active']++;
+                // Add to revenue based on plan
+                if ($tenant->subscription_plan === 'monthly') $stats['monthly_mrr'] += 999;
+                if ($tenant->subscription_plan === 'yearly') $stats['yearly_arr'] += 9990;
+                if ($tenant->subscription_plan === 'trial') $stats['trial_revenue'] += 99;
+            } else {
+                $stats['expired']++;
+            }
         }
+
+        $stats['total_revenue'] = $stats['monthly_mrr'] + $stats['yearly_arr'] + $stats['trial_revenue'];
+
+        return view('superadmin.index', compact('tenants', 'stats'));
     }
 
     public function toggleStatus(Request $request, User $user)
