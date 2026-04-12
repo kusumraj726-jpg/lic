@@ -36,7 +36,10 @@
                     <!-- Current Photo -->
                     <div class="h-full w-full rounded-[20px] bg-white flex items-center justify-center overflow-hidden" x-show="!photoPreview">
                         @if($user->avatar)
-                            <img src="{{ Storage::url($user->avatar) }}" class="h-full w-full object-cover">
+                            @php
+                                $disk = env('AWS_ACCESS_KEY_ID') ? 's3' : config('filesystems.default');
+                            @endphp
+                            <img src="{{ Storage::disk($disk)->url($user->avatar) }}" class="h-full w-full object-cover">
                         @else
                             <span class="text-3xl font-black text-indigo-600 uppercase">{{ substr($user->name, 0, 1) }}</span>
                         @endif
