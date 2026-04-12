@@ -33,17 +33,23 @@
                     <span class="text-2xl font-black text-white tracking-widest uppercase">Velora</span>
                 </div>
                 
-                <div class="flex items-center space-x-8">
-                    <a href="#features" class="hidden md:block text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Features</a>
-                    <a href="#pricing" class="hidden md:block text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Pricing</a>
-                    
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#features" class="text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Features</a>
+                    <a href="#pricing" class="text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Pricing</a>
+                </div>
+
+                <div class="flex items-center gap-4">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ route('dashboard') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest transition-all">Sign Up</a>
+                            <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Dashboard</a>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="text-[10px] font-black text-slate-500 hover:text-red-400 uppercase tracking-widest">Logout</button>
+                            </form>
                         @else
-                            <a href="{{ route('login') }}" class="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Sign In</a>
+                            <a href="{{ route('login') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Sign In</a>
                             @if (Route::has('get.started'))
-                                <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest">Sign Up</a>
+                                <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/20">Sign Up</a>
                             @endif
                         @endauth
                     @endif
@@ -104,25 +110,48 @@
         </div>
     </main>
 
-    <!-- Pricing -->
+    <!-- Pricing Section -->
     <section id="pricing" class="py-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-20">
+                <h3 class="text-4xl font-black text-white uppercase tracking-tight italic">Platform Logic.</h3>
+            </div>
+            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Trial -->
                 <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col">
                     <div class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4">Trial</div>
                     <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹99</div>
+                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-slate-500 tracking-widest leading-relaxed">
+                        <p>• 60 Days Full Access</p>
+                        <p>• All Core ERP Modules</p>
+                        <p>• Live Data Sync</p>
+                    </div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
+                <!-- Monthly -->
                 <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col">
                     <div class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-4">Starter</div>
                     <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹999</div>
+                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-slate-500 tracking-widest leading-relaxed">
+                        <p>• Unlimited Clients</p>
+                        <p>• Unlimited Staff</p>
+                        <p>• Standard Security</p>
+                    </div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
+                <!-- Pro -->
                 <div class="bg-indigo-600 rounded-[3rem] p-12 flex flex-col shadow-2xl">
                     <div class="text-[10px] font-black text-indigo-200 uppercase tracking-[0.3em] mb-4">Pro</div>
                     <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹9,990</div>
+                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-indigo-100 tracking-widest leading-relaxed">
+                        <p>• Everything In Starter</p>
+                        <p>• Custom Staff Logic</p>
+                        <p>• Priority Support</p>
+                        <p>• 2 Months Free</p>
+                    </div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-white text-indigo-600 text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Yearly</a>
                 </div>
             </div>
