@@ -31,8 +31,9 @@
             <!-- Simple Dark Theme Background without heavy blue gradients -->
 
             <div class="mb-6 text-center z-10 w-full flex justify-center">
-                <a href="/" class="flex justify-center">
+                <a href="/" class="flex flex-col items-center justify-center gap-2">
                     <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="h-20 w-auto object-contain">
+                    <span class="text-3xl font-extrabold text-white tracking-widest">Velora</span>
                 </a>
             </div>
 
