@@ -30,9 +30,10 @@ class BillingController extends Controller
      */
     public function guestCheckout(Request $request)
     {
-        $request->validate(['plan' => 'required|in:monthly,yearly']);
+        $request->validate(['plan' => 'required|in:monthly,yearly,trial']);
 
-        $amount = $request->plan === 'yearly' ? 9990 : 999;
+        $amounts = ['trial' => 99, 'monthly' => 999, 'yearly' => 9990];
+        $amount = $amounts[$request->plan];
         $amountInPaise = $amount * 100;
 
         try {
@@ -67,7 +68,7 @@ class BillingController extends Controller
             'razorpay_payment_id' => 'required|string',
             'razorpay_order_id'   => 'required|string',
             'razorpay_signature'  => 'required|string',
-            'plan'                => 'required|in:monthly,yearly',
+            'plan'                => 'required|in:monthly,yearly,trial',
         ]);
 
         try {
@@ -150,7 +151,7 @@ class BillingController extends Controller
             'razorpay_payment_id' => 'required|string',
             'razorpay_order_id'   => 'required|string',
             'razorpay_signature'  => 'required|string',
-            'plan'                => 'required|in:monthly,yearly',
+            'plan'                => 'required|in:monthly,yearly,trial',
         ]);
 
         try {
@@ -162,7 +163,11 @@ class BillingController extends Controller
             ]);
 
             $user = auth()->user();
-            $daysToAdd = $request->plan === 'yearly' ? 365 : 30;
+            $daysToAdd = match($request->plan) {
+                'trial'   => 60,
+                'yearly'  => 365,
+                default   => 30,
+            };
 
             if ($user->subscription_ends_at && $user->subscription_ends_at->isFuture()) {
                 $user->subscription_ends_at = $user->subscription_ends_at->addDays($daysToAdd);

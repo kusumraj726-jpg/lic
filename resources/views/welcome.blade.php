@@ -173,9 +173,27 @@
                 <p class="mt-4 text-slate-400">Fixed costs. No hidden fees. Start building your portfolio today.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Trial Plan -->
+                <div class="pricing-card bg-slate-900 border border-emerald-800 rounded-[2rem] p-8 flex flex-col justify-between relative">
+                    <div class="absolute -top-4 inset-x-0 mx-auto w-max bg-emerald-500 text-emerald-950 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">One-Time Trial</div>
+                    <div>
+                        <h4 class="text-xl font-black text-white uppercase tracking-widest mb-2">Try It Out</h4>
+                        <p class="text-slate-400 text-sm font-medium mb-6">60 Days Access</p>
+                        <div class="flex items-baseline gap-2 mb-8 pb-8 border-b border-slate-800">
+                            <span class="text-4xl font-black text-white">₹99</span>
+                            <span class="text-slate-500 font-bold uppercase tracking-widest">/once</span>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-slate-300 font-bold text-sm"><span class="bg-emerald-500/20 p-1 rounded"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>60 Days Full Access</li>
+                            <li class="flex items-center gap-3 text-slate-300 font-bold text-sm"><span class="bg-emerald-500/20 p-1 rounded"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>All Core Modules</li>
+                            <li class="flex items-center gap-3 text-slate-300 font-bold text-sm"><span class="bg-emerald-500/20 p-1 rounded"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>Upgrade Anytime</li>
+                        </ul>
+                    </div>
+                    <a href="{{ route('get.started') }}" class="w-full bg-slate-800 hover:bg-emerald-600 text-white font-black py-4 rounded-xl border border-emerald-800 hover:border-emerald-500 block text-center uppercase tracking-widest transition-colors">Try For ₹99</a>
+                </div>
                 <!-- Starter Plan -->
-                <div class="pricing-card bg-slate-900 border border-slate-800 rounded-[2rem] p-10 flex flex-col justify-between">
+                <div class="pricing-card bg-slate-900 border border-slate-800 rounded-[2rem] p-8 flex flex-col justify-between">
                     <div>
                         <h4 class="text-2xl font-black text-white uppercase tracking-widest mb-2">Starter</h4>
                         <p class="text-slate-400 text-sm font-medium mb-8">Billed Monthly</p>

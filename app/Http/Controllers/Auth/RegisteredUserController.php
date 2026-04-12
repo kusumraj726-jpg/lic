@@ -51,7 +51,11 @@ class RegisteredUserController extends Controller
         $uniqueId = 'NX-ADM-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
         $plan = session('velora_payment_plan', 'monthly');
-        $daysToAdd = $plan === 'yearly' ? 365 : 30;
+        $daysToAdd = match($plan) {
+            'trial'  => 60,
+            'yearly' => 365,
+            default  => 30,
+        };
 
         $user = User::create([
             'company_name'        => $request->company_name,
