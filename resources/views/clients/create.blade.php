@@ -21,6 +21,20 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <x-form-input label="Date of Birth" name="dob" type="date" />
+                        <div class="form-group flex-1">
+                            <label for="gender" class="block text-sm font-medium text-slate-700">Gender</label>
+                            <select id="gender" name="gender" class="form-control mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Select Gender</option>
+                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <x-form-input label="Phone Number" name="phone" placeholder="+1 234 567 890" minlength="10" maxlength="10" pattern="[0-9]{10}" title="10-digit Phone Number" />
                         <div class="form-group flex-1">
                             <label for="address">Residential Address</label>

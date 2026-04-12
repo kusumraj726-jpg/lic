@@ -25,6 +25,23 @@
                         </div>
 
                         <div>
+                            <x-input-label for="dob" :value="__('Date of Birth')" />
+                            <x-text-input id="dob" name="dob" type="date" class="mt-1 block w-full" :value="old('dob', $client->dob)" />
+                            <x-input-error class="mt-2" :messages="$errors->get('dob')" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="gender" :value="__('Gender')" />
+                            <select id="gender" name="gender" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                <option value="">Select Gender</option>
+                                <option value="Male" {{ old('gender', $client->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ old('gender', $client->gender) == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Other" {{ old('gender', $client->gender) == 'Other' ? 'selected' : '' }}>Other</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                        </div>
+
+                        <div>
                             <x-input-label for="phone" :value="__('Phone Number')" />
                             <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $client->phone)" minlength="10" maxlength="10" pattern="[0-9]{10}" title="10-digit Phone Number" />
                             <x-input-error class="mt-2" :messages="$errors->get('phone')" />

@@ -37,6 +37,8 @@ class ClientController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|in:Male,Female,Other',
             'phone' => 'nullable|digits:10',
             'address' => 'nullable|string',
         ]);
@@ -61,6 +63,8 @@ class ClientController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|in:Male,Female,Other',
             'phone' => 'nullable|digits:10',
             'address' => 'nullable|string',
         ]);
