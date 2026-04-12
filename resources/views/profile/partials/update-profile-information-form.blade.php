@@ -38,8 +38,11 @@
                         @if($user->avatar)
                             @php
                                 $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
+                                $avatarUrl = $disk === 's3' 
+                                    ? Storage::disk($disk)->temporaryUrl($user->avatar, now()->addMinutes(60))
+                                    : Storage::disk($disk)->url($user->avatar);
                             @endphp
-                            <img src="{{ Storage::disk($disk)->url($user->avatar) }}" class="h-full w-full object-cover">
+                            <img src="{{ $avatarUrl }}" class="h-full w-full object-cover">
                         @else
                             <span class="text-3xl font-black text-indigo-600 uppercase">{{ substr($user->name, 0, 1) }}</span>
                         @endif

@@ -47,7 +47,13 @@
                                         <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-md shadow-indigo-100 group-hover:shadow-indigo-200 transition-all">
                                             <div class="h-full w-full rounded-[6px] bg-white flex items-center justify-center overflow-hidden">
                                                 @if(Auth::user()->avatar)
-                                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" class="h-full w-full object-cover">
+                                                    @php
+                                                        $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
+                                                        $avatarUrl = $disk === 's3' 
+                                                            ? Storage::disk($disk)->temporaryUrl(Auth::user()->avatar, now()->addMinutes(60))
+                                                            : Storage::disk($disk)->url(Auth::user()->avatar);
+                                                    @endphp
+                                                    <img src="{{ $avatarUrl }}" class="h-full w-full object-cover">
                                                 @else
                                                     <span class="text-indigo-600 font-black text-xs uppercase">{{ substr(Auth::user()->name, 0, 1) }}</span>
                                                 @endif
