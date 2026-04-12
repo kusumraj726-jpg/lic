@@ -10,7 +10,7 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\RenewalController;
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return view('welcome');
 });
 
 Route::middleware(['auth', 'verified', 'ensureActive'])->group(function () {
