@@ -56,7 +56,7 @@
                     <a href="#pricing" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Pricing</a>
                     
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-black text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest">Enter Portal &rarr;</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm font-black text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest">Click To Sign Up &rarr;</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Log In</a>
                         <a href="{{ route('register') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">Start Free Trial</a>
