@@ -61,7 +61,7 @@
             
             @if(!Auth::check())
                 <a class="text-center text-xs font-bold text-slate-500 hover:text-slate-300 uppercase tracking-widest transition-colors" href="{{ route('login') }}">
-                    {{ __('Back to Control Portal') }}
+                    {{ __('Back to Login') }}
                 </a>
             @endif
         </div>
