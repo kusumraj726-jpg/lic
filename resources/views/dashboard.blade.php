@@ -153,9 +153,48 @@
 
                 <!-- Right Column: Sidebar & Actions (1/3 width) -->
                 <div class="space-y-8">
+                    <!-- Priority Alerts / Attention Required -->
+                    @if($urgent_items->count() > 0)
+                    <div class="premium-card bg-rose-50 border-rose-100 shadow-xl shadow-rose-100/30">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="h-10 w-10 rounded-xl bg-rose-600 flex items-center justify-center animate-pulse shadow-lg shadow-rose-200">
+                                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-[11px] font-black text-rose-900 uppercase tracking-[0.2em] leading-tight">Attention Required</h3>
+                                <p class="text-[9px] font-bold text-rose-600 uppercase">{{ $urgent_items->count() }} Critical Items</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            @foreach($urgent_items as $item)
+                            <a href="{{ $item->url }}" class="flex flex-col p-4 rounded-2xl bg-white/70 border border-white hover:bg-white hover:shadow-md transition-all group">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[10px] font-black text-{{ $item->color }}-600 uppercase tracking-widest">{{ $item->type }}</span>
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">{{ $item->created_at->diffForHumans() }}</span>
+                                </div>
+                                <h4 class="text-xs font-black text-slate-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors">{{ $item->client->name ?? 'External System' }}</h4>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="text-[9px] font-bold text-rose-500 uppercase flex items-center gap-1">
+                                        <div class="h-1 w-1 rounded-full bg-rose-500"></div>
+                                        Action Delayed
+                                    </span>
+                                    <svg class="h-3 w-3 text-slate-300 group-hover:text-indigo-500 transition-all transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                </div>
+                            </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    @else
+                    <div class="premium-card bg-emerald-50 border-emerald-100 shadow-sm border-dashed">
+                        <div class="flex flex-col items-center text-center py-6">
+                            <div class="h-10 w-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <h3 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest">All Clear</h3>
+                            <p class="text-[9px] font-bold text-emerald-600 uppercase mt-1">No urgent attention required</p>
+                        </div>
+                    </div>
                     @endif
-                </div>
-            </div>
                 </div>
             </div>
 
