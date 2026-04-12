@@ -36,7 +36,7 @@
                     <!-- Current Photo -->
                     <div class="h-full w-full rounded-[20px] bg-white flex items-center justify-center overflow-hidden" x-show="!photoPreview">
                         @if($user->avatar)
-                            <img src="{{ asset('storage/' . $user->avatar) }}" class="h-full w-full object-cover">
+                            <img src="{{ Storage::url($user->avatar) }}" class="h-full w-full object-cover">
                         @else
                             <span class="text-3xl font-black text-indigo-600 uppercase">{{ substr($user->name, 0, 1) }}</span>
                         @endif

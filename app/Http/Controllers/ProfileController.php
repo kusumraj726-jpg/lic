@@ -31,12 +31,15 @@ class ProfileController extends Controller
         $user->fill($request->validated());
 
         if ($request->hasFile('avatar')) {
+            $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+            
             // Delete old avatar if exists
             if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
+                Storage::disk($disk)->delete($user->avatar);
             }
             
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $tenantId = $user->context()->id;
+            $path = $request->file('avatar')->store("tenants/{$tenantId}/avatars", $disk);
             $user->avatar = $path;
         }
 
