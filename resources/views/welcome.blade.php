@@ -59,7 +59,7 @@
                         <a href="{{ url('/dashboard') }}" class="text-sm font-black text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest">Enter Dashboard &rarr;</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Sign In</a>
-                        <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">Get Started</a>
+                        <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">Sign Up</a>
                     @endauth
                 </div>
             </div>
@@ -86,7 +86,7 @@
             
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-8 py-4 rounded-2xl uppercase tracking-widest shadow-xl shadow-indigo-600/30 transition-all hover:-translate-y-1 block text-center">
-                    Get Started
+                    Sign Up Now
                 </a>
                 <a href="{{ route('login') }}" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-bold px-8 py-4 rounded-2xl uppercase tracking-widest transition-all hover:border-slate-500 block text-center">
                     Sign In
@@ -190,7 +190,7 @@
                             <li class="flex items-center gap-3 text-slate-300 font-bold text-sm"><span class="bg-emerald-500/20 p-1 rounded"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>Upgrade Anytime</li>
                         </ul>
                     </div>
-                    <a href="{{ route('get.started') }}" class="w-full bg-slate-800 hover:bg-emerald-600 text-white font-black py-4 rounded-xl border border-emerald-800 hover:border-emerald-500 block text-center uppercase tracking-widest transition-colors">Try For ₹99</a>
+                    <a href="{{ route('get.started') }}" class="w-full bg-slate-800 hover:bg-emerald-600 text-white font-black py-4 rounded-xl border border-emerald-800 hover:border-emerald-500 block text-center uppercase tracking-widest transition-colors">Sign Up for ₹99</a>
                 </div>
                 <!-- Starter Plan -->
                 <div class="pricing-card bg-slate-900 border border-slate-800 rounded-[2rem] p-8 flex flex-col justify-between">
@@ -226,7 +226,7 @@
                     </div>
                     
                     <a href="{{ route('get.started') }}" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-black py-4 rounded-xl border border-slate-700 block text-center uppercase tracking-widest transition-colors">
-                        Start Monthly Plan
+                        Sign Up Now
                     </a>
                 </div>
 
@@ -268,7 +268,7 @@
                     </div>
                     
                     <a href="{{ route('get.started') }}" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg block text-center uppercase tracking-widest transition-transform hover:-translate-y-1">
-                        Start Yearly Plan
+                        Sign Up Yearly
                     </a>
                 </div>
             </div>
