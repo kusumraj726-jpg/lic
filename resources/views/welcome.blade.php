@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) ?>" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,14 +20,6 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .pricing-card {
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
-        }
-        .pricing-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            background: rgba(15, 23, 42, 0.6);
-        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-300 antialiased selection:bg-indigo-500 selection:text-white">
@@ -45,20 +37,24 @@
                     <a href="#features" class="hidden md:block text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Features</a>
                     <a href="#pricing" class="hidden md:block text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Pricing</a>
                     
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest transition-all">Sign Up</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Sign In</a>
-                        <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/20 transition-all">Sign Up</a>
-                    @endauth
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest transition-all">Sign Up</a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Sign In</a>
+                            @if (Route::has('get.started'))
+                                <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest">Sign Up</a>
+                            @endif
+                        @endauth
+                    @endif
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <main class="relative pt-40 pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+    <main class="relative pt-40 pb-32 overflow-hidden text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-10">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
                 Velora ERP 2.0 is Live
@@ -66,16 +62,15 @@
             
             <h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-none uppercase">
                 The Ultimate <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-black">Command Center.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Command Center.</span>
             </h1>
             
             <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-400 mb-20 uppercase tracking-widest font-medium opacity-80">
                 Securely manage clients, automate renewals, and allocate staff from a single, beautifully engineered workspace.
             </p>
             
-            <!-- Bento Grid Content (Simplified & Aligned) -->
-            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 max-w-6xl mx-auto text-left">
-                <!-- Large Card -->
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 max-w-6xl mx-auto text-left py-10">
                 <div class="md:col-span-2 md:row-span-2 bg-slate-900/40 border border-slate-800 rounded-[2rem] p-10 flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 bg-indigo-600/10 rounded-xl flex items-center justify-center mb-10 border border-indigo-500/20">
@@ -86,83 +81,58 @@
                     </div>
                 </div>
 
-                <!-- Medium Card -->
-                <div class="md:col-span-2 bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-10 flex items-center gap-8">
-                    <div class="w-20 h-20 shrink-0 bg-cyan-500/5 rounded-2xl flex items-center justify-center border border-cyan-500/10">
+                <div class="md:col-span-2 bg-slate-900/40 border border-slate-800 rounded-[2rem] p-10 flex items-center gap-8">
+                    <div class="w-20 h-20 bg-cyan-500/5 rounded-2xl flex items-center justify-center border border-cyan-500/10">
                         <svg class="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                     </div>
                     <div>
                         <h4 class="text-lg font-black text-white mb-1 uppercase tracking-tighter">Tenant Shield</h4>
-                        <p class="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em]">Absolute Data Isolation Logic.</p>
+                        <p class="text-slate-600 text-[10px] font-black uppercase tracking-[0.2em]">Data Isolation Logic.</p>
                     </div>
                 </div>
 
-                <!-- Small Cards -->
                 <div class="bg-indigo-600 rounded-[2rem] p-8 flex flex-col justify-end">
                     <h4 class="text-lg font-black text-white uppercase tracking-tighter">Auto-Renew</h4>
-                    <p class="text-indigo-200 text-[10px] font-bold uppercase tracking-widest opacity-80">Cycle 01 Automation</p>
+                    <p class="text-indigo-200 text-[10px] font-bold uppercase tracking-widest">Cycle 01</p>
                 </div>
 
                 <div class="bg-slate-900/40 border border-slate-800 rounded-[2rem] p-8 flex flex-col justify-end">
                     <h4 class="text-lg font-black text-white uppercase tracking-tighter">Staff Sync</h4>
-                    <p class="text-slate-600 text-[10px] font-bold uppercase tracking-widest">Multi-User Logic</p>
+                    <p class="text-slate-600 text-[10px] font-black uppercase tracking-widest">Multi-User</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Pricing Section (Clean & Aligned) -->
-    <section id="pricing" class="py-40 bg-slate-950">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-24">
-                <h3 class="text-4xl md:text-5xl font-black text-white tracking-tight uppercase">Platform Pricing.</h3>
-                <p class="mt-4 text-slate-600 uppercase font-black tracking-widest text-[10px]">No hidden costs. Simple logic.</p>
-            </div>
-
+    <!-- Pricing -->
+    <section id="pricing" class="py-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Trial -->
-                <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col text-center">
-                    <div class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4">Trial Gateway</div>
+                <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col">
+                    <div class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4">Trial</div>
                     <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹99</div>
-                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-slate-500 tracking-widest">
-                        <p>60 Days Access</p>
-                        <p>All Core Modules</p>
-                    </div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
-                <!-- Monthly -->
-                <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col text-center">
-                    <div class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-4">Starter Plan</div>
-                    <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹999<span class="text-xs text-slate-600 ml-1">/Mo</span></div>
-                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-slate-500 tracking-widest">
-                        <p>Unlimited Clients</p>
-                        <p>Standard Support</p>
-                    </div>
+                <div class="bg-slate-900/30 border border-slate-800 rounded-[3rem] p-12 flex flex-col">
+                    <div class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-4">Starter</div>
+                    <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹999</div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
-                <!-- Pro -->
-                <div class="bg-indigo-600 rounded-[3rem] p-12 flex flex-col text-center shadow-2xl shadow-indigo-900/20">
-                    <div class="text-[10px] font-black text-indigo-200 uppercase tracking-[0.3em] mb-4">Pro Annual</div>
-                    <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹9,990<span class="text-xs text-indigo-300 ml-1">/Yr</span></div>
-                    <div class="space-y-4 mb-12 text-[10px] uppercase font-black text-indigo-100 tracking-widest">
-                        <p>Everything in Starter</p>
-                        <p>2 Months Free</p>
-                    </div>
+                <div class="bg-indigo-600 rounded-[3rem] p-12 flex flex-col shadow-2xl">
+                    <div class="text-[10px] font-black text-indigo-200 uppercase tracking-[0.3em] mb-4">Pro</div>
+                    <div class="text-5xl font-black text-white mb-10 tracking-tighter">₹9,990</div>
                     <a href="{{ route('get.started') }}" class="mt-auto bg-white text-indigo-600 text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Yearly</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-20 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-slate-700 text-[10px] font-black uppercase tracking-[0.4em]">
-                &copy; {{ date('Y') }} Velora ERP Platform. All Logic Reserved.
-            </p>
-        </div>
+    <footer class="py-20 border-t border-slate-900 text-center">
+        <p class="text-slate-700 text-[10px] font-black uppercase tracking-[0.4em]">
+            &copy; {{ date('Y') }} Velora ERP Platform.
+        </p>
     </footer>
 
 </body>
