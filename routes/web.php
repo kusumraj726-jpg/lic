@@ -19,10 +19,27 @@ Route::get('/', function () {
 // -----------------------------------------------
 Route::get('/run-migrations-velora-99', function() {
     try {
+        // 1. Run migrations
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return "Migration Success: " . \Illuminate\Support\Facades\Artisan::output();
+        
+        // 2. Ensure SuperAdmin account exists
+        $user = \App\Models\User::updateOrCreate(
+            ['email' => 'mcauxstain@gmail.com'],
+            [
+                'name'                 => 'Super Admin',
+                'company_name'         => 'Velora HQ',
+                'password'             => \Illuminate\Support\Facades\Hash::make('super s.s'),
+                'role'                 => 'superadmin',
+                'unique_id'            => 'SUPER-001',
+                'subscription_status'  => 'active',
+                'subscription_plan'    => 'superadmin',
+                'subscription_ends_at' => now()->addYears(99),
+            ]
+        );
+
+        return "Migration & Account Setup Success! You can now login as: " . $user->email;
     } catch (\Exception $e) {
-        return "Migration Error: " . $e->getMessage();
+        return "Setup Error: " . $e->getMessage();
     }
 });
 
