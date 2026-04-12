@@ -33,7 +33,7 @@ Route::get('/run-migrations-velora-99', function() {
                 'unique_id'            => 'SUPER-001',
                 'subscription_status'  => 'active',
                 'subscription_plan'    => 'superadmin',
-                'subscription_ends_at' => now()->addYears(99),
+                'subscription_ends_at' => now()->addYears(10),
             ]
         );
 
