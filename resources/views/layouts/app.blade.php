@@ -42,7 +42,7 @@
                                     <button @click="open = !open" class="flex items-center gap-3 p-1 rounded-xl hover:bg-slate-50 transition-all group">
                                         <div class="text-right hidden sm:block">
                                             <p class="text-[13px] font-black text-slate-900 leading-tight uppercase tracking-tight">{{ Auth::user()->name }}</p>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.1em]">{{ Auth::user()->email }}</p>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.1em]">{{ Auth::user()->role }}</p>
                                         </div>
                                         <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-md shadow-indigo-100 group-hover:shadow-indigo-200 transition-all">
                                             <div class="h-full w-full rounded-[6px] bg-white flex items-center justify-center overflow-hidden">

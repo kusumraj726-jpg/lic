@@ -19,11 +19,7 @@
                 </div>
             </div>
 
-            <div class="premium-card !p-8 border-none bg-indigo-50/30 border border-indigo-100 shadow-xl shadow-slate-200/50">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+
         </div>
     </div>
 </x-app-layout>
