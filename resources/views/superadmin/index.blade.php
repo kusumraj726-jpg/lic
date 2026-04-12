@@ -1,203 +1,154 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Velora Control Panel</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>body { font-family: 'Outfit', sans-serif; }</style>
-</head>
-<body class="bg-slate-950 text-slate-300 antialiased min-h-screen">
-
-    <!-- Top Bar -->
-    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+<x-app-layout>
+    <x-slot name="header">
         <div class="flex items-center gap-3">
-            <img src="{{ asset('images/logo.png') }}" class="h-8 w-auto" alt="Velora">
+            <div class="p-2 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-200">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
             <div>
-                <h1 class="text-white font-black uppercase tracking-widest text-sm">Velora Control Panel</h1>
-                <p class="text-slate-500 text-xs">Super Admin — Restricted Access</p>
+                <h2 class="font-black text-2xl text-slate-900 uppercase tracking-tight">Master Control Panel</h2>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Platform Oversight & Revenue Tracking</p>
             </div>
         </div>
-        <div class="flex items-center gap-4">
-            <span class="text-slate-400 text-sm font-medium">{{ auth()->user()->email }}</span>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-bold uppercase tracking-widest transition-colors">
-                    Logout
-                </button>
-            </form>
-        </div>
-    </header>
+    </x-slot>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-
-        <!-- Flash Messages -->
-        @if(session('success'))
-            <div class="mb-6 bg-emerald-900/50 border border-emerald-500 text-emerald-300 px-6 py-3 rounded-xl text-sm font-medium">
-                ✅ {{ session('success') }}
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="mb-6 bg-red-900/50 border border-red-500 text-red-300 px-6 py-3 rounded-xl text-sm font-medium">
-                ❌ {{ session('error') }}
-            </div>
-        @endif
-
+    <div class="py-6">
         <!-- Revenue Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Tenants</p>
-                <p class="text-3xl font-black text-white">{{ $stats['total'] }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg class="h-12 w-12 text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                </div>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Tenants</p>
+                <p class="text-3xl font-black text-slate-900">{{ $stats['total'] ?? 0 }}</p>
             </div>
-            <div class="bg-emerald-900/30 border border-emerald-800 rounded-2xl p-5">
-                <p class="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-1">Active</p>
-                <p class="text-3xl font-black text-white">{{ $stats['active'] }}</p>
+
+            <div class="bg-indigo-600 p-6 rounded-3xl shadow-lg shadow-indigo-100 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-20">
+                    <svg class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                </div>
+                <p class="text-[10px] font-black text-indigo-200 uppercase tracking-widest mb-1">Active</p>
+                <p class="text-3xl font-black text-white">{{ $stats['active'] ?? 0 }}</p>
             </div>
-            <div class="bg-red-900/30 border border-red-800 rounded-2xl p-5">
-                <p class="text-red-400 text-xs font-bold uppercase tracking-widest mb-1">Expired / Inactive</p>
-                <p class="text-3xl font-black text-white">{{ $stats['expired'] }}</p>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden group">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Expired / Inactive</p>
+                <p class="text-3xl font-black text-rose-600">{{ $stats['expired'] ?? 0 }}</p>
             </div>
-            <div class="bg-indigo-900/30 border border-indigo-800 rounded-2xl p-5">
-                <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-1">Est. Revenue</p>
-                <p class="text-3xl font-black text-white">₹{{ number_format($stats['total_revenue']) }}</p>
+
+            <div class="bg-slate-900 p-6 rounded-3xl shadow-xl shadow-slate-200 relative overflow-hidden group text-white">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Est. Total Revenue</p>
+                <p class="text-3xl font-black text-white">₹{{ number_format($stats['total_revenue'] ?? 0) }}</p>
             </div>
         </div>
 
-        <!-- Revenue Breakdown -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center justify-between">
+        <!-- Breakdown -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Monthly MRR</p>
-                    <p class="text-2xl font-black text-white mt-1">₹{{ number_format($stats['monthly_mrr']) }}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Monthly MRR</p>
+                    <p class="text-xl font-black text-slate-900 mt-1">₹{{ number_format($stats['monthly_mrr'] ?? 0) }}</p>
                 </div>
-                <span class="bg-indigo-500/20 text-indigo-400 text-xs font-black px-3 py-1 rounded-full uppercase">@ ₹999/mo</span>
+                <span class="bg-indigo-50 text-indigo-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">999/mo</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center justify-between">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Yearly ARR</p>
-                    <p class="text-2xl font-black text-white mt-1">₹{{ number_format($stats['yearly_arr']) }}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Yearly ARR</p>
+                    <p class="text-xl font-black text-slate-900 mt-1">₹{{ number_format($stats['yearly_arr'] ?? 0) }}</p>
                 </div>
-                <span class="bg-amber-500/20 text-amber-400 text-xs font-black px-3 py-1 rounded-full uppercase">@ ₹9,990/yr</span>
+                <span class="bg-amber-50 text-amber-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">9,990/yr</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center justify-between">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Trial Revenue</p>
-                    <p class="text-2xl font-black text-white mt-1">₹{{ number_format($stats['trial_revenue']) }}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Trial Revenue</p>
+                    <p class="text-xl font-black text-slate-900 mt-1">₹{{ number_format($stats['trial_revenue'] ?? 0) }}</p>
                 </div>
-                <span class="bg-emerald-500/20 text-emerald-400 text-xs font-black px-3 py-1 rounded-full uppercase">@ ₹99/trial</span>
+                <span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">99 Trial</span>
             </div>
         </div>
 
-        <!-- Tenants Table -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-                <h2 class="text-white font-black uppercase tracking-widest text-sm">All Registered Tenants</h2>
-                <span class="text-slate-500 text-xs font-medium">{{ $tenants->where('role', 'admin')->count() }} total</span>
+        <!-- Tenant Table -->
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div class="px-8 py-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                <h3 class="font-black text-slate-900 uppercase tracking-widest text-xs">Platform Tenants</h3>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $tenants->where('role', 'admin')->count() }} Registered Accounts</span>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full text-sm">
+                <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="border-b border-slate-800">
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Company</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Admin Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Email</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Plan</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Expires</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Joined</th>
-                            <th class="px-6 py-3 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Action</th>
+                        <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] bg-white border-b border-slate-50">
+                            <th class="px-8 py-5">Company / Tenant</th>
+                            <th class="px-8 py-5">Plan</th>
+                            <th class="px-8 py-5">Status</th>
+                            <th class="px-8 py-5">Expiry Date</th>
+                            <th class="px-8 py-5">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800">
+                    <tbody class="divide-y divide-slate-50">
                         @forelse($tenants->where('role', 'admin') as $tenant)
-                        <tr class="hover:bg-slate-800/50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-white">{{ $tenant->company_name ?? '—' }}</td>
-                            <td class="px-6 py-4 text-slate-300">{{ $tenant->name }}</td>
-                            <td class="px-6 py-4 text-slate-400 font-mono text-xs">{{ $tenant->email }}</td>
-                            <td class="px-6 py-4">
-                                @php
-                                    $planColors = [
-                                        'monthly' => 'bg-indigo-500/20 text-indigo-400',
-                                        'yearly'  => 'bg-amber-500/20 text-amber-400',
-                                        'trial'   => 'bg-emerald-500/20 text-emerald-400',
-                                        default   => 'bg-slate-700 text-slate-400',
-                                    ];
-                                    $plan = $tenant->subscription_plan ?? 'none';
-                                    $color = $planColors[$plan] ?? $planColors['default'];
-                                @endphp
-                                <span class="px-2 py-1 rounded text-[11px] font-black uppercase {{ $color }}">{{ $plan }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($tenant->hasActiveSubscription())
-                                    <span class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs">
-                                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>Active
+                            <tr class="hover:bg-slate-50/50 transition-colors group">
+                                <td class="px-8 py-6">
+                                    <p class="text-sm font-black text-slate-900 uppercase truncate max-w-[200px]">{{ $tenant->company_name ?? '—' }}</p>
+                                    <p class="text-[10px] font-medium text-slate-400 truncate max-w-[200px]">{{ $tenant->email }}</p>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-600">
+                                        {{ $tenant->subscription_plan ?? 'none' }}
                                     </span>
-                                @else
-                                    <span class="flex items-center gap-1.5 text-red-400 font-bold text-xs">
-                                        <span class="w-2 h-2 bg-red-400 rounded-full"></span>Inactive
-                                    </span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-slate-400 text-xs">
-                                @if($tenant->subscription_ends_at)
-                                    @php
-                                        try {
-                                            $endsAt = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at);
-                                        } catch (\Exception $e) {
-                                            $endsAt = null;
-                                        }
-                                    @endphp
-
-                                    @if($endsAt)
-                                        <span class="{{ $endsAt->isPast() ? 'text-red-400' : 'text-slate-300' }}">
-                                            {{ $endsAt->format('d M Y') }}
-                                        </span>
-                                        <br>
-                                        <span class="text-slate-600 text-[10px]">
-                                            {{ $endsAt->isPast() ? 'Expired ' . $endsAt->diffForHumans() : 'Expires ' . $endsAt->diffForHumans() }}
-                                        </span>
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($tenant->hasActiveSubscription())
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                            <span class="text-[10px] font-black text-emerald-600 uppercase">Active</span>
+                                        </div>
                                     @else
-                                        <span class="text-slate-400">{{ $tenant->subscription_ends_at }}</span>
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-1.5 w-1.5 rounded-full bg-rose-500"></div>
+                                            <span class="text-[10px] font-black text-rose-600 uppercase">Suspended</span>
+                                        </div>
                                     @endif
-                                @else
-                                    <span class="text-slate-600">Not set</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-slate-500 text-xs">
-                                @php
-                                    try {
-                                        $joinedLabel = \Illuminate\Support\Carbon::parse($tenant->created_at)->format('d M Y');
-                                    } catch (\Exception $e) {
-                                        $joinedLabel = '—';
-                                    }
-                                @endphp
-                                {{ $joinedLabel }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <form method="POST" action="{{ route('superadmin.toggle', $tenant) }}">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit"
-                                        onclick="return confirm('Toggle subscription status for {{ $tenant->company_name }}?')"
-                                        class="{{ $tenant->hasActiveSubscription() ? 'bg-red-900/50 hover:bg-red-800 text-red-400 border-red-800' : 'bg-emerald-900/50 hover:bg-emerald-800 text-emerald-400 border-emerald-800' }} px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest border transition-colors">
-                                        {{ $tenant->hasActiveSubscription() ? 'Suspend' : 'Activate' }}
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="px-8 py-6 whitespace-nowrap">
+                                    @if($tenant->subscription_ends_at)
+                                        @php
+                                            try { $endsAt = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at); } catch(\Exception $e) { $endsAt = null; }
+                                        @endphp
+                                        @if($endsAt)
+                                            <p class="text-[11px] font-bold text-slate-900">{{ $endsAt->format('d M, Y') }}</p>
+                                            <p class="text-[9px] font-medium {{ $endsAt->isPast() ? 'text-rose-500' : 'text-slate-400' }}">
+                                                {{ $endsAt->diffForHumans() }}
+                                            </p>
+                                        @else
+                                            <p class="text-[11px] font-bold text-slate-400">{{ $tenant->subscription_ends_at }}</p>
+                                        @endif
+                                    @else
+                                        <p class="text-[11px] font-bold text-slate-300">No Expiry Set</p>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    <form method="POST" action="{{ route('superadmin.toggle', $tenant) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" 
+                                            class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all {{ $tenant->hasActiveSubscription() ? 'bg-rose-50 text-rose-600 hover:bg-rose-100' : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' }}">
+                                            {{ $tenant->hasActiveSubscription() ? 'Suspend' : 'Activate' }}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="8" class="px-6 py-12 text-center text-slate-600 font-medium">No tenants registered yet.</td>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="px-8 py-20 text-center">
+                                    <p class="text-xs font-bold text-slate-400 uppercase italic">No Registered Tenants Found</p>
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
-</body>
-</html>
+</x-app-layout>
