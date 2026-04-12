@@ -17,6 +17,15 @@ Route::get('/', function () {
 // SUPER ADMIN CONTROL PANEL (Hidden — Only you)
 // URL: /velora-control
 // -----------------------------------------------
+Route::get('/run-migrations-velora-99', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return "Migration Success: " . \Illuminate\Support\Facades\Artisan::output();
+    } catch (\Exception $e) {
+        return "Migration Error: " . $e->getMessage();
+    }
+});
+
 Route::middleware(['auth', 'superadmin'])->prefix('velora-control')->group(function () {
     Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
     Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
