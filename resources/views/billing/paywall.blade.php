@@ -57,9 +57,9 @@
                     </li>
                 </ul>
             </div>
-            <button @click="pay('monthly')" :disabled="loading" class="w-full bg-slate-800 hover:bg-indigo-600 text-white font-black py-4 rounded-xl border border-slate-700 hover:border-indigo-500 uppercase tracking-widest transition-all">
-                <span x-show="!loading">Subscribe Monthly</span>
-                <span x-show="loading" class="animate-pulse">Loading...</span>
+            <button @click="pay('monthly')" :disabled="loadingPlan !== null" class="w-full bg-slate-800 hover:bg-indigo-600 text-white font-black py-4 rounded-xl border border-slate-700 hover:border-indigo-500 uppercase tracking-widest transition-all">
+                <span x-show="loadingPlan !== 'monthly'">Subscribe Monthly</span>
+                <span x-show="loadingPlan === 'monthly'" class="animate-pulse">Loading...</span>
             </button>
         </div>
 
@@ -96,9 +96,9 @@
                     </li>
                 </ul>
             </div>
-            <button @click="pay('yearly')" :disabled="loading" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg hover:bg-slate-100 uppercase tracking-widest transition-transform hover:-translate-y-1">
-                <span x-show="!loading">Subscribe Yearly</span>
-                <span x-show="loading" class="animate-pulse">Loading...</span>
+            <button @click="pay('yearly')" :disabled="loadingPlan !== null" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg hover:bg-slate-100 uppercase tracking-widest transition-transform hover:-translate-y-1">
+                <span x-show="loadingPlan !== 'yearly'">Subscribe Yearly</span>
+                <span x-show="loadingPlan === 'yearly'" class="animate-pulse">Loading...</span>
             </button>
         </div>
 
@@ -119,10 +119,10 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('checkout', () => ({
-                loading: false,
+                loadingPlan: null,
 
                 async pay(plan) {
-                    this.loading = true;
+                    this.loadingPlan = plan;
                     try {
                         // 1. Ask Backend to Generate a Razorpay Order
                         const response = await fetch('/billing/checkout', {
@@ -138,7 +138,7 @@
 
                         if (!data.success) {
                             alert(data.message || 'Error initializing payment.');
-                            this.loading = false;
+                            this.loadingPlan = null;
                             return;
                         }
 
@@ -184,7 +184,7 @@
                             },
                             "modal": {
                                 "ondismiss": () => {
-                                    this.loading = false;
+                                    this.loadingPlan = null;
                                 }
                             }
                         };
@@ -193,7 +193,7 @@
 
                     } catch (error) {
                         alert('Something went wrong. Please try again.');
-                        this.loading = false;
+                        this.loadingPlan = null;
                     }
                 }
             }))

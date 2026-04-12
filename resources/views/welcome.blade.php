@@ -56,10 +56,10 @@
                     <a href="#pricing" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Pricing</a>
                     
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-black text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest">Click To Sign Up &rarr;</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm font-black text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest">Enter Dashboard &rarr;</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Log In</a>
-                        <a href="{{ route('register') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">Start Free Trial</a>
+                        <a href="{{ route('login') }}" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Sign In</a>
+                        <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5">Get Started</a>
                     @endauth
                 </div>
             </div>
@@ -85,11 +85,11 @@
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ route('register') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-8 py-4 rounded-2xl uppercase tracking-widest shadow-xl shadow-indigo-600/30 transition-all hover:-translate-y-1 block text-center">
-                    Deploy Your Workspace
+                <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-8 py-4 rounded-2xl uppercase tracking-widest shadow-xl shadow-indigo-600/30 transition-all hover:-translate-y-1 block text-center">
+                    Get Started
                 </a>
-                <a href="#features" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-bold px-8 py-4 rounded-2xl uppercase tracking-widest transition-all hover:border-slate-500 block text-center">
-                    Explore Features
+                <a href="{{ route('login') }}" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-bold px-8 py-4 rounded-2xl uppercase tracking-widest transition-all hover:border-slate-500 block text-center">
+                    Sign In
                 </a>
             </div>
             
@@ -207,7 +207,7 @@
                         </ul>
                     </div>
                     
-                    <a href="{{ route('register') }}" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-black py-4 rounded-xl border border-slate-700 block text-center uppercase tracking-widest transition-colors">
+                    <a href="{{ route('get.started') }}" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-black py-4 rounded-xl border border-slate-700 block text-center uppercase tracking-widest transition-colors">
                         Start Monthly Plan
                     </a>
                 </div>
@@ -249,7 +249,7 @@
                         </ul>
                     </div>
                     
-                    <a href="{{ route('register') }}" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg block text-center uppercase tracking-widest transition-transform hover:-translate-y-1">
+                    <a href="{{ route('get.started') }}" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg block text-center uppercase tracking-widest transition-transform hover:-translate-y-1">
                         Start Yearly Plan
                     </a>
                 </div>

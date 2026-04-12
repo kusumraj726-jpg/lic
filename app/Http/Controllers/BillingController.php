@@ -8,78 +8,162 @@ use Illuminate\Support\Facades\Log;
 
 class BillingController extends Controller
 {
-    public function index()
+    // -------------------------------------------------------
+    // GUEST FLOW: Payment before registration
+    // -------------------------------------------------------
+
+    /**
+     * Show the public pricing/get-started page (no login required)
+     */
+    public function guestIndex()
     {
-        // If they already have an active subscription, no need to pay again, just allow them to dashboard
-        if (auth()->user()->hasActiveSubscription()) {
-            return redirect()->route('dashboard');
+        // If payment already done in this session, redirect to register
+        if (session('velora_payment_done')) {
+            return redirect()->route('register')->with('status', 'Payment verified! Please create your account below.');
         }
 
-        return view('billing.paywall');
+        return view('billing.get_started');
     }
 
-    public function checkout(Request $request)
+    /**
+     * Create a Razorpay order for a guest user
+     */
+    public function guestCheckout(Request $request)
     {
-        $request->validate([
-            'plan' => 'required|in:monthly,yearly',
-        ]);
+        $request->validate(['plan' => 'required|in:monthly,yearly']);
 
         $amount = $request->plan === 'yearly' ? 9990 : 999;
-        
-        // For security, amount is sent in paise (multiply by 100)
         $amountInPaise = $amount * 100;
 
         try {
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-            
-            $orderData = [
-                'receipt'         => 'rcptid_' . auth()->id() . '_' . time(),
+
+            $razorpayOrder = $api->order->create([
+                'receipt'         => 'gs_' . substr(session()->getId(), 0, 8) . '_' . time(),
                 'amount'          => $amountInPaise,
                 'currency'        => 'INR',
-                'payment_capture' => 1 // Auto capture
-            ];
-
-            $razorpayOrder = $api->order->create($orderData);
-            
-            return response()->json([
-                'success' => true,
-                'order_id' => $razorpayOrder['id'],
-                'amount' => $amountInPaise,
-                'key' => env('RAZORPAY_KEY'),
-                'plan' => $request->plan
+                'payment_capture' => 1,
             ]);
 
+            return response()->json([
+                'success'  => true,
+                'order_id' => $razorpayOrder['id'],
+                'amount'   => $amountInPaise,
+                'key'      => env('RAZORPAY_KEY'),
+                'plan'     => $request->plan,
+            ]);
         } catch (\Exception $e) {
-            Log::error('Razorpay Order Creation Failed: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error generating payment gateway.'], 500);
+            Log::error('GuestCheckout Razorpay Error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Error generating payment.'], 500);
         }
     }
 
-    public function verify(Request $request)
+    /**
+     * Verify guest payment + store token in session, redirect to register
+     */
+    public function guestVerify(Request $request)
     {
         $request->validate([
             'razorpay_payment_id' => 'required|string',
-            'razorpay_order_id' => 'required|string',
-            'razorpay_signature' => 'required|string',
-            'plan' => 'required|in:monthly,yearly',
+            'razorpay_order_id'   => 'required|string',
+            'razorpay_signature'  => 'required|string',
+            'plan'                => 'required|in:monthly,yearly',
         ]);
 
         try {
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-            $attributes = array(
-                'razorpay_order_id' => $request->razorpay_order_id,
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature
-            );
+                'razorpay_signature'  => $request->razorpay_signature,
+            ]);
 
-            // This will throw a SignatureVerificationError if signature is invalid
-            $api->utility->verifyPaymentSignature($attributes);
+            // Store payment info in session — one-time use for registration
+            session([
+                'velora_payment_done'       => true,
+                'velora_payment_plan'       => $request->plan,
+                'velora_payment_id'         => $request->razorpay_payment_id,
+                'velora_payment_order_id'   => $request->razorpay_order_id,
+            ]);
+
+            return response()->json(['success' => true]);
+
+        } catch (\Exception $e) {
+            Log::error('GuestVerify Razorpay Error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Payment verification failed.'], 400);
+        }
+    }
+
+    // -------------------------------------------------------
+    // AUTH FLOW: Renewal for existing logged-in users
+    // -------------------------------------------------------
+
+    /**
+     * Show renewal billing page for logged-in users
+     */
+    public function index()
+    {
+        if (auth()->user()->hasActiveSubscription()) {
+            return redirect()->route('dashboard');
+        }
+        return view('billing.paywall');
+    }
+
+    /**
+     * Create Razorpay order for logged-in user renewal
+     */
+    public function checkout(Request $request)
+    {
+        $request->validate(['plan' => 'required|in:monthly,yearly']);
+
+        $amount = $request->plan === 'yearly' ? 9990 : 999;
+        $amountInPaise = $amount * 100;
+
+        try {
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $razorpayOrder = $api->order->create([
+                'receipt'         => 'rcpt_' . auth()->id() . '_' . time(),
+                'amount'          => $amountInPaise,
+                'currency'        => 'INR',
+                'payment_capture' => 1,
+            ]);
+
+            return response()->json([
+                'success'  => true,
+                'order_id' => $razorpayOrder['id'],
+                'amount'   => $amountInPaise,
+                'key'      => env('RAZORPAY_KEY'),
+                'plan'     => $request->plan,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Razorpay Order Error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Error generating payment.'], 500);
+        }
+    }
+
+    /**
+     * Verify renewal payment and activate subscription
+     */
+    public function verify(Request $request)
+    {
+        $request->validate([
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_order_id'   => 'required|string',
+            'razorpay_signature'  => 'required|string',
+            'plan'                => 'required|in:monthly,yearly',
+        ]);
+
+        try {
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature'  => $request->razorpay_signature,
+            ]);
 
             $user = auth()->user();
-            
-            // Success! Upgrade their subscription
             $daysToAdd = $request->plan === 'yearly' ? 365 : 30;
-            
+
             if ($user->subscription_ends_at && $user->subscription_ends_at->isFuture()) {
                 $user->subscription_ends_at = $user->subscription_ends_at->addDays($daysToAdd);
             } else {
@@ -93,7 +177,7 @@ class BillingController extends Controller
             return response()->json(['success' => true]);
 
         } catch (\Exception $e) {
-            Log::error('Razorpay Verification Failed: ' . $e->getMessage());
+            Log::error('Razorpay Verify Error: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Payment verification failed.'], 400);
         }
     }

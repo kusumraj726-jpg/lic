@@ -20,6 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        // Block registration if payment has not been completed first
+        if (!session('velora_payment_done')) {
+            return redirect()->route('get.started')->with('error', 'Please complete payment first to create your account.');
+        }
         return view('auth.register');
     }
 
@@ -46,24 +50,32 @@ class RegisteredUserController extends Controller
         }
         $uniqueId = 'NX-ADM-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
+        $plan = session('velora_payment_plan', 'monthly');
+        $daysToAdd = $plan === 'yearly' ? 365 : 30;
+
         $user = User::create([
-            'company_name' => $request->company_name,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'admin',
-            'unique_id' => $uniqueId,
+            'company_name'        => $request->company_name,
+            'name'                => $request->name,
+            'email'               => $request->email,
+            'password'            => Hash::make($request->password),
+            'role'                => 'admin',
+            'unique_id'           => $uniqueId,
+            'subscription_status' => 'active',
+            'subscription_plan'   => $plan,
+            'subscription_ends_at'=> now()->addDays($daysToAdd),
         ]);
 
         event(new Registered($user));
 
-        // If an admin is creating another admin, don't log them out.
+        // If an admin is creating a staff member from within the portal (already logged in)
         if (Auth::check()) {
-            return back()->with('success', "Admin account created successfully with ID: {$uniqueId}");
+            return back()->with('success', "Account created successfully with ID: {$uniqueId}");
         }
 
-        // Auth::login($user);
+        // Clear the one-time payment session so the same payment cannot be reused
+        session()->forget(['velora_payment_done', 'velora_payment_plan', 'velora_payment_id', 'velora_payment_order_id']);
 
-        return redirect(route('login'))->with('status', 'Registration successful! Please login.');
+        // Don't auto-login — redirect to login page so they can consciously log in
+        return redirect()->route('login')->with('status', 'Registration complete! Please login to access your workspace.');
     }
 }
