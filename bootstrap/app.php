@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'checkModule' => \App\Http\Middleware\CheckModuleAccess::class,
             'ensureActive' => \App\Http\Middleware\EnsureUserIsActive::class,
+            'subscribed' => \App\Http\Middleware\EnsureActiveSubscription::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

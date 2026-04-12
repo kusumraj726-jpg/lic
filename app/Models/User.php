@@ -26,6 +26,9 @@ class User extends Authenticatable
         'role',
         'avatar',
         'unique_id',
+        'subscription_status',
+        'subscription_plan',
+        'subscription_ends_at',
     ];
 
     /**
@@ -48,6 +51,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'subscription_ends_at' => 'datetime',
         ];
     }
 
@@ -100,5 +104,22 @@ class User extends Authenticatable
             return $this->linkedStaffProfile->advisor;
         }
         return $this;
+    }
+
+    /**
+     * Helper to check if the workspace subscription is active
+     */
+    public function hasActiveSubscription(): bool
+    {
+        $tenant = $this->context();
+        if ($tenant->subscription_status === 'active') {
+            return true;
+        }
+        
+        if ($tenant->subscription_ends_at && $tenant->subscription_ends_at->isFuture()) {
+            return true;
+        }
+
+        return false;
     }
 }
