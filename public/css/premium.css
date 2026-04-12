@@ -101,7 +101,7 @@ body {
     top: 0;
     background: white;
     box-shadow: var(--shadow-md);
-    padding: 2.5rem 1.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     z-index: 50;
@@ -109,7 +109,7 @@ body {
 }
 
 .sidebar-logo {
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem;
     padding-left: 0.5rem;
 }
 
