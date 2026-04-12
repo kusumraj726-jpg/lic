@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\RenewalController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(funct
     Route::get('/trash', [\App\Http\Controllers\TrashController::class, 'index'])->name('trash.index');
     Route::post('/trash/{type}/{id}/restore', [\App\Http\Controllers\TrashController::class, 'restore'])->name('trash.restore');
     Route::delete('/trash/{type}/{id}/force', [\App\Http\Controllers\TrashController::class, 'forceDelete'])->name('trash.force-delete');
+    Route::get('/api/search', [SearchController::class, 'search'])->name('api.search');
 });
 
 require __DIR__.'/auth.php';

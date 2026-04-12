@@ -88,7 +88,7 @@ class RegisteredUserController extends Controller
                 'velora_payment_id',
                 'velora_payment_order_id',
             ]);
-            return redirect()->route('login')
+            return redirect()->route('login', ['flow' => 'onboarding', 'step' => 3])
                 ->with('status', 'Registration complete! Please login to access your workspace.');
         }
 

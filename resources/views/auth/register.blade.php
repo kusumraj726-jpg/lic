@@ -4,12 +4,6 @@
         <p class="text-sm text-slate-400 mt-2 uppercase tracking-widest font-bold">Register Primary Account</p>
     </div>
 
-    @if (session('success'))
-        <div class="mb-4 p-3 bg-green-500/20 border border-green-500/50 rounded-xl text-green-400 text-sm font-bold flex items-center gap-3">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-            {{ session('success') }}
-        </div>
-    @endif
 
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
@@ -59,7 +53,7 @@
                 {{ __('Provision Account') }}
             </button>
             
-            @if(!Auth::check())
+            @if(!Auth::check() && !request()->has('flow'))
                 <a class="text-center text-xs font-bold text-slate-500 hover:text-slate-300 uppercase tracking-widest transition-colors" href="{{ route('login') }}">
                     {{ __('Back to Login') }}
                 </a>

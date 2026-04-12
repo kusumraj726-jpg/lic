@@ -134,11 +134,6 @@
                 </a>
             </div>
 
-            @if(session('success'))
-                <div class="mb-4 p-4 bg-emerald-100 text-emerald-700 rounded-lg border border-emerald-200">
-                    {{ session('success') }}
-                </div>
-            @endif
 
             <div class="premium-card overflow-hidden !p-0 border-none shadow-xl">
                 <div class="overflow-x-auto">

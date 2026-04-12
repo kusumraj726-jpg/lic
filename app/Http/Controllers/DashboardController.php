@@ -17,13 +17,83 @@ class DashboardController extends Controller
         $context = $user->context();
         $now = \Carbon\Carbon::now();
         
-        // 1. Core Statistics
+        // 1. Core Statistics & Trend Analysis
+        $lastMonth = $now->copy()->subMonth();
+        
+        $currentClients = $context->clients()->count();
+        $prevClients = $context->clients()->whereDate('created_at', '<', $now->copy()->startOfMonth())->count();
+        
         $stats = [
-            'clients_count' => $context->clients()->count(),
+            'clients_count' => $currentClients,
+            'clients_trend' => $this->calculateTrend($currentClients, $prevClients),
+            
             'open_queries' => $context->queries()->whereIn('status', ['pending', 'open', 'in-progress'])->count(),
+            'queries_trend' => $this->calculateTrend(
+                $context->queries()->whereMonth('created_at', $now->month)->count(),
+                $context->queries()->whereMonth('created_at', $lastMonth->month)->count()
+            ),
+            
             'pending_claims' => $context->claims()->whereIn('status', ['pending', 'submitted'])->count(),
+            'claims_trend' => $this->calculateTrend(
+                $context->claims()->whereMonth('created_at', $now->month)->count(),
+                $context->claims()->whereMonth('created_at', $lastMonth->month)->count()
+            ),
+            
             'upcoming_renewals' => $context->renewals()->where('status', 'pending')->whereDate('expiry_date', '>=', $now)->count(),
         ];
+
+        // 2. Executive Insights (Premium Intelligence)
+        $executive_briefs = collect();
+        
+        if ($stats['open_queries'] > 5) {
+            $executive_briefs->push([
+                'title' => 'High Query Volume',
+                'message' => 'Incoming communication is trending above average. Consider reallocating staff resources to the query desk.',
+                'type' => 'warning',
+                'id' => 'brief_queries'
+            ]);
+        }
+
+        if ($stats['pending_claims'] > 3) {
+            $executive_briefs->push([
+                'title' => 'Claim Pulse Detected',
+                'message' => 'Multiple cases are awaiting resolution. Early intervention today will improve weekly resolution rates.',
+                'type' => 'info',
+                'id' => 'brief_claims'
+            ]);
+        }
+
+        $upcoming_renewals_seven_days = $context->renewals()
+            ->where('status', 'pending')
+            ->whereBetween('expiry_date', [$now->copy()->startOfDay(), $now->copy()->addDays(7)->endOfDay()])
+            ->count();
+
+        if ($upcoming_renewals_seven_days > 0) {
+            $executive_briefs->push([
+                'title' => 'Renewal Alert',
+                'message' => "{$upcoming_renewals_seven_days} renewals approaching in the next 7 days.",
+                'type' => 'success',
+                'id' => 'brief_renewals'
+            ]);
+        }
+
+        // Add Birthdays to Velora Intelligence
+        $today_birthdays = collect();
+        
+        $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name));
+        $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($s) => $today_birthdays->push($s->name));
+        if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
+            $today_birthdays->push("You (Admin)");
+        }
+
+        if ($today_birthdays->count() > 0) {
+            $executive_briefs->push([
+                'title' => 'Birthday Milestone',
+                'message' => "It's " . $today_birthdays->implode(', ') . "'s birthday today! Reach out to celebrate.",
+                'type' => 'brand',
+                'id' => 'brief_birthdays'
+            ]);
+        }
 
         // 2. Chart Data (Last 6 Months)
         $months = collect(range(5, 0))->map(function ($i) use ($now) {
@@ -40,24 +110,6 @@ class DashboardController extends Controller
             }),
         ];
 
-        // 3. Combined Recent Activity
-        $recent_queries = $context->queries()->with('client')->latest()->take(5)->get()->map(function($q) {
-            $q->activity_type = 'Query';
-            $q->activity_url = route('queries.index', ['id' => $q->id]);
-            $q->activity_icon = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>';
-            $q->activity_color = 'rose';
-            return $q;
-        });
-
-        $recent_claims = $context->claims()->with('client')->latest()->take(5)->get()->map(function($c) {
-            $c->activity_type = 'Claim';
-            $c->activity_url = route('claims.index', ['id' => $c->id]);
-            $c->activity_icon = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>';
-            $c->activity_color = 'amber';
-            return $c;
-        });
-
-        $activities = $recent_queries->concat($recent_claims)->sortByDesc('created_at')->take(8);
 
         // 4. Attention Required — all active queries and claims
         $urgent_queries = $context->queries()->with('client')->whereIn('status', ['pending', 'open', 'in-progress'])->latest()->get()->map(function($q) {
@@ -74,7 +126,14 @@ class DashboardController extends Controller
             return $c;
         });
 
-        $urgent_items = $urgent_queries->concat($urgent_claims)->sortByDesc('created_at')->take(8);
+        $urgent_renewals = $context->renewals()->with('client')->where('status', 'pending')->whereDate('expiry_date', '<=', $now)->latest()->get()->map(function($r) {
+            $r->type = 'Renewal';
+            $r->color = 'emerald';
+            $r->url = route('renewals.index');
+            return $r;
+        });
+
+        $urgent_items = $urgent_queries->concat($urgent_claims)->concat($urgent_renewals)->sortByDesc('created_at')->take(8);
 
         // 5. Calendar Events (Birthdays + Renewals)
         $calendar_events = collect();
@@ -91,19 +150,47 @@ class DashboardController extends Controller
             ]);
         });
 
-        // Add Renewals to Calendar
-        $context->renewals()->get()->each(function($renewal) use ($calendar_events) {
-            $expiry = \Carbon\Carbon::parse($renewal->expiry_date);
+        // Add Staff Birthdays to Calendar
+        $context->staff()->whereNotNull('dob')->get()->each(function($staff) use ($calendar_events) {
+            $dob = \Carbon\Carbon::parse($staff->dob);
             $calendar_events->push([
-                'day' => (int)$expiry->day,
-                'month' => (int)$expiry->month,
-                'type' => 'renewal',
-                'title' => "Renewal: {$renewal->policy_type}",
-                'color' => 'rose'
+                'day' => (int)$dob->day,
+                'month' => (int)$dob->month,
+                'type' => 'birthday',
+                'title' => "Staff Birthday: {$staff->name}",
+                'color' => 'indigo'
             ]);
         });
 
+        // Add Advisor Birthday to Calendar
+        if ($context->dob) {
+            $dob = \Carbon\Carbon::parse($context->dob);
+            $calendar_events->push([
+                'day' => (int)$dob->day,
+                'month' => (int)$dob->month,
+                'type' => 'birthday',
+                'title' => "Team Birthday: {$context->name}",
+                'color' => 'indigo'
+            ]);
+        }
+
+
         $birthdays = $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get();
+        
+        // Add current staff birthdays to today's list
+        $staff_birthdays = $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get();
+        foreach($staff_birthdays as $sb) {
+            $sb->type = 'Staff';
+            $birthdays->push($sb);
+        }
+
+        // Add current admin birthday to today's list
+        if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
+            $birthdays->push((object)[
+                'name' => $context->name,
+                'type' => 'Admin'
+            ]);
+        }
         $upcoming_birthdays = $context->clients()
             ->where(function($q) use ($now) {
                 $start = $now->copy()->addDay();
@@ -125,6 +212,12 @@ class DashboardController extends Controller
             ->take(3)
             ->get();
 
-        return view('dashboard', compact('stats', 'chartData', 'activities', 'urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays'));
+        return view('dashboard', compact('stats', 'chartData', 'urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'executive_briefs'));
+    }
+
+    private function calculateTrend($current, $previous)
+    {
+        if ($previous == 0) return $current > 0 ? 100 : 0;
+        return round((($current - $previous) / $previous) * 100);
     }
 }

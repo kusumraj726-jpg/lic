@@ -6,9 +6,9 @@
     <title>Get Started | Velora ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>body { font-family: 'Outfit', sans-serif; }</style>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-slate-950 text-slate-300 antialiased min-h-screen flex flex-col">
 
@@ -25,8 +25,8 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <div class="flex items-center justify-center gap-3 mb-6">
-                <img src="{{ asset('images/logo.png') }}" alt="Velora" class="h-12 w-auto">
-                <span class="text-3xl font-black text-white tracking-widest uppercase">Velora ERP</span>
+                <img src="{{ asset('images/logo.png') }}?v=100" alt="Velora" class="h-20 w-auto object-contain">
+                <span class="text-3xl font-black text-white tracking-widest uppercase">Velora</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">Choose Your Plan</h1>
             <p class="text-slate-400 text-lg">Pay once. Create your account. Access your workspace.</p>
@@ -58,10 +58,10 @@
                     One-Time Trial
                 </div>
                 <div>
-                    <h3 class="text-2xl font-black text-white uppercase tracking-widest mb-1">Try It Out</h3>
-                    <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6">2 Months Access</p>
+                    <h3 class="text-2xl font-extrabold text-white uppercase tracking-widest mb-1">Try It Out</h3>
+                    <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6 border-b border-white/5 pb-2">2 Months Access</p>
                     <div class="flex items-baseline gap-1 mb-8 border-b border-slate-800 pb-6">
-                        <span class="text-5xl font-black text-white">₹99</span>
+                        <span class="text-5xl font-extrabold text-white">₹99</span>
                         <span class="text-slate-500 text-sm font-bold uppercase tracking-widest">/once</span>
                     </div>
                     <ul class="space-y-4 mb-8">
@@ -92,10 +92,10 @@
             <!-- Monthly Plan -->
             <div class="bg-slate-900 border border-slate-700 rounded-[2rem] p-8 relative flex flex-col justify-between hover:border-indigo-500 transition-colors">
                 <div>
-                    <h3 class="text-2xl font-black text-white uppercase tracking-widest mb-1">Starter</h3>
-                    <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6">Monthly Plan</p>
+                    <h3 class="text-2xl font-extrabold text-white uppercase tracking-widest mb-1">Starter</h3>
+                    <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6 border-b border-white/5 pb-2">Monthly Plan</p>
                     <div class="flex items-baseline gap-1 mb-8 border-b border-slate-800 pb-6">
-                        <span class="text-5xl font-black text-white">₹999</span>
+                        <span class="text-5xl font-extrabold text-white">₹999</span>
                         <span class="text-slate-500 text-sm font-bold uppercase tracking-widest">/mo</span>
                     </div>
                     <ul class="space-y-4 mb-8">
@@ -120,15 +120,15 @@
             </div>
 
             <!-- Yearly Plan -->
-            <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 relative flex flex-col justify-between shadow-2xl shadow-indigo-900/50 md:-translate-y-4">
+            <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 relative flex flex-col justify-between shadow-2xl shadow-indigo-900/50">
                 <div class="absolute -top-4 inset-x-0 mx-auto w-max bg-amber-500 text-amber-950 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
                     Best Value — 2 Months Free
                 </div>
                 <div>
-                    <h3 class="text-2xl font-black text-white uppercase tracking-widest mb-1">Professional</h3>
-                    <p class="text-indigo-200 text-sm font-medium uppercase tracking-widest mb-6">Annual Plan</p>
+                    <h3 class="text-2xl font-extrabold text-white uppercase tracking-widest mb-1">Professional</h3>
+                    <p class="text-indigo-200 text-sm font-medium uppercase tracking-widest mb-6 border-b border-white/10 pb-2">Annual Plan</p>
                     <div class="flex items-baseline gap-1 mb-8 border-b border-indigo-500/50 pb-6">
-                        <span class="text-5xl font-black text-white">₹9,990</span>
+                        <span class="text-5xl font-extrabold text-white">₹9,990</span>
                         <span class="text-indigo-200 text-sm font-bold uppercase tracking-widest">/yr</span>
                     </div>
                     <ul class="space-y-4 mb-8">
@@ -146,7 +146,7 @@
                         </li>
                     </ul>
                 </div>
-                <button @click="pay('yearly')" :disabled="loadingPlan !== null" class="w-full bg-white text-indigo-900 font-black py-4 rounded-xl shadow-lg hover:bg-slate-100 uppercase tracking-widest transition-transform hover:-translate-y-1">
+                <button @click="pay('yearly')" :disabled="loadingPlan !== null" class="w-full bg-indigo-950/50 hover:bg-white/10 text-white font-black py-4 rounded-xl border border-indigo-400 shadow-lg uppercase tracking-widest transition-all">
                     <span x-show="loadingPlan !== 'yearly'">Pay ₹9,990/yr</span>
                     <span x-show="loadingPlan === 'yearly'" class="animate-pulse">Processing...</span>
                 </button>
@@ -198,7 +198,7 @@
                             "key": data.key,
                             "amount": data.amount,
                             "currency": "INR",
-                            "name": "Velora ERP",
+                            "name": "Velora",
                             "description": planLabels[plan],
                             "image": "{{ asset('images/logo.png') }}",
                             "order_id": data.order_id,
@@ -220,7 +220,7 @@
                                 const verifyData = await verifyResponse.json();
                                 if (verifyData.success) {
                                     // Payment done! Redirect to registration
-                                    window.location.href = "{{ route('register') }}";
+                                    window.location.href = "{{ route('register') }}?flow=onboarding&step=2";
                                 } else {
                                     alert('Payment verification failed. Please contact support.');
                                     this.loadingPlan = null;

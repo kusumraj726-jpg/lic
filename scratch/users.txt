@@ -1,0 +1,66 @@
+Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [email] => advisor@example.com
+            [subscription_ends_at] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [email] => shivam.sh0023@gmail.com
+            [subscription_ends_at] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 3
+            [email] => karan@gmail.com
+            [subscription_ends_at] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 4
+            [email] => mcauxstain@gmail.com
+            [subscription_ends_at] => 
+        )
+
+    [4] => Array
+        (
+            [id] => 5
+            [email] => sharma@gmail.com
+            [subscription_ends_at] => 
+        )
+
+    [5] => Array
+        (
+            [id] => 6
+            [email] => shivam@gmail.com
+            [subscription_ends_at] => 
+        )
+
+    [6] => Array
+        (
+            [id] => 7
+            [email] => kartik@gmail.com
+            [subscription_ends_at] => 2026-06-11T10:43:32.000000Z
+        )
+
+    [7] => Array
+        (
+            [id] => 8
+            [email] => ka@gmail.com
+            [subscription_ends_at] => 2026-05-12T11:27:01.000000Z
+        )
+
+    [8] => Array
+        (
+            [id] => 9
+            [email] => kirat@gmail.com
+            [subscription_ends_at] => 2026-05-12T11:30:02.000000Z
+        )
+
+)

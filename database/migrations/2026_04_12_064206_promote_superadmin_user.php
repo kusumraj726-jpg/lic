@@ -14,7 +14,7 @@ return new class extends Migration
                 'role'                 => 'superadmin',
                 'subscription_status'  => 'active',
                 'subscription_plan'    => 'superadmin',
-                'subscription_ends_at' => now()->addYears(99),
+                'subscription_ends_at' => \Illuminate\Support\Carbon::now()->addYears(10),
             ]);
     }
 
