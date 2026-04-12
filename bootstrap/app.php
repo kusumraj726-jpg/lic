@@ -15,9 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
             //
         ]);
         $middleware->alias([
-            'checkModule' => \App\Http\Middleware\CheckModuleAccess::class,
+            'checkModule'  => \App\Http\Middleware\CheckModuleAccess::class,
             'ensureActive' => \App\Http\Middleware\EnsureUserIsActive::class,
-            'subscribed' => \App\Http\Middleware\EnsureActiveSubscription::class,
+            'subscribed'   => \App\Http\Middleware\EnsureActiveSubscription::class,
+            'superadmin'   => \App\Http\Middleware\SuperAdminOnly::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -13,6 +13,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// -----------------------------------------------
+// SUPER ADMIN CONTROL PANEL (Hidden — Only you)
+// URL: /velora-control
+// -----------------------------------------------
+Route::middleware(['auth', 'superadmin'])->prefix('velora-control')->group(function () {
+    Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
+    Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
+});
+
 // Payment-First flow: Public pricing page (no auth needed)
 Route::get('/get-started', [\App\Http\Controllers\BillingController::class, 'guestIndex'])->name('get.started');
 Route::post('/get-started/checkout', [\App\Http\Controllers\BillingController::class, 'guestCheckout'])->name('get.started.checkout');
