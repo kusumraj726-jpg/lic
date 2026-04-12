@@ -28,31 +28,27 @@
     <nav class="fixed w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
+                <!-- Left: Logo -->
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('images/logo.png') }}" alt="Velora Logo" class="h-10 w-auto">
                     <span class="text-2xl font-black text-white tracking-widest uppercase">Velora</span>
                 </div>
                 
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#features" class="text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Features</a>
-                    <a href="#pricing" class="text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Pricing</a>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Dashboard</a>
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
-                                @csrf
-                                <button type="submit" class="text-[10px] font-black text-slate-500 hover:text-red-400 uppercase tracking-widest">Logout</button>
-                            </form>
-                        @else
-                            <a href="{{ route('login') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Sign In</a>
-                            @if (Route::has('get.started'))
-                                <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/20">Sign Up</a>
-                            @endif
-                        @endauth
-                    @endif
+                <!-- Right: Links & Buttons Aligned Together -->
+                <div class="flex items-center space-x-8">
+                    <a href="#features" class="hidden lg:block text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Features</a>
+                    <a href="#pricing" class="hidden lg:block text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Pricing</a>
+                    
+                    @auth
+                        <!-- Labels remain 'Sign In' (Dashboard) and 'Sign Up' (Billing) even when logged in for branding consistency -->
+                        <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Sign In</a>
+                        <a href="{{ route('billing.index') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/20 transition-all">Sign Up</a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-widest">Sign In</a>
+                        @if (Route::has('get.started'))
+                            <a href="{{ route('get.started') }}" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-widest shadow-lg shadow-indigo-600/20">Sign Up</a>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>
@@ -127,7 +123,7 @@
                         <p>• All Core ERP Modules</p>
                         <p>• Live Data Sync</p>
                     </div>
-                    <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
+                    <a href="{{ auth()->check() ? route('billing.index') : route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
                 <!-- Monthly -->
@@ -139,7 +135,7 @@
                         <p>• Unlimited Staff</p>
                         <p>• Standard Security</p>
                     </div>
-                    <a href="{{ route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
+                    <a href="{{ auth()->check() ? route('billing.index') : route('get.started') }}" class="mt-auto bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Now</a>
                 </div>
 
                 <!-- Pro -->
@@ -152,7 +148,7 @@
                         <p>• Priority Support</p>
                         <p>• 2 Months Free</p>
                     </div>
-                    <a href="{{ route('get.started') }}" class="mt-auto bg-white text-indigo-600 text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Yearly</a>
+                    <a href="{{ auth()->check() ? route('billing.index') : route('get.started') }}" class="mt-auto bg-white text-indigo-600 text-[10px] font-black py-4 rounded-2xl uppercase tracking-[0.2em] transition-all">Sign Up Yearly</a>
                 </div>
             </div>
         </div>
