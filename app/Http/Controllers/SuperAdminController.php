@@ -16,14 +16,19 @@ class SuperAdminController extends Controller
             ->get();
 
         // Revenue calculation
+        // Revenue calculation
         $activeMonthly = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'monthly')->count();
         $activeYearly  = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'yearly')->count();
         $activeTrial   = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'trial')->count();
 
         $stats = [
             'total'           => $tenants->where('role', 'admin')->count(),
-            'active'          => $tenants->filter(fn($u) => $u->hasActiveSubscription() && $u->role === 'admin')->count(),
-            'expired'         => $tenants->where('role', 'admin')->filter(fn($u) => !$u->hasActiveSubscription())->count(),
+            'active'          => $tenants->filter(function($u) {
+                return $u->role === 'admin' && $u->hasActiveSubscription();
+            })->count(),
+            'expired'         => $tenants->filter(function($u) {
+                return $u->role === 'admin' && !$u->hasActiveSubscription();
+            })->count(),
             'monthly_mrr'     => $activeMonthly * 999,
             'yearly_arr'      => $activeYearly * 9990,
             'trial_revenue'   => $activeTrial * 99,

@@ -143,19 +143,38 @@
                             </td>
                             <td class="px-6 py-4 text-slate-400 text-xs">
                                 @if($tenant->subscription_ends_at)
-                                    <span class="{{ $tenant->subscription_ends_at->isPast() ? 'text-red-400' : 'text-slate-300' }}">
-                                        {{ $tenant->subscription_ends_at->format('d M Y') }}
-                                    </span>
-                                    <br>
-                                    <span class="text-slate-600 text-[10px]">
-                                        {{ $tenant->subscription_ends_at->isPast() ? 'Expired ' . $tenant->subscription_ends_at->diffForHumans() : 'Expires ' . $tenant->subscription_ends_at->diffForHumans() }}
-                                    </span>
+                                    @php
+                                        try {
+                                            $endsAt = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at);
+                                        } catch (\Exception $e) {
+                                            $endsAt = null;
+                                        }
+                                    @endphp
+
+                                    @if($endsAt)
+                                        <span class="{{ $endsAt->isPast() ? 'text-red-400' : 'text-slate-300' }}">
+                                            {{ $endsAt->format('d M Y') }}
+                                        </span>
+                                        <br>
+                                        <span class="text-slate-600 text-[10px]">
+                                            {{ $endsAt->isPast() ? 'Expired ' . $endsAt->diffForHumans() : 'Expires ' . $endsAt->diffForHumans() }}
+                                        </span>
+                                    @else
+                                        <span class="text-slate-400">{{ $tenant->subscription_ends_at }}</span>
+                                    @endif
                                 @else
                                     <span class="text-slate-600">Not set</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-slate-500 text-xs">
-                                {{ $tenant->created_at->format('d M Y') }}
+                                @php
+                                    try {
+                                        $joinedLabel = \Illuminate\Support\Carbon::parse($tenant->created_at)->format('d M Y');
+                                    } catch (\Exception $e) {
+                                        $joinedLabel = '—';
+                                    }
+                                @endphp
+                                {{ $joinedLabel }}
                             </td>
                             <td class="px-6 py-4">
                                 <form method="POST" action="{{ route('superadmin.toggle', $tenant) }}">

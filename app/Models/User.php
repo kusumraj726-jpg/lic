@@ -112,12 +112,22 @@ class User extends Authenticatable
     public function hasActiveSubscription(): bool
     {
         $tenant = $this->context();
+        
+        if (!$tenant) {
+            return false;
+        }
+
         if ($tenant->subscription_status === 'active') {
             return true;
         }
         
-        if ($tenant->subscription_ends_at && $tenant->subscription_ends_at->isFuture()) {
-            return true;
+        if ($tenant->subscription_ends_at) {
+            try {
+                $date = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at);
+                return $date->isFuture();
+            } catch (\Exception $e) {
+                return false;
+            }
         }
 
         return false;
