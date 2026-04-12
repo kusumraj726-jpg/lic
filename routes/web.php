@@ -43,7 +43,7 @@ Route::get('/run-migrations-velora-99', function() {
     }
 });
 
-Route::middleware(['auth', 'superadmin'])->prefix('velora-control')->group(function () {
+Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('velora-control')->group(function () {
     Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
     Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
@@ -54,13 +54,13 @@ Route::post('/get-started/checkout', [\App\Http\Controllers\BillingController::c
 Route::post('/get-started/verify', [\App\Http\Controllers\BillingController::class, 'guestVerify'])->name('get.started.verify');
 
 // Billing renewal for existing logged-in users
-Route::middleware(['auth', 'verified', 'ensureActive'])->group(function () {
+Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(function () {
     Route::get('/billing', [\App\Http\Controllers\BillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/checkout', [\App\Http\Controllers\BillingController::class, 'checkout'])->name('billing.checkout');
     Route::post('/billing/verify', [\App\Http\Controllers\BillingController::class, 'verify'])->name('billing.verify');
 });
 
-Route::middleware(['auth', 'verified', 'ensureActive'])->group(function () {
+Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
