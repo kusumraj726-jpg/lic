@@ -10,33 +10,12 @@ class SuperAdminController extends Controller
 {
     public function index()
     {
-        // All admin/superadmin tenants (not staff)
-        $tenants = User::whereIn('role', ['admin', 'superadmin'])
-            ->orderByDesc('created_at')
-            ->get();
-
-        // Revenue calculation
-        // Revenue calculation
-        $activeMonthly = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'monthly')->count();
-        $activeYearly  = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'yearly')->count();
-        $activeTrial   = $tenants->where('subscription_status', 'active')->where('subscription_plan', 'trial')->count();
-
-        $stats = [
-            'total'           => $tenants->where('role', 'admin')->count(),
-            'active'          => $tenants->filter(function($u) {
-                return $u->role === 'admin' && $u->hasActiveSubscription();
-            })->count(),
-            'expired'         => $tenants->filter(function($u) {
-                return $u->role === 'admin' && !$u->hasActiveSubscription();
-            })->count(),
-            'monthly_mrr'     => $activeMonthly * 999,
-            'yearly_arr'      => $activeYearly * 9990,
-            'trial_revenue'   => $activeTrial * 99,
-        ];
-
-        $stats['total_revenue'] = $stats['monthly_mrr'] + $stats['yearly_arr'] + $stats['trial_revenue'];
-
-        return view('superadmin.index', compact('tenants', 'stats'));
+        try {
+            $count = User::count();
+            return "Control Panel Debug: Connection OK. Total Users: " . $count;
+        } catch (\Exception $e) {
+            return "Database Error: " . $e->getMessage();
+        }
     }
 
     public function toggleStatus(Request $request, User $user)
