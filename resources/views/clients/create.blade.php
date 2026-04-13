@@ -22,6 +22,10 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <x-form-input label="Date of Birth" name="dob" type="date" />
+                        <x-form-input label="Marriage Anniversary" name="marriage_anniversary" type="date" />
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="form-group flex-1">
                             <label for="gender" class="block text-sm font-medium text-slate-700">Gender</label>
                             <select id="gender" name="gender" class="form-control mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -32,10 +36,10 @@
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('gender')" />
                         </div>
+                        <x-form-input label="Phone Number" name="phone" placeholder="+1 234 567 890" minlength="10" maxlength="10" pattern="[0-9]{10}" title="10-digit Phone Number" />
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <x-form-input label="Phone Number" name="phone" placeholder="+1 234 567 890" minlength="10" maxlength="10" pattern="[0-9]{10}" title="10-digit Phone Number" />
+                    <div class="grid grid-cols-1 gap-8">
                         <div class="form-group flex-1">
                             <label for="address">Residential Address</label>
                             <textarea id="address" name="address" class="form-control" rows="3">{{ old('address') }}</textarea>

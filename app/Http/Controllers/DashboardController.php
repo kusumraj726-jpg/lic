@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Add Birthdays to Velora Intelligence
+        // Add Birthdays and Anniversaries to Velora Intelligence
         $today_birthdays = collect();
         
         $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name));
@@ -85,11 +85,12 @@ class DashboardController extends Controller
         if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
             $today_birthdays->push("You (Admin)");
         }
+        $context->clients()->whereMonth('marriage_anniversary', $now->month)->whereDay('marriage_anniversary', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name . " (Anniv.)"));
 
         if ($today_birthdays->count() > 0) {
             $executive_briefs->push([
-                'title' => 'Birthday Milestone',
-                'message' => "It's " . $today_birthdays->implode(', ') . "'s birthday today! Reach out to celebrate.",
+                'title' => 'Celebration Milestone',
+                'message' => "It's " . $today_birthdays->implode(', ') . "'s special day! Reach out to celebrate.",
                 'type' => 'brand',
                 'id' => 'brief_birthdays'
             ]);
@@ -146,7 +147,23 @@ class DashboardController extends Controller
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
                 'title' => "{$client->name}'s Birthday",
-                'color' => 'indigo'
+                'color' => 'indigo',
+                'name' => $client->name,
+                'phone' => $client->phone
+            ]);
+        });
+
+        // Add Anniversaries to Calendar
+        $context->clients()->whereNotNull('marriage_anniversary')->get()->each(function($client) use ($calendar_events) {
+            $ann = \Carbon\Carbon::parse($client->marriage_anniversary);
+            $calendar_events->push([
+                'day' => (int)$ann->day,
+                'month' => (int)$ann->month,
+                'type' => 'anniversary',
+                'title' => "{$client->name}'s Anniversary",
+                'color' => 'pink',
+                'name' => $client->name,
+                'phone' => $client->phone
             ]);
         });
 
@@ -158,7 +175,9 @@ class DashboardController extends Controller
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
                 'title' => "Staff Birthday: {$staff->name}",
-                'color' => 'indigo'
+                'color' => 'indigo',
+                'name' => $staff->name,
+                'phone' => $staff->phone
             ]);
         });
 
@@ -170,7 +189,9 @@ class DashboardController extends Controller
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
                 'title' => "Team Birthday: {$context->name}",
-                'color' => 'indigo'
+                'color' => 'indigo',
+                'name' => $context->name,
+                'phone' => $context->phone
             ]);
         }
 

@@ -14,7 +14,10 @@
             name: '',
             email: '',
             phone: '',
-            address: ''
+            address: '',
+            dob: '',
+            gender: '',
+            marriage_anniversary: ''
         },
         openView(c) {
             this.client = c;
@@ -110,7 +113,10 @@
                                                 "name" => $client->name,
                                                 "email" => $client->email,
                                                 "phone" => $client->phone,
-                                                "address" => $client->address
+                                                "address" => $client->address,
+                                                "dob" => $client->dob,
+                                                "gender" => $client->gender,
+                                                "marriage_anniversary" => $client->marriage_anniversary
                                             ], JSON_HEX_APOS | JSON_HEX_QUOT) }})' class="text-indigo-600 hover:text-indigo-900 flex items-center gap-1 group transition-transform hover:scale-105">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                                 View
@@ -120,7 +126,10 @@
                                                 "name" => $client->name,
                                                 "email" => $client->email,
                                                 "phone" => $client->phone,
-                                                "address" => $client->address
+                                                "address" => $client->address,
+                                                "dob" => $client->dob,
+                                                "gender" => $client->gender,
+                                                "marriage_anniversary" => $client->marriage_anniversary
                                             ], JSON_HEX_APOS | JSON_HEX_QUOT) }})' class="text-amber-600 hover:text-amber-900 flex items-center gap-1 group transition-transform hover:scale-105">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                                 Edit
@@ -221,6 +230,41 @@
                                     </template>
                                     <template x-if="mode === 'edit'">
                                         <input type="text" name="phone" x-model="client.phone" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Date of Birth</label>
+                                    <template x-if="mode === 'view'">
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.dob || 'N/A'"></div>
+                                    </template>
+                                    <template x-if="mode === 'edit'">
+                                        <input type="date" name="dob" x-model="client.dob" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                    </template>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Gender</label>
+                                    <template x-if="mode === 'view'">
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.gender || 'N/A'"></div>
+                                    </template>
+                                    <template x-if="mode === 'edit'">
+                                        <select name="gender" x-model="client.gender" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </template>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Anniversary</label>
+                                    <template x-if="mode === 'view'">
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.marriage_anniversary || 'N/A'"></div>
+                                    </template>
+                                    <template x-if="mode === 'edit'">
+                                        <input type="date" name="marriage_anniversary" x-model="client.marriage_anniversary" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
                                     </template>
                                 </div>
                             </div>

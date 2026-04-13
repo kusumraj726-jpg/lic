@@ -31,6 +31,12 @@
                         </div>
 
                         <div>
+                            <x-input-label for="marriage_anniversary" :value="__('Marriage Anniversary')" />
+                            <x-text-input id="marriage_anniversary" name="marriage_anniversary" type="date" class="mt-1 block w-full" :value="old('marriage_anniversary', $client->marriage_anniversary)" />
+                            <x-input-error class="mt-2" :messages="$errors->get('marriage_anniversary')" />
+                        </div>
+
+                        <div>
                             <x-input-label for="gender" :value="__('Gender')" />
                             <select id="gender" name="gender" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                 <option value="">Select Gender</option>

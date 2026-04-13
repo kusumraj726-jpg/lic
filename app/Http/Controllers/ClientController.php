@@ -40,6 +40,7 @@ class ClientController extends Controller
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:Male,Female,Other',
             'phone' => 'nullable|digits:10',
+            'marriage_anniversary' => 'nullable|date',
             'address' => 'nullable|string',
         ]);
 
@@ -66,6 +67,7 @@ class ClientController extends Controller
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:Male,Female,Other',
             'phone' => 'nullable|digits:10',
+            'marriage_anniversary' => 'nullable|date',
             'address' => 'nullable|string',
         ]);
 

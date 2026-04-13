@@ -11,7 +11,7 @@ use App\Traits\BelongsToTenant;
 class Client extends Model
 {
     use HasFactory, SoftDeletes, BelongsToTenant;
-    protected $fillable = ['user_id', 'name', 'email', 'dob', 'gender', 'phone', 'address'];
+    protected $fillable = ['user_id', 'name', 'email', 'dob', 'gender', 'phone', 'address', 'marriage_anniversary'];
 
     public function user()
     {
