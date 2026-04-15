@@ -2,72 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Query;
 use App\Models\Claim;
 use App\Models\Renewal;
-use Illuminate\Http\Request;
+use App\Models\Staff;
 
 class TrashController extends Controller
 {
+    protected $modelMap = [
+        'client' => Client::class,
+        'query' => Query::class,
+        'claim' => Claim::class,
+        'renewal' => Renewal::class,
+        'staff' => Staff::class,
+    ];
+
     public function index()
     {
         $user = auth()->user();
-        $search = request('search');
-        
-        $clients = $user->clients()->onlyTrashed();
-        $queries = $user->queries()->onlyTrashed();
-        $claims = $user->claims()->onlyTrashed();
-        $renewals = $user->renewals()->onlyTrashed();
-        $staff = $user->staff()->onlyTrashed();
+        $context = $user->context();
 
-        if ($search) {
-            $clients->where('name', 'like', "%$search%");
-            $queries->where('subject', 'like', "%$search%");
-            $claims->where('policy_number', 'like', "%$search%");
-            $renewals->where('policy_number', 'like', "%$search%");
-            $staff->where('name', 'like', "%$search%");
-        }
+        $deletedClients = $context->clients()->onlyTrashed()->get();
+        $deletedQueries = $context->queries()->onlyTrashed()->get();
+        $deletedClaims = $context->claims()->onlyTrashed()->get();
+        $deletedRenewals = $context->renewals()->onlyTrashed()->get();
+        $deletedStaff = Staff::where('advisor_id', $context->id)->onlyTrashed()->get();
 
-        $trashed = [
-            'clients' => $clients->get(),
-            'queries' => $queries->get(),
-            'claims' => $claims->get(),
-            'renewals' => $renewals->get(),
-            'staff' => $staff->get(),
-        ];
-
-        return view('trash.index', compact('trashed'));
+        return view('trash.index', compact(
+            'deletedClients',
+            'deletedQueries',
+            'deletedClaims',
+            'deletedRenewals',
+            'deletedStaff'
+        ));
     }
 
     public function restore($type, $id)
     {
-        $model = $this->getModel($type, $id, true);
-        $model->restore();
+        $modelClass = $this->modelMap[$type] ?? null;
+        if (!$modelClass) abort(404);
 
-        return back()->with('success', ucfirst($type) . ' record restored successfully.');
+        $context = auth()->user()->context();
+
+        $fkColumn = ($type === 'staff') ? 'advisor_id' : 'user_id';
+
+        $item = $modelClass::onlyTrashed()
+            ->where($fkColumn, $context->id)
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $item->restore();
+
+        return redirect()->back()->with('success', ucfirst($type) . ' restored successfully.');
     }
 
     public function forceDelete($type, $id)
     {
-        $model = $this->getModel($type, $id, true);
-        $model->forceDelete();
+        $modelClass = $this->modelMap[$type] ?? null;
+        if (!$modelClass) abort(404);
 
-        return back()->with('success', ucfirst($type) . ' record permanently purged.');
-    }
+        $context = auth()->user()->context();
 
-    protected function getModel($type, $id, $trashed = false)
-    {
-        $user = auth()->user();
-        $query = match($type) {
-            'clients' => $user->clients(),
-            'queries' => $user->queries(),
-            'claims' => $user->claims(),
-            'renewals' => $user->renewals(),
-            'staff' => $user->staff(),
-            default => abort(404),
-        };
+        $fkColumn = ($type === 'staff') ? 'advisor_id' : 'user_id';
 
-        return $trashed ? $query->onlyTrashed()->findOrFail($id) : $query->findOrFail($id);
+        $item = $modelClass::onlyTrashed()
+            ->where($fkColumn, $context->id)
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $item->forceDelete();
+
+        return redirect()->back()->with('success', ucfirst($type) . ' permanently deleted.');
     }
 }

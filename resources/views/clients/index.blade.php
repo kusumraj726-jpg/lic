@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-900 uppercase tracking-tight">
+        <h2 class="font-extrabold text-2xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
             {{ __('Manage Clients') }}
         </h2>
     </x-slot>
@@ -17,7 +17,8 @@
             address: '',
             dob: '',
             gender: '',
-            marriage_anniversary: ''
+            marriage_anniversary: '',
+            photo: ''
         },
         openView(c) {
             this.client = c;
@@ -60,16 +61,27 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Client Directory</h2>
-                    <p class="text-gray-500 mt-1">Manage your policyholders and their contact information.</p>
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100">Client Directory</h2>
+                    <p class="text-gray-500 mt-1 dark:text-slate-400">Manage your policyholders and their contact
+                        information.</p>
                 </div>
                 <div class="flex items-center gap-4">
                     <form action="{{ route('clients.index') }}" method="GET" class="relative group">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search clients..." class="pl-10 pr-4 py-2.5 rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all">
-                        <svg class="h-5 w-5 absolute left-3 top-3 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search clients..."
+                            class="search-input pl-11 pr-4 py-2.5 rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                     </form>
-                    <a href="{{ route('clients.create') }}" class="premium-btn premium-btn-primary flex items-center gap-2 shadow-lg shadow-indigo-100">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    <a href="{{ route('clients.create') }}"
+                        class="premium-btn premium-btn-primary flex items-center gap-2">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
                         Add New Client
                     </a>
                 </div>
@@ -82,73 +94,128 @@
                             <tr>
                                 <th>Client Name</th>
                                 <th>Contact Details</th>
+                                <th>DOB / Gender</th>
+                                <th>Anniversary</th>
                                 <th>Address</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($clients as $client)
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="h-10 w-10 flex-shrink-0 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
-                                                {{ substr($client->name, 0, 1) }}
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-bold text-gray-900">{{ $client->name }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900 font-medium">{{ $client->email }}</div>
-                                        <div class="text-xs text-gray-500 mt-0.5">{{ $client->phone }}</div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm text-gray-600 italic">"{{ Str::limit($client->address, 30) }}"</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-sm font-bold uppercase tracking-wider">
-                                            <button @click='openView({{ json_encode([
-                                                "id" => $client->id,
-                                                "name" => $client->name,
-                                                "email" => $client->email,
-                                                "phone" => $client->phone,
-                                                "address" => $client->address,
-                                                "dob" => $client->dob,
-                                                "gender" => $client->gender,
-                                                "marriage_anniversary" => $client->marriage_anniversary
-                                            ], JSON_HEX_APOS | JSON_HEX_QUOT) }})' class="text-indigo-600 hover:text-indigo-900 flex items-center gap-1 group transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                                View
-                                            </button>
-                                            <button @click='openEdit({{ json_encode([
-                                                "id" => $client->id,
-                                                "name" => $client->name,
-                                                "email" => $client->email,
-                                                "phone" => $client->phone,
-                                                "address" => $client->address,
-                                                "dob" => $client->dob,
-                                                "gender" => $client->gender,
-                                                "marriage_anniversary" => $client->marriage_anniversary
-                                            ], JSON_HEX_APOS | JSON_HEX_QUOT) }})' class="text-amber-600 hover:text-amber-900 flex items-center gap-1 group transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('clients.destroy', $client) }}" method="POST" class="inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="text-rose-600 hover:text-rose-900 flex items-center gap-1 group" onclick="return confirm('Archive this client?')">
-                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                        <tr class="hover:bg-slate-50 transition-colors dark:hover:bg-slate-800/50">
+                                                            <td class="px-6 py-4">
+                                                                <div class="flex items-center">
+                                                                    @if($client->photo)
+                                                                        <img class="h-10 w-10 rounded-full object-cover border-2 border-slate-100 shadow-sm"
+                                                                            src="{{ Storage::url($client->photo) }}" alt="">
+                                                                    @else
+                                                                        <div
+                                                                            class="h-10 w-10 flex-shrink-0 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold overflow-hidden">
+                                                                            {{ substr($client->name, 0, 1) }}
+                                                                        </div>
+                                                                    @endif
+                                                                    <div class="ml-4">
+                                                                        <div class="text-sm font-bold text-gray-900 dark:text-gray-100">
+                                                                            {{ $client->name }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                <div class="text-sm text-gray-900 font-medium dark:text-gray-100">
+                                                                    {{ $client->email ?: '—' }}</div>
+                                                                <div class="text-xs text-gray-500 mt-0.5 dark:text-slate-400">
+                                                                    {{ $client->phone ?: '—' }}</div>
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                <div class="text-sm text-gray-700 dark:text-slate-300">
+                                                                    {{ $client->dob ? \Carbon\Carbon::parse($client->dob)->format('d M Y') : '—' }}
+                                                                </div>
+                                                                @if($client->gender)
+                                                                    <span
+                                                                        class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold mt-1 {{ $client->gender === 'Male' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : ($client->gender === 'Female' ? 'bg-pink-100 text-pink-700 dark:bg-pink-900/50 dark:text-pink-300' : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300') }}">
+                                                                        {{ $client->gender }}
+                                                                    </span>
+                                                                @else
+                                                                    <span class="text-xs text-gray-400">—</span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                <div class="text-sm text-gray-700 dark:text-slate-300">
+                                                                    {{ $client->marriage_anniversary ? \Carbon\Carbon::parse($client->marriage_anniversary)->format('d M Y') : '—' }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-4">
+                                                                <span
+                                                                    class="text-sm text-slate-600 italic dark:text-slate-300">{{ $client->address ? Str::limit($client->address, 25) : '—' }}</span>
+                                                            </td>
+                                                            <td class="px-6 py-4 text-right">
+                                                                <div
+                                                                    class="flex items-center justify-end gap-3 text-sm font-bold uppercase tracking-wider">
+                                                                    <button @click='openView({{ json_encode([
+                                    "id" => $client->id,
+                                    "name" => $client->name,
+                                    "email" => $client->email,
+                                    "phone" => $client->phone,
+                                    "address" => $client->address,
+                                    "dob" => $client->dob,
+                                    "gender" => $client->gender,
+                                    "marriage_anniversary" => $client->marriage_anniversary,
+                                    "photo" => $client->photo ? Storage::url($client->photo) : null
+                                ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
+                                                                        class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 flex items-center gap-1 group transition-transform hover:scale-105">
+                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                                        </svg>
+                                                                        View
+                                                                    </button>
+                                                                    <button @click='openEdit({{ json_encode([
+                                    "id" => $client->id,
+                                    "name" => $client->name,
+                                    "email" => $client->email,
+                                    "phone" => $client->phone,
+                                    "address" => $client->address,
+                                    "dob" => $client->dob,
+                                    "gender" => $client->gender,
+                                    "marriage_anniversary" => $client->marriage_anniversary,
+                                    "photo" => $client->photo ? Storage::url($client->photo) : null
+                                ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
+                                                                        class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1 group transition-transform hover:scale-105">
+                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                                        </svg>
+                                                                        Edit
+                                                                    </button>
+                                                                    <form action="{{ route('clients.destroy', $client) }}" method="POST"
+                                                                        class="inline">
+                                                                        @csrf @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 flex items-center gap-1 group"
+                                                                            onclick="return confirm('Archive this client?')">
+                                                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                                                                stroke="currentColor">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                            </svg>
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                                    <td colspan="6" class="px-6 py-12 text-center text-gray-500 dark:text-slate-400">
                                         <div class="flex flex-col items-center">
-                                            <svg class="h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                            <svg class="h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                            </svg>
                                             <p>No clients found. Start by adding one!</p>
                                         </div>
                                     </td>
@@ -158,7 +225,7 @@
                     </table>
                 </div>
                 @if($clients->hasPages())
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 dark:bg-slate-800/50">
                         {{ $clients->links() }}
                     </div>
                 @endif
@@ -168,89 +235,153 @@
         <!-- Inline Modal Container -->
         <div x-show="openModal" class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
             <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div x-show="openModal" 
-                     x-transition:enter="ease-out duration-300" 
-                     x-transition:enter-start="opacity-0" 
-                     x-transition:enter-end="opacity-100" 
-                     x-transition:leave="ease-in duration-200" 
-                     x-transition:leave-start="opacity-100" 
-                     x-transition:leave-end="opacity-0" 
-                     class="fixed inset-0 transition-opacity" 
-                     @click="openModal = false">
+                <div x-show="openModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 transition-opacity" @click="openModal = false">
                     <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
                 </div>
 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
-                <div x-show="openModal" 
-                     x-transition:enter="ease-out duration-300" 
-                     x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" 
-                     x-transition:leave="ease-in duration-200" 
-                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
-                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-                     class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-slate-100">
-                    
+                <div x-show="openModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-slate-100">
+
                     <div class="px-6 py-4 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
-                        <h3 class="text-lg font-black text-slate-800" x-text="mode === 'view' ? 'Client Details' : 'Edit Client Profile'"></h3>
+                        <h3 class="text-lg font-black text-slate-800 dark:text-slate-200"
+                            x-text="mode === 'view' ? 'Client Details' : 'Edit Client Profile'"></h3>
                         <button @click="openModal = false" class="text-slate-400 hover:text-slate-600">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
                         </button>
                     </div>
 
-                    <form :action="`/clients/${client.id}`" method="POST" x-ref="editForm" @submit.prevent="submitForm">
+                    <form :action="`/clients/${client.id}`" method="POST" x-ref="editForm" @submit.prevent="submitForm"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        
+
                         <div class="p-6 space-y-6">
+                            <!-- Photo Section in Modal -->
+                            <div
+                                class="flex items-center gap-6 bg-slate-50 p-4 rounded-2xl border border-slate-100 dark:bg-slate-800/50">
+                                <div class="relative group">
+                                    <div
+                                        class="h-20 w-20 rounded-2xl bg-white p-1 shadow-sm overflow-hidden border border-slate-100">
+                                        <div id="modal-photo-preview"
+                                            class="h-full w-full flex items-center justify-center bg-slate-50 text-slate-300 dark:bg-slate-800/50">
+                                            <template x-if="client.photo">
+                                                <img :src="client.photo" class="h-full w-full object-cover">
+                                            </template>
+                                            <template x-if="!client.photo">
+                                                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <template x-if="mode === 'edit'">
+                                        <label for="modal-photo"
+                                            class="absolute -bottom-1 -right-1 h-7 w-7 bg-white shadow-lg rounded-lg flex items-center justify-center text-slate-600 hover:text-indigo-600 cursor-pointer border border-slate-100 transition-transform hover:scale-110 dark:text-slate-300">
+                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            <input type="file" id="modal-photo" name="photo"
+                                                class="hidden dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
+                                                accept="image/*" @change="
+                                                const file = $event.target.files[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = (e) => { client.photo = e.target.result; };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            ">
+                                        </label>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Profile
+                                        Photo</h4>
+                                    <p class="text-[10px] text-slate-500 font-medium dark:text-slate-400"
+                                        x-text="mode === 'view' ? 'Current client identification' : 'Upload or change photo'">
+                                    </p>
+                                </div>
+                            </div>
+
                             <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Full Name</label>
                                 <template x-if="mode === 'view'">
-                                    <div class="p-3 bg-slate-50 rounded-xl text-slate-700 font-bold" x-text="client.name"></div>
+                                    <div class="p-3 bg-slate-50 rounded-xl text-slate-700 font-bold dark:bg-slate-800/50"
+                                        x-text="client.name"></div>
                                 </template>
                                 <template x-if="mode === 'edit'">
-                                    <input type="text" name="name" x-model="client.name" class="w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm font-bold">
+                                    <input type="text" name="name" x-model="client.name"
+                                        class="w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                 </template>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Email Address</label>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Email
+                                        Address</label>
                                     <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.email"></div>
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
+                                            x-text="client.email"></div>
                                     </template>
                                     <template x-if="mode === 'edit'">
-                                        <input type="email" name="email" x-model="client.email" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                        <input type="email" name="email" x-model="client.email"
+                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                     </template>
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Phone Number</label>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Phone
+                                        Number</label>
                                     <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.phone"></div>
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
+                                            x-text="client.phone"></div>
                                     </template>
                                     <template x-if="mode === 'edit'">
-                                        <input type="text" name="phone" x-model="client.phone" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                        <input type="text" name="phone" x-model="client.phone"
+                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                     </template>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Date of Birth</label>
+                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Date of
+                                        Birth</label>
                                     <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.dob || 'N/A'"></div>
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
+                                            x-text="client.dob || 'N/A'"></div>
                                     </template>
                                     <template x-if="mode === 'edit'">
-                                        <input type="date" name="dob" x-model="client.dob" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                        <input type="date" name="dob" x-model="client.dob"
+                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                     </template>
                                 </div>
                                 <div>
                                     <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Gender</label>
                                     <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.gender || 'N/A'"></div>
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
+                                            x-text="client.gender || 'N/A'"></div>
                                     </template>
                                     <template x-if="mode === 'edit'">
-                                        <select name="gender" x-model="client.gender" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                        <select name="gender" x-model="client.gender"
+                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                             <option value="">Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -259,42 +390,59 @@
                                     </template>
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Anniversary</label>
+                                    <label
+                                        class="text-xs font-bold text-slate-400 uppercase mb-1 block">Anniversary</label>
                                     <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600" x-text="client.marriage_anniversary || 'N/A'"></div>
+                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
+                                            x-text="client.marriage_anniversary || 'N/A'"></div>
                                     </template>
                                     <template x-if="mode === 'edit'">
-                                        <input type="date" name="marriage_anniversary" x-model="client.marriage_anniversary" class="w-full rounded-xl border-slate-200 focus:border-indigo-500">
+                                        <input type="date" name="marriage_anniversary"
+                                            x-model="client.marriage_anniversary"
+                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                     </template>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Primary Address</label>
+                                <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Primary
+                                    Address</label>
                                 <template x-if="mode === 'view'">
-                                    <div class="p-4 bg-slate-50 rounded-xl text-slate-600 italic" x-text="client.address"></div>
+                                    <div class="p-4 bg-slate-50 rounded-xl text-slate-600 italic dark:text-slate-300 dark:bg-slate-800/50"
+                                        x-text="client.address"></div>
                                 </template>
                                 <template x-if="mode === 'edit'">
-                                    <textarea name="address" x-model="client.address" rows="3" class="w-full rounded-xl border-slate-200 focus:border-indigo-500"></textarea>
+                                    <textarea name="address" x-model="client.address" rows="3"
+                                        class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"></textarea>
                                 </template>
                             </div>
                         </div>
 
                         <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex justify-end gap-3">
-                            <button type="button" @click="openModal = false" class="text-sm font-bold text-slate-400 px-4 py-2">Cancel</button>
+                            <button type="button" @click="openModal = false"
+                                class="text-sm font-bold text-slate-400 px-4 py-2">Cancel</button>
                             <template x-if="mode === 'view'">
-                                <button type="button" @click="mode = 'edit'" class="premium-btn premium-btn-primary !px-8 flex items-center gap-2">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                <button type="button" @click="mode = 'edit'"
+                                    class="premium-btn premium-btn-primary !px-8 flex items-center gap-2">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
                                     Edit Profile
                                 </button>
                             </template>
                             <template x-if="mode === 'edit'">
-                                <button type="submit" 
-                                        :disabled="submitting"
-                                        class="premium-btn premium-btn-primary !px-8 shadow-indigo-100 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                                <button type="submit" :disabled="submitting"
+                                    class="premium-btn premium-btn-primary !px-8 disabled:opacity-50 disabled:cursor-not-allowed">
                                     <span x-show="!submitting">Save Changes</span>
                                     <span x-show="submitting" class="flex items-center gap-2">
-                                        <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                        <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="4" fill="none"></circle>
+                                            <path class="opacity-75" fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                            </path>
+                                        </svg>
                                         Saving...
                                     </span>
                                 </button>

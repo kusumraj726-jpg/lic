@@ -32,7 +32,7 @@ class ProfileController extends Controller
 
         if ($request->hasFile('avatar')) {
             // Check config directly for S3 credentials
-            $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
             
             // Delete old avatar if exists
             if ($user->avatar) {

@@ -35,10 +35,10 @@
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     Step 1: Pay
                 </span>
-                <span class="text-slate-600">→</span>
-                <span class="text-slate-500">Step 2: Register</span>
-                <span class="text-slate-600">→</span>
-                <span class="text-slate-500">Step 3: Login & Use</span>
+                <span class="text-slate-600 dark:text-slate-300">→</span>
+                <span class="text-slate-500 dark:text-slate-400">Step 2: Register</span>
+                <span class="text-slate-600 dark:text-slate-300">→</span>
+                <span class="text-slate-500 dark:text-slate-400">Step 3: Login & Use</span>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
                     <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6 border-b border-white/5 pb-2">2 Months Access</p>
                     <div class="flex items-baseline gap-1 mb-8 border-b border-slate-800 pb-6">
                         <span class="text-5xl font-extrabold text-white">₹99</span>
-                        <span class="text-slate-500 text-sm font-bold uppercase tracking-widest">/once</span>
+                        <span class="text-slate-500 text-sm font-bold uppercase tracking-widest dark:text-slate-400">/once</span>
                     </div>
                     <ul class="space-y-4 mb-8">
                         <li class="flex items-center gap-3 text-sm text-slate-300 font-bold">
@@ -77,8 +77,8 @@
                             <span class="bg-emerald-500/20 p-1 rounded"><svg class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></span>
                             Upgrade Anytime
                         </li>
-                        <li class="flex items-start gap-3 text-xs text-slate-500 font-medium mt-2">
-                            <svg class="h-4 w-4 text-slate-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <li class="flex items-start gap-3 text-xs text-slate-500 font-medium mt-2 dark:text-slate-400">
+                            <svg class="h-4 w-4 text-slate-600 mt-0.5 shrink-0 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             One-time per account. Access auto-expires after 60 days.
                         </li>
                     </ul>
@@ -96,7 +96,7 @@
                     <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6 border-b border-white/5 pb-2">Monthly Plan</p>
                     <div class="flex items-baseline gap-1 mb-8 border-b border-slate-800 pb-6">
                         <span class="text-5xl font-extrabold text-white">₹999</span>
-                        <span class="text-slate-500 text-sm font-bold uppercase tracking-widest">/mo</span>
+                        <span class="text-slate-500 text-sm font-bold uppercase tracking-widest dark:text-slate-400">/mo</span>
                     </div>
                     <ul class="space-y-4 mb-8">
                         <li class="flex items-center gap-3 text-sm text-slate-300 font-bold">
@@ -120,7 +120,7 @@
             </div>
 
             <!-- Yearly Plan -->
-            <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 relative flex flex-col justify-between shadow-2xl shadow-indigo-900/50">
+            <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 relative flex flex-col justify-between shadow-2xl">
                 <div class="absolute -top-4 inset-x-0 mx-auto w-max bg-amber-500 text-amber-950 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
                     Best Value — 2 Months Free
                 </div>
@@ -154,7 +154,7 @@
 
         </div>
 
-        <p class="mt-12 text-slate-500 text-sm text-center">
+        <p class="mt-12 text-slate-500 text-sm text-center dark:text-slate-400">
             Already have an account?
             <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-bold underline transition-colors">Sign In</a>
         </p>

@@ -10,8 +10,8 @@ use App\Traits\BelongsToTenant;
 
 class Client extends Model
 {
-    use HasFactory, SoftDeletes, BelongsToTenant;
-    protected $fillable = ['user_id', 'name', 'email', 'dob', 'gender', 'phone', 'address', 'marriage_anniversary'];
+    use HasFactory, SoftDeletes, BelongsToTenant, \App\Traits\LogsActivity;
+    protected $fillable = ['user_id', 'name', 'email', 'dob', 'gender', 'phone', 'address', 'marriage_anniversary', 'photo'];
 
     public function user()
     {
@@ -31,5 +31,10 @@ class Client extends Model
     public function renewals()
     {
         return $this->hasMany(Renewal::class);
+    }
+
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class);
     }
 }

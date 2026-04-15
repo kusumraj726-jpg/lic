@@ -32,6 +32,9 @@ class User extends Authenticatable
         'subscription_status',
         'subscription_plan',
         'subscription_ends_at',
+        'birthday_template',
+        'anniversary_template',
+        'commission_rates',
     ];
 
     /**
@@ -55,6 +58,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'subscription_ends_at' => 'datetime',
+            'commission_rates' => 'array',
         ];
     }
 
@@ -91,6 +95,11 @@ class User extends Authenticatable
     public function staff()
     {
         return $this->hasMany(Staff::class, 'advisor_id');
+    }
+
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class);
     }
 
     public function linkedStaffProfile()
@@ -134,5 +143,38 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    /**
+     * Get the URL for the user's avatar.
+     */
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (!$this->avatar) {
+            return null;
+        }
+
+        $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+        
+        return $disk === 's3' 
+            ? \Illuminate\Support\Facades\Storage::disk($disk)->temporaryUrl($this->avatar, now()->addMinutes(60))
+            : \Illuminate\Support\Facades\Storage::disk($disk)->url($this->avatar);
+    }
+
+    /**
+     * Get the URL for the workplace logo.
+     */
+    public function getLogoUrlAttribute(): ?string
+    {
+        $context = $this->context();
+        if (!$context || !$context->brand_logo) {
+            return null;
+        }
+
+        $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+        
+        return $disk === 's3' 
+            ? \Illuminate\Support\Facades\Storage::disk($disk)->temporaryUrl($context->brand_logo, now()->addMinutes(60))
+            : \Illuminate\Support\Facades\Storage::disk($disk)->url($context->brand_logo);
     }
 }

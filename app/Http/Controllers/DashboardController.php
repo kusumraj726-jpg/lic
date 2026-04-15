@@ -40,6 +40,9 @@ class DashboardController extends Controller
             ),
             
             'upcoming_renewals' => $context->renewals()->where('status', 'pending')->whereDate('expiry_date', '>=', $now)->count(),
+            
+            'total_expected_comm' => $context->commissions()->where('status', 'pending')->sum('expected_amount'),
+            'received_comm_month' => $context->commissions()->where('status', 'received')->whereMonth('received_at', $now->month)->sum('received_amount'),
         ];
 
         // 2. Executive Insights (Premium Intelligence)
@@ -77,22 +80,33 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Add Birthdays and Anniversaries to Velora Intelligence
+        // Add Birthdays to Velora Intelligence
         $today_birthdays = collect();
-        
         $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name));
         $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($s) => $today_birthdays->push($s->name));
         if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
             $today_birthdays->push("You (Admin)");
         }
-        $context->clients()->whereMonth('marriage_anniversary', $now->month)->whereDay('marriage_anniversary', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name . " (Anniv.)"));
 
         if ($today_birthdays->count() > 0) {
             $executive_briefs->push([
-                'title' => 'Celebration Milestone',
-                'message' => "It's " . $today_birthdays->implode(', ') . "'s special day! Reach out to celebrate.",
+                'title' => 'Birthday',
+                'message' => "Today is " . $today_birthdays->implode(', ') . "'s birthday! Send a gift or greeting.",
                 'type' => 'brand',
                 'id' => 'brief_birthdays'
+            ]);
+        }
+
+        // Add Anniversaries to Velora Intelligence
+        $today_anniversaries = collect();
+        $context->clients()->whereMonth('marriage_anniversary', $now->month)->whereDay('marriage_anniversary', $now->day)->get()->each(fn($c) => $today_anniversaries->push($c->name));
+
+        if ($today_anniversaries->count() > 0) {
+            $executive_briefs->push([
+                'title' => 'Anniversary',
+                'message' => "Today is " . $today_anniversaries->implode(', ') . "'s anniversary! Send a flower or greeting.",
+                'type' => 'brand',
+                'id' => 'brief_anniversaries'
             ]);
         }
 
@@ -109,6 +123,32 @@ class DashboardController extends Controller
             'claims' => collect(range(5, 0))->map(function ($i) use ($context, $now) {
                 return $context->claims()->whereMonth('created_at', $now->copy()->subMonths($i)->month)->count();
             }),
+        ];
+
+        // 3. Financial Forecast (Next 12 Months)
+        $forecastMonths = collect(range(0, 11))->map(function ($i) use ($now) {
+            return $now->copy()->addMonths($i)->format('M y');
+        });
+
+        $rates = $context->commission_rates ?? ['default' => 15];
+        $forecastData = collect(range(0, 11))->map(function ($i) use ($context, $now, $rates) {
+            $monthStart = $now->copy()->addMonths($i)->startOfMonth();
+            $monthEnd = $now->copy()->addMonths($i)->endOfMonth();
+            
+            $renewals = $context->renewals()
+                ->whereBetween('expiry_date', [$monthStart, $monthEnd])
+                ->get();
+            
+            return $renewals->sum(function($r) use ($rates) {
+                $type = strtolower($r->policy_type);
+                $rate = $rates[$type] ?? ($rates['default'] ?? 15);
+                return ($r->premium_amount * $rate) / 100;
+            });
+        });
+
+        $revenueForecast = [
+            'labels' => $forecastMonths,
+            'data' => $forecastData
         ];
 
 
@@ -146,7 +186,8 @@ class DashboardController extends Controller
                 'day' => (int)$dob->day,
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
-                'title' => "{$client->name}'s Birthday",
+                'title' => 'Birthday',
+                'message' => "Today is {$client->name}'s birthday! Send a gift or greeting.",
                 'color' => 'indigo',
                 'name' => $client->name,
                 'phone' => $client->phone
@@ -160,7 +201,8 @@ class DashboardController extends Controller
                 'day' => (int)$ann->day,
                 'month' => (int)$ann->month,
                 'type' => 'anniversary',
-                'title' => "{$client->name}'s Anniversary",
+                'title' => 'Anniversary Milestone',
+                'message' => "Today is {$client->name}'s marriage anniversary! Send a flower or greeting.",
                 'color' => 'pink',
                 'name' => $client->name,
                 'phone' => $client->phone
@@ -174,7 +216,8 @@ class DashboardController extends Controller
                 'day' => (int)$dob->day,
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
-                'title' => "Staff Birthday: {$staff->name}",
+                'title' => 'Staff Birthday',
+                'message' => "{$staff->name} celebrates their birthday today!",
                 'color' => 'indigo',
                 'name' => $staff->name,
                 'phone' => $staff->phone
@@ -188,7 +231,8 @@ class DashboardController extends Controller
                 'day' => (int)$dob->day,
                 'month' => (int)$dob->month,
                 'type' => 'birthday',
-                'title' => "Team Birthday: {$context->name}",
+                'title' => 'Personal Milestone',
+                'message' => 'Happy Birthday! Wishing you a great day.',
                 'color' => 'indigo',
                 'name' => $context->name,
                 'phone' => $context->phone
@@ -233,7 +277,28 @@ class DashboardController extends Controller
             ->take(3)
             ->get();
 
-        return view('dashboard', compact('stats', 'chartData', 'urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'executive_briefs'));
+        $user = auth()->user();
+        $birthday_template = $user->birthday_template ?? "Happy Birthday, [NAME]! 🎂 Wishing you a year filled with happiness and success. - Best regards, " . ($user->company_name ?? $user->name);
+        $anniversary_template = $user->anniversary_template ?? "Happy Anniversary, [NAME]! 🥂 Wishing you many more years of love and togetherness. - Regards, " . ($user->company_name ?? $user->name);
+
+        return view('dashboard', compact('stats', 'chartData', 'urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'executive_briefs', 'birthday_template', 'anniversary_template', 'revenueForecast'));
+    }
+
+    public function updateTemplate(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:birthday,anniversary',
+            'template' => 'required|string'
+        ]);
+
+        $user = auth()->user();
+        if ($request->type === 'birthday') {
+            $user->update(['birthday_template' => $request->template]);
+        } else {
+            $user->update(['anniversary_template' => $request->template]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Template updated successfully!']);
     }
 
     private function calculateTrend($current, $previous)

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-900 uppercase tracking-tight">
+        <h2 class="font-extrabold text-2xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
             {{ __('Edit Query') }}: #{{ $query->id }}
         </h2>
     </x-slot>
@@ -66,7 +66,7 @@
                             <button type="submit" class="premium-btn premium-btn-primary">
                                 {{ __('Update Query') }}
                             </button>
-                            <a href="{{ route('queries.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Cancel</a>
+                            <a href="{{ route('queries.index') }}" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300">Cancel</a>
                         </div>
                     </form>
                 </div>

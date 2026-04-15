@@ -2,15 +2,15 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <a href="{{ route('dashboard') }}" class="p-2 rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition-all">
+                <a href="{{ route('dashboard') }}" class="p-2 rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition-all dark:text-slate-400 dark:bg-slate-800">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 </a>
-                <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight">
+                <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight dark:text-slate-200">
                     {{ __('Query Details') }}
                 </h2>
             </div>
             <div class="flex gap-3">
-                <a href="{{ route('queries.edit', $query->id) }}" class="px-6 py-2.5 rounded-2xl bg-indigo-600 text-white text-xs font-black uppercase tracking-widest hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all">
+                <a href="{{ route('queries.edit', $query->id) }}" class="px-6 py-2.5 rounded-2xl bg-indigo-600 text-white text-xs font-black uppercase tracking-widest hover:bg-indigo-700 transition-all">
                     Edit Query
                 </a>
             </div>
@@ -33,8 +33,7 @@
                             <div class="flex gap-4">
                                 <div class="px-6 py-4 rounded-[2rem] bg-white/10 backdrop-blur-md border border-white/20">
                                     <p class="text-[10px] font-black uppercase tracking-[0.2em] opacity-70 mb-1 text-center">Priority</p>
-                                    <div class="text-lg font-black uppercase tracking-widest text-center
-                                        @if($query->priority == 'high') text-rose-400 @elseif($query->priority == 'medium') text-amber-400 @else text-emerald-400 @endif">
+                                    <div class="text-lg font-black uppercase tracking-widest text-center @if($query->priority == 'high') text-rose-400 @elseif($query->priority == 'medium') text-amber-400 @else text-emerald-400 @endif">
                                         {{ $query->priority }}
                                     </div>
                                 </div>
@@ -51,7 +50,7 @@
                     <!-- Description Card -->
                     <div class="premium-card bg-white border-none shadow-xl">
                         <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Full Query Description</h4>
-                        <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-100 text-slate-700 leading-relaxed text-sm shadow-inner group transition-all hover:bg-white hover:shadow-md">
+                        <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-100 text-slate-700 leading-relaxed text-sm shadow-inner group transition-all hover:bg-white hover:shadow-md dark:bg-slate-800/50">
                             {{ $query->description }}
                         </div>
                     </div>
@@ -75,7 +74,7 @@
                             </a>
                         </div>
                         @else
-                        <div class="text-center py-10 rounded-3xl border-2 border-dashed border-slate-100 bg-slate-50">
+                        <div class="text-center py-10 rounded-3xl border-2 border-dashed border-slate-100 bg-slate-50 dark:bg-slate-800/50">
                             <svg class="h-10 w-10 text-slate-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
                             <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">No Documents Attached</p>
                         </div>
@@ -93,12 +92,12 @@
                                 {{ substr($query->client->name ?? '?', 0, 1) }}
                             </div>
                             <div>
-                                <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight">{{ $query->client->name ?? 'External System' }}</h4>
+                                <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">{{ $query->client->name ?? 'External System' }}</h4>
                                 <p class="text-xs font-bold text-slate-400">{{ $query->client->email ?? 'no-email-recorded' }}</p>
                             </div>
                         </div>
                         <div class="pt-6 border-t border-slate-50">
-                            <a href="{{ $query->client_id ? route('clients.show', $query->client_id) : '#' }}" class="flex items-center justify-center w-full py-3 rounded-xl bg-slate-50 text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] hover:bg-slate-900 hover:text-white transition-all">
+                            <a href="{{ $query->client_id ? route('clients.show', $query->client_id) : '#' }}" class="flex items-center justify-center w-full py-3 rounded-xl bg-slate-50 text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] hover:bg-slate-900 hover:text-white transition-all dark:text-slate-300 dark:bg-slate-800/50">
                                 View Full Profile
                             </a>
                         </div>

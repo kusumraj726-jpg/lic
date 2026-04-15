@@ -54,7 +54,24 @@ class RenewalController extends Controller
     {
         $context = auth()->user()->context();
         $clients = $context->clients()->get();
-        return view('renewals.create', compact('clients'));
+        
+        // Smarter Detection: Pull policy numbers from both Renewals and Claims
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('renewals.create', compact('clients', 'clientPolicies'));
     }
 
     public function store(Request $request)
@@ -67,11 +84,13 @@ class RenewalController extends Controller
             'policy_number' => 'required|string|max:255',
             'policy_type' => 'required|string|max:255',
             'premium_amount' => 'required|numeric|min:0',
+            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
             'expiry_date' => 'required|date',
             'status' => 'required|in:pending,renewed,lapsed',
         ]);
 
-        $context->renewals()->create($validated);
+        $renewal = $context->renewals()->create($validated);
+        $renewal->generateCommission();
         
         if ($request->ajax()) {
             return response()->json(['message' => 'Renewal created successfully.']);
@@ -85,7 +104,23 @@ class RenewalController extends Controller
         $context = auth()->user()->context();
         if ($renewal->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
-        return view('renewals.edit', compact('renewal', 'clients'));
+        
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('renewals.edit', compact('renewal', 'clients', 'clientPolicies'));
     }
 
     public function update(Request $request, Renewal $renewal)
@@ -98,11 +133,13 @@ class RenewalController extends Controller
             'policy_number' => 'required|string|max:255',
             'policy_type' => 'required|string|max:255',
             'premium_amount' => 'required|numeric|min:0',
+            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
             'expiry_date' => 'required|date',
             'status' => 'required|in:pending,renewed,lapsed',
         ]);
 
         $renewal->update($validated);
+        $renewal->generateCommission();
 
         if ($request->ajax()) {
             return response()->json(['message' => 'Renewal updated successfully.']);

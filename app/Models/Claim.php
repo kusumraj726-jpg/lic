@@ -10,8 +10,8 @@ use App\Traits\BelongsToTenant;
 
 class Claim extends Model
 {
-    use HasFactory, SoftDeletes, BelongsToTenant;
-    protected $fillable = ['user_id', 'client_id', 'policy_number', 'policy_type', 'claim_amount', 'incident_date', 'status', 'description'];
+    use HasFactory, SoftDeletes, BelongsToTenant, \App\Traits\LogsActivity;
+    protected $fillable = ['user_id', 'client_id', 'policy_number', 'policy_type', 'claim_amount', 'custom_commission_rate', 'incident_date', 'status', 'description'];
     protected $casts = ['incident_date' => 'date'];
 
     public function user()

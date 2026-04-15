@@ -41,7 +41,24 @@ class ClaimController extends Controller
     {
         $context = auth()->user()->context();
         $clients = $context->clients()->get();
-        return view('claims.create', compact('clients'));
+        
+        // Smarter Detection: Pull policy numbers from both Renewals and Claims
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('claims.create', compact('clients', 'clientPolicies'));
     }
 
     public function store(Request $request)
@@ -57,6 +74,7 @@ class ClaimController extends Controller
             'incident_date' => 'required|date',
             'status' => 'required|in:submitted,pending,approved,rejected',
             'description' => 'nullable|string',
+            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $context->claims()->create($validated);
@@ -73,7 +91,23 @@ class ClaimController extends Controller
         $context = auth()->user()->context();
         if ($claim->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
-        return view('claims.edit', compact('claim', 'clients'));
+        
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('claims.edit', compact('claim', 'clients', 'clientPolicies'));
     }
 
     public function update(Request $request, Claim $claim)
@@ -89,6 +123,7 @@ class ClaimController extends Controller
             'incident_date' => 'required|date',
             'status' => 'required|in:submitted,pending,approved,rejected',
             'description' => 'nullable|string',
+            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $claim->update($validated);

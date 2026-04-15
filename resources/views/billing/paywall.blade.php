@@ -34,7 +34,7 @@
                 <p class="text-slate-400 text-sm font-medium uppercase tracking-widest mb-8 border-b border-white/5 pb-2">Billed Monthly</p>
                 <div class="flex items-baseline gap-1 mb-10 border-b border-slate-800 pb-8">
                     <span class="text-5xl font-extrabold text-white">₹999</span>
-                    <span class="text-slate-500 text-sm font-bold uppercase tracking-widest">/mo</span>
+                    <span class="text-slate-500 text-sm font-bold uppercase tracking-widest dark:text-slate-400">/mo</span>
                 </div>
                 <ul class="space-y-5 mb-10">
                     <li class="flex items-center gap-4 text-sm text-slate-300 font-bold">
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Yearly Plan (Recommended) -->
-        <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 lg:p-10 relative flex flex-col justify-between shadow-2xl shadow-indigo-900/50">
+        <div class="bg-gradient-to-b from-indigo-600 to-indigo-900 border border-indigo-500 rounded-[2rem] p-8 lg:p-10 relative flex flex-col justify-between shadow-2xl">
             <div class="absolute -top-4 inset-x-0 mx-auto w-max bg-amber-500 text-amber-950 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
                 Save 16% (2 Months Free)
             </div>
@@ -105,7 +105,7 @@
     </div>
 
     <!-- Actions -->
-    <div class="mt-12 text-center text-slate-500 text-sm">
+    <div class="mt-12 text-center text-slate-500 text-sm dark:text-slate-400">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="hover:text-white underline transition-colors">Log Out Instead</button>

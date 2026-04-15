@@ -1,26 +1,21 @@
-<aside class="glass-sidebar shadow-xl">
-    <div class="sidebar-header border-b border-gray-100/50 mb-4 pb-4 px-2">
+<aside class="glass-sidebar shadow-xl transition-colors duration-300">
+    <div class="sidebar-header border-b border-gray-100/50 dark:border-slate-700 mb-4 pb-4 px-2 transition-colors duration-300">
+        @php
+            $sidebarContext = auth()->user()->context();
+        @endphp
         <a href="{{ route('dashboard') }}" class="sidebar-logo flex items-center gap-3 py-2">
-            @php
-                $context = auth()->user()->context();
-                $brandLogo = $context->brand_logo;
-                if ($brandLogo) {
-                    $disk = config('filesystems.disks.s3.key') ? 's3' : config('filesystems.default');
-                    $logoUrl = Storage::disk($disk)->url($brandLogo);
-                }
-            @endphp
-
-            @if(isset($logoUrl))
-                <img src="{{ $logoUrl }}" alt="Logo" class="h-10 w-auto object-contain">
+            @if(Auth::user()->logo_url)
+                <img src="{{ Auth::user()->logo_url }}" alt="Logo" class="h-10 w-10 object-cover rounded-[0.5rem] shadow-sm bg-white">
             @else
-                <div class="h-10 w-10 rounded-xl bg-brand text-white flex items-center justify-center font-black text-xl shadow-lg shadow-indigo-100">
-                    {{ substr($context->company_name ?? 'V', 0, 1) }}
-                </div>
-                <div class="flex flex-col">
-                    <span class="tracking-tight text-xs font-black uppercase text-slate-900 group-hover:text-brand transition-colors">{{ $context->company_name ?? 'Velora ERP' }}</span>
-                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Command Center</span>
+                <div class="h-10 w-10 rounded-[0.5rem] bg-brand text-white flex shrink-0 items-center justify-center font-black text-xl shadow-lg">
+                    {{ substr($sidebarContext->company_name ?? 'V', 0, 1) }}
                 </div>
             @endif
+            
+            <div class="flex flex-col overflow-hidden">
+                <span class="tracking-tight text-[11px] font-black uppercase text-slate-900 dark:text-slate-100 group-hover:text-brand transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $sidebarContext->company_name ?? config('app.name', 'Velora ERP') }}</span>
+                <span class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Command Center</span>
+            </div>
         </a>
     </div>
 
@@ -77,6 +72,14 @@
                 </svg>
                 Renewals
             </a>
+
+            <a href="{{ route('commissions.index') }}" class="nav-item {{ request()->routeIs('commissions.*') ? 'active' : '' }}">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Commissions
+            </a>
         @endif
 
         @if($isAdvisor)
@@ -86,6 +89,14 @@
                         d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
                 Staff Management
+            </a>
+            
+            <a href="{{ route('trash.index') }}" class="nav-item {{ request()->routeIs('trash.*') ? 'active' : '' }}">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Trash Bin
             </a>
         @endif
 
@@ -103,7 +114,14 @@
         @endif
     </nav>
 
-    <div class="sidebar-footer mt-auto border-t border-gray-100 pt-4">
+    <div class="sidebar-footer mt-auto border-t border-gray-100 pt-4 px-2 space-y-1">
+        <a href="{{ route('settings.index') }}" class="nav-item {{ request()->routeIs('settings.*') ? 'active' : '' }} mb-2">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Settings
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"

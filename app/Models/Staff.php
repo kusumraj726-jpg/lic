@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\BelongsToTenant;
 
+use App\Traits\LogsActivity;
+
 class Staff extends Model
 {
-    use HasFactory, SoftDeletes, BelongsToTenant;
+    use HasFactory, SoftDeletes, BelongsToTenant, LogsActivity;
 
     protected $fillable = [
         'advisor_id',

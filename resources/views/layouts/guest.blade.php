@@ -45,21 +45,21 @@
                     <!-- Onboarding Progress Bar -->
                     <div class="mb-10 flex justify-center items-center gap-3 text-[9px] uppercase font-black tracking-widest transition-all animate-in fade-in slide-in-from-top-4 duration-700">
                         <div class="flex items-center gap-2 {{ $currentStep >= 1 ? 'text-emerald-400' : 'text-slate-600' }}">
-                            <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep > 1 ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]' }}">
+                            <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep > 1 ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-emerald-500 ' }}">
                                 {{ $currentStep > 1 ? '✓' : '1' }}
                             </span>
                             <span class="{{ $currentStep == 1 ? 'opacity-100' : 'opacity-60' }}">Pay</span>
                         </div>
                         <div class="w-6 h-[2px] rounded-full {{ $currentStep >= 2 ? 'bg-emerald-500' : 'bg-slate-800' }}"></div>
                         <div class="flex items-center gap-2 {{ $currentStep >= 2 ? 'text-indigo-400' : 'text-slate-600' }}">
-                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 2 ? 'border-indigo-400 shadow-[0_0_10px_rgba(129,140,248,0.4)]' : ($currentStep > 2 ? 'bg-indigo-400 border-indigo-400 text-slate-950' : 'border-slate-800') }}">
+                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 2 ? 'border-indigo-400 ' : ($currentStep > 2 ? 'bg-indigo-400 border-indigo-400 text-slate-950' : 'border-slate-800') }}">
                                 {{ $currentStep > 2 ? '✓' : '2' }}
                             </span>
                             <span class="{{ $currentStep == 2 ? 'opacity-100' : 'opacity-60' }}">Register</span>
                         </div>
                         <div class="w-6 h-[2px] rounded-full {{ $currentStep >= 3 ? 'bg-indigo-400' : 'bg-slate-800' }}"></div>
                         <div class="flex items-center gap-2 {{ $currentStep >= 3 ? 'text-indigo-400' : 'text-slate-600' }}">
-                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 3 ? 'border-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.45)]' : 'border-slate-800' }}">
+                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 3 ? 'border-indigo-400 ' : 'border-slate-800' }}">
                                 3
                             </span>
                             <span class="{{ $currentStep == 3 ? 'opacity-100' : 'opacity-60' }}">Login</span>
@@ -72,7 +72,7 @@
                 </div>
                 
                 <div class="mt-6 text-center">
-                    <p class="text-slate-500 text-xs font-medium uppercase tracking-widest">
+                    <p class="text-slate-500 text-xs font-medium uppercase tracking-widest dark:text-slate-400">
                         Official Enterprise Resource Planning Portal
                     </p>
                 </div>
@@ -109,13 +109,9 @@
              class="fixed top-8 right-8 z-[110] w-80"
              style="display: none;">
             
-            <div class="bg-slate-900 border rounded-3xl shadow-2xl p-5 flex items-start gap-4 border-slate-700 shadow-indigo-500/10">
+            <div class="bg-slate-900 border rounded-3xl shadow-2xl p-5 flex items-start gap-4 border-slate-700">
                 <div class="h-10 w-10 shrink-0 rounded-2xl flex items-center justify-center bg-slate-800"
-                     :class="{
-                        'text-emerald-400': type === 'success',
-                        'text-rose-400': type === 'error',
-                        'text-indigo-400': type === 'info'
-                     }">
+                     :class="{ 'text-emerald-400': type === 'success', 'text-rose-400': type === 'error', 'text-indigo-400': type === 'info' }">
                     <template x-if="type === 'success'">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </template>
@@ -129,15 +125,11 @@
 
                 <div class="flex-auto">
                     <h4 class="text-[10px] font-black uppercase tracking-[0.2em] mb-1"
-                        :class="{
-                            'text-emerald-400': type === 'success',
-                            'text-rose-400': type === 'error',
-                            'text-indigo-400': type === 'info'
-                        }" x-text="type === 'success' ? 'Provisioning Success' : (type === 'error' ? 'Security Alert' : 'Onboarding Info')"></h4>
+                        :class="{ 'text-emerald-400': type === 'success', 'text-rose-400': type === 'error', 'text-indigo-400': type === 'info' }" x-text="type === 'success' ? 'Provisioning Success' : (type === 'error' ? 'Security Alert' : 'Onboarding Info')"></h4>
                     <p class="text-xs font-bold text-slate-300 leading-relaxed" x-text="message"></p>
                 </div>
 
-                <button @click="show = false" class="text-slate-600 hover:text-slate-400 transition-colors">
+                <button @click="show = false" class="text-slate-600 hover:text-slate-400 transition-colors dark:text-slate-300">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
