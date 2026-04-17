@@ -18,7 +18,7 @@ class BillingController extends Controller
     public function guestIndex()
     {
         // If payment already done in this session, redirect to register
-        if (session('velora_payment_done')) {
+        if (session('nexorabyte_payment_done')) {
             return redirect()->route('register')->with('status', 'Payment verified! Please create your account below.');
         }
 
@@ -81,10 +81,10 @@ class BillingController extends Controller
 
             // Store payment info in session — one-time use for registration
             session([
-                'velora_payment_done'       => true,
-                'velora_payment_plan'       => $request->plan,
-                'velora_payment_id'         => $request->razorpay_payment_id,
-                'velora_payment_order_id'   => $request->razorpay_order_id,
+                'nexorabyte_payment_done'       => true,
+                'nexorabyte_payment_plan'       => $request->plan,
+                'nexorabyte_payment_id'         => $request->razorpay_payment_id,
+                'nexorabyte_payment_order_id'   => $request->razorpay_order_id,
             ]);
 
             return response()->json(['success' => true]);

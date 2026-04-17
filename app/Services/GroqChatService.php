@@ -433,7 +433,7 @@ class GroqChatService
             case 'save_preference':
                 $pref = $arguments['preference'] ?? '';
                 $cat = $arguments['category'] ?? 'habit';
-                \App\Models\VeloraInsight::updateOrCreate(
+                \App\Models\NexoraByteInsight::updateOrCreate(
                     ['user_id' => $user->id, 'content' => $pref],
                     ['category' => $cat, 'importance' => 8]
                 );

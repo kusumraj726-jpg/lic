@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
         }
 
         // Block guest registration if payment has not been completed first
-        if (!session('velora_payment_done')) {
+        if (!session('nexorabyte_payment_done')) {
             return redirect()->route('get.started')->with('error', 'Please complete payment first to create your account.');
         }
 
@@ -57,7 +57,7 @@ class RegisteredUserController extends Controller
         }
         $uniqueId = 'NX-ADM-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
-        $plan = session('velora_payment_plan', 'monthly');
+        $plan = session('nexorabyte_payment_plan', 'monthly');
         $daysToAdd = match($plan) {
             'trial'  => 60,
             'yearly' => 365,
@@ -81,12 +81,12 @@ class RegisteredUserController extends Controller
         // ── PAYMENT FLOW (highest priority) ──────────────────────────────
         // If this registration came from the /get-started payment flow,
         // clear the one-time session immediately — no second account can be made
-        if (session('velora_payment_done')) {
+        if (session('nexorabyte_payment_done')) {
             session()->forget([
-                'velora_payment_done',
-                'velora_payment_plan',
-                'velora_payment_id',
-                'velora_payment_order_id',
+                'nexorabyte_payment_done',
+                'nexorabyte_payment_plan',
+                'nexorabyte_payment_id',
+                'nexorabyte_payment_order_id',
             ]);
             return redirect()->route('login', ['flow' => 'onboarding', 'step' => 3])
                 ->with('status', 'Registration complete! Please login to access your workspace.');

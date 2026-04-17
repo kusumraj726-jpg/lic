@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Global Velora Intelligence View Composer
+        // Global NexoraByte Intelligence View Composer
         view()->composer('layouts.app', function ($view) {
             $user = auth()->user();
             if (!$user) return;

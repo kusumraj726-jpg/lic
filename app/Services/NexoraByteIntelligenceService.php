@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Models\VeloraInsight;
+use App\Models\NexoraByteInsight;
 use Illuminate\Support\Facades\Log;
 
-class VeloraIntelligenceService
+class NexoraByteIntelligenceService
 {
     protected $groq;
 
@@ -44,13 +44,13 @@ class VeloraIntelligenceService
             if (str_contains(strtoupper($insightContent), 'NONE')) return;
 
             // Store it silently
-            VeloraInsight::updateOrCreate(
+            NexoraByteInsight::updateOrCreate(
                 ['user_id' => $user->id, 'content' => $insightContent],
                 ['category' => 'autonomous_habit', 'importance' => 5]
             );
 
         } catch (\Exception $e) {
-            Log::error("Velora Autonomous Learning Error: " . $e->getMessage());
+            Log::error("NexoraByte Autonomous Learning Error: " . $e->getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ class VeloraIntelligenceService
      */
     public function getMemoriesForPrompt(User $user): string
     {
-        $insights = VeloraInsight::where('user_id', $user->id)
+        $insights = NexoraByteInsight::where('user_id', $user->id)
             ->orderBy('importance', 'desc')
             ->take(5)
             ->get();

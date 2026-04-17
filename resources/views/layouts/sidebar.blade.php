@@ -13,7 +13,7 @@
             @endif
             
             <div class="flex flex-col overflow-hidden">
-                <span class="tracking-tight text-[11px] font-black uppercase text-slate-900 dark:text-slate-100 group-hover:text-brand transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $sidebarContext->company_name ?? config('app.name', 'Velora ERP') }}</span>
+                <span class="tracking-tight text-[11px] font-black uppercase text-slate-900 dark:text-slate-100 group-hover:text-brand transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $sidebarContext->company_name ?? config('app.name', 'NexoraByte ERP') }}</span>
                 <span class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Command Center</span>
             </div>
         </a>

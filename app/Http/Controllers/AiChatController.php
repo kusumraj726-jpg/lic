@@ -14,7 +14,7 @@ class AiChatController extends Controller
     protected $groq;
     protected $intelligence;
 
-    public function __construct(GroqChatService $groq, \App\Services\VeloraIntelligenceService $intelligence)
+    public function __construct(GroqChatService $groq, \App\Services\NexoraByteIntelligenceService $intelligence)
     {
         $this->groq = $groq;
         $this->intelligence = $intelligence;
@@ -33,7 +33,7 @@ class AiChatController extends Controller
             'renewals' => $tenant->renewals()->where('status', 'pending')->whereDate('expiry_date', '>=', $now)->whereDate('expiry_date', '<=', $now->copy()->addDays(7))->count(),
         ];
 
-        $greeting = "Hi " . explode(' ', $user->name)[0] . "! Velora HQ mein aapka swagat hai.";
+        $greeting = "Hi " . explode(' ', $user->name)[0] . "! NexoraByte HQ mein aapka swagat hai.";
         $update = "Aapke paas " . $stats['clients'] . " clients hain, aur " . ($stats['queries'] + $stats['claims']) . " pending items hain jinpar dhyan dena zaroori hai.";
         
         if ($stats['renewals'] > 0) {
@@ -115,7 +115,7 @@ class AiChatController extends Controller
         }
 
         $systemPrompt = <<<PROMPT
-**Velora Identity**: You are a warm, helpful FEMALE secretary named Velora.
+**Nexora Identity**: You are a warm, helpful FEMALE secretary named Nexora.
 **GENDER**: Strictly Female. Use "bata sakti hu", "karki hu", "ati hu".
 **REASONING (The Brain)**: You have an advanced 'Autonomous Brain'. Before responding, silently 'Think' (Chain of Thought):
 1. Analyze the user's HIDDEN intent.

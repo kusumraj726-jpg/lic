@@ -33,7 +33,7 @@
             <div class="mb-6 text-center z-10 w-full flex justify-center">
                 <a href="/" class="flex flex-col items-center justify-center gap-2">
                     <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="h-40 w-auto object-contain">
-                    <span class="text-3xl font-extrabold text-white tracking-widest">Velora</span>
+                    <span class="text-3xl font-extrabold text-white tracking-widest">NexoraByte</span>
                 </a>
             </div>
 
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <!-- 🛡️ Velora Global Toast Hub (Guest Alignment) -->
+        <!-- 🛡️ NexoraByte Global Toast Hub (Guest Alignment) -->
         <div x-data="{ 
                 show: false, 
                 type: 'success', 

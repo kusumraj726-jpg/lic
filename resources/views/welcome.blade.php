@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Velora ERP | Elite Command Center</title>
+    <title>NexoraByte ERP | Elite Command Center</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Fonts -->
@@ -156,7 +156,7 @@
         <div class="max-w-7xl mx-auto w-full px-8 flex justify-between items-center">
             <a href="{{ route('dashboard') }}" class="sidebar-logo flex items-center gap-4">
                 <img src="{{ asset('images/logo.png') }}?v=100" alt="logo" class="h-16 w-auto object-contain">
-                <span class="text-2xl font-black text-white tracking-[0.2em] uppercase">Velora</span>
+                <span class="text-2xl font-black text-white tracking-[0.2em] uppercase">NexoraByte</span>
             </a>
 
             <div class="flex items-center gap-10">
@@ -288,7 +288,7 @@
                             <div class="flex items-center gap-2 px-5 py-1 rounded-full"
                                 style="background:rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15);">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">velora.app /
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">nexorabyte.in /
                                     <span class="text-indigo-300" x-text="activeTab"></span></span>
                             </div>
                             <div class="w-14"></div>
@@ -360,7 +360,7 @@
                                 <span class="text-[8px] font-black uppercase tracking-widest px-2 py-1 rounded-full"
                                     style="background:rgba(16,185,129,0.1); color:#6ee7b7;">Multi-Tenant</span>
                             </div>
-                            <span class="text-[8px] text-slate-600 uppercase tracking-widest font-bold dark:text-slate-300">Velora Cloud
+                            <span class="text-[8px] text-slate-600 uppercase tracking-widest font-bold dark:text-slate-300">NexoraByte Cloud
                                 ERP</span>
                         </div>
                     </div>
@@ -462,7 +462,7 @@
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-4 tracking-tight relative z-10">Specialized <br /> Cloud
                         ERP</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8 relative z-10">Our flagship Velora SaaS
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8 relative z-10">Our flagship NexoraByte SaaS
                         structure engineered for zero-friction administration, multi-tenant isolation, and flawless
                         internal operations.</p>
                     <ul
@@ -479,7 +479,7 @@
         </div>
     </section>
 
-    <!-- Deep Dive Showcase: Velora ERP -->
+    <!-- Deep Dive Showcase: NexoraByte ERP -->
     <section
         class="py-24 px-8 border-t border-white/5 bg-gradient-to-b from-slate-900/40 to-[#020617] overflow-hidden relative">
         <div
@@ -491,10 +491,10 @@
                 <span
                     class="text-emerald-400 text-[10px] font-bold uppercase tracking-[0.2em] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Flagship
                     Software Showcase</span>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">Velora Cloud
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">NexoraByte Cloud
                     ERP: <br /><span class="text-slate-400">Powerful Where It Counts.</span></h2>
                 <p class="text-slate-400 text-lg leading-relaxed pt-2">
-                    Originally engineered exclusively for high-performing insurance agencies, Velora is our premium
+                    Originally engineered exclusively for high-performing insurance agencies, NexoraByte is our premium
                     multi-tenant enterprise solution. See how our bespoke software manages the workflows that dictate
                     your growth.
                 </p>
@@ -580,7 +580,7 @@
                                 style="background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2);">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
                                 <span
-                                    class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">velora.app/dashboard</span>
+                                    class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">nexorabyte.in/dashboard</span>
                             </div>
                             <div class="w-10"></div>
                         </div>
@@ -588,7 +588,7 @@
                         <!-- Screenshot cropped (margin-top: -85px removes browser chrome) -->
                         <div style="overflow:hidden; position:relative; max-height:420px;">
                             <img src="{{ asset('images/screenshots/ss_dashboard_full.png') }}"
-                                alt="Velora ERP Dashboard" style="display:block; width:100%; margin-top:-85px;" />
+                                alt="NexoraByte ERP Dashboard" style="display:block; width:100%; margin-top:-85px;" />
                             <!-- Bottom fade -->
                             <div
                                 style="position:absolute; bottom:0; left:0; right:0; height:80px; background:linear-gradient(to bottom, transparent, #0f172a); pointer-events:none;">
@@ -834,7 +834,7 @@
                 <div class="md:col-span-2">
                     <a href="#" class="flex items-center gap-4 mb-6">
                         <img src="{{ asset('images/logo.png') }}?v=100" alt="logo" class="h-10 w-auto object-contain">
-                        <span class="text-xl font-black text-white tracking-[0.2em] uppercase">Velora Digital</span>
+                        <span class="text-xl font-black text-white tracking-[0.2em] uppercase">NexoraByte Digital</span>
                     </a>
                     <p class="text-slate-400 text-sm leading-relaxed max-w-sm mb-8">
                         Elevating brands and optimizing operations through elite digital marketing, custom web
@@ -887,7 +887,7 @@
             </div>
 
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">&copy; {{ date('Y') }} VELORA
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">&copy; {{ date('Y') }} NEXORABYTE
                     DIGITAL. ALL RIGHTS RESERVED.</p>
                 <div class="flex gap-6">
                     <a href="#"
@@ -934,7 +934,7 @@
                             "key": data.key,
                             "amount": data.amount,
                             "currency": "INR",
-                            "name": "Velora",
+                            "name": "NexoraByte",
                             "description": "Subscription Plan: " + plan.charAt(0).toUpperCase() + plan.slice(1),
                             "image": "{{ asset('images/logo.png') }}",
                             "order_id": data.order_id,

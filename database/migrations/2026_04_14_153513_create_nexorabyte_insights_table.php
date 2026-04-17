@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('velora_insights', function (Blueprint $table) {
+        Schema::create('nexorabyte_insights', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('category'); // preference, habit, voice_config
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('velora_insights');
+        Schema::dropIfExists('nexorabyte_insights');
     }
 };

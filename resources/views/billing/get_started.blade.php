@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Get Started | Velora ERP</title>
+    <title>Get Started | NexoraByte ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -25,8 +25,8 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <div class="flex items-center justify-center gap-3 mb-6">
-                <img src="{{ asset('images/logo.png') }}?v=100" alt="Velora" class="h-20 w-auto object-contain">
-                <span class="text-3xl font-black text-white tracking-widest uppercase">Velora</span>
+                <img src="{{ asset('images/logo.png') }}?v=100" alt="NexoraByte" class="h-20 w-auto object-contain">
+                <span class="text-3xl font-black text-white tracking-widest uppercase">NexoraByte</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">Choose Your Plan</h1>
             <p class="text-slate-400 text-lg">Pay once. Create your account. Access your workspace.</p>
@@ -198,7 +198,7 @@
                             "key": data.key,
                             "amount": data.amount,
                             "currency": "INR",
-                            "name": "Velora",
+                            "name": "NexoraByte",
                             "description": planLabels[plan],
                             "image": "{{ asset('images/logo.png') }}",
                             "order_id": data.order_id,

@@ -24,9 +24,9 @@ Route::get('/force-login', function () {
 
 // -----------------------------------------------
 // SUPER ADMIN CONTROL PANEL (Hidden — Only you)
-// URL: /velora-control
+// URL: /nexorabyte-control
 // -----------------------------------------------
-Route::get('/run-migrations-velora-99', function() {
+Route::get('/run-migrations-nexorabyte-99', function() {
     try {
         // 1. Run migrations
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
@@ -36,7 +36,7 @@ Route::get('/run-migrations-velora-99', function() {
             ['email' => 'mcauxstain@gmail.com'],
             [
                 'name'                 => 'Super Admin',
-                'company_name'         => 'Velora HQ',
+                'company_name'         => 'NexoraByte HQ',
                 'password'             => \Illuminate\Support\Facades\Hash::make('super s.s'),
                 'role'                 => 'superadmin',
                 'unique_id'            => 'SUPER-001',
@@ -52,7 +52,7 @@ Route::get('/run-migrations-velora-99', function() {
     }
 });
 
-Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('velora-control')->group(function () {
+Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-control')->group(function () {
     Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
     Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });

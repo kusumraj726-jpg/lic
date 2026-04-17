@@ -103,7 +103,7 @@
                                     <svg x-show="darkMode" style="display: none;" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                 </button>
 
-                                <!-- Velora Intelligence Hub Pill (Shared Across Pages) -->
+                                <!-- NexoraByte Intelligence Hub Pill (Shared Across Pages) -->
                                 @if(isset($global_intel) && $global_intel->count() > 0)
                                 <div class="relative">
                                     <button @click="intelOpen = !intelOpen" 
@@ -129,7 +129,7 @@
                                         
                                         <div class="flex items-center justify-between mb-8">
                                             <h4 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 dark:text-slate-100">
-                                                Velora Intelligence
+                                                NexoraByte Intelligence
                                             </h4>
                                             <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Live Pulse</span>
                                         </div>
@@ -357,7 +357,7 @@
             }
         </script>
 
-        <!-- 🛡️ Velora Global Toast Hub -->
+        <!-- 🛡️ NexoraByte Global Toast Hub -->
         <div x-data="{ 
                 show: false, 
                 type: 'success', 

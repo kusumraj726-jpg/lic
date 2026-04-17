@@ -38,13 +38,13 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-sm font-black text-white tracking-widest uppercase">Velora AI</span>
+                        <span class="text-sm font-black text-white tracking-widest uppercase">NexoraByte AI</span>
                         <span class="relative flex h-2 w-2">
                             <span class="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                         </span>
                     </div>
-                    <p class="text-[10px] font-bold uppercase tracking-widest" style="color:rgba(255,255,255,0.55);">Powered by Velora</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest" style="color:rgba(255,255,255,0.55);">Powered by NexoraByte</p>
                 </div>
             </div>
             <div class="relative flex gap-2">
@@ -131,7 +131,7 @@
             <div class="px-4 pb-4 pt-3 flex-shrink-0" style="border-top:1px solid rgba(79,70,229,0.1);">
                 <form @submit.prevent="send()" class="flex items-center gap-2">
                     <input type="text" x-model="userInput" :disabled="loading"
-                           placeholder="Ask Velora anything..."
+                           placeholder="Ask NexoraByte anything..."
                            class="flex-1 px-4 py-3 text-sm font-medium rounded-xl border-0 outline-none transition-all"
                            style="background:rgba(30,41,59,0.9);color:rgba(226,232,240,0.95);">
                     <button type="submit" :disabled="!userInput.trim()||loading"
@@ -140,7 +140,7 @@
                         <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </button>
                 </form>
-                <p class="text-[9px] font-bold uppercase tracking-widest text-center mt-2" style="color:rgba(100,116,139,0.5);">Velora Intelligence · Verify critical records</p>
+                <p class="text-[9px] font-bold uppercase tracking-widest text-center mt-2" style="color:rgba(100,116,139,0.5);">NexoraByte Intelligence · Verify critical records</p>
             </div>
         </div>
 
@@ -254,16 +254,16 @@
 function aiChatWidget() {
     return {
         // Persistence states
-        open: sessionStorage.getItem('velora_open') === 'true',
-        isExpanded: sessionStorage.getItem('velora_expanded') === 'true',
-        activeTab: sessionStorage.getItem('velora_tab') || 'chat',
+        open: sessionStorage.getItem('nexorabyte_open') === 'true',
+        isExpanded: sessionStorage.getItem('nexorabyte_expanded') === 'true',
+        activeTab: sessionStorage.getItem('nexorabyte_tab') || 'chat',
         userInput: '',
         loading: false,
         hasUnread: false,
         sessionId: null,
         messages: [],
         suggestions: ['How many clients?', 'Show pending claims', 'Go to Dashboard', 'Switch to light mode'],
-        conversationMode: sessionStorage.getItem('velora_voice') === 'true',
+        conversationMode: sessionStorage.getItem('nexorabyte_voice') === 'true',
 
         // Voice mode state
         voiceState: 'idle',
@@ -287,7 +287,7 @@ function aiChatWidget() {
             'Profile': 'प्रोफाइल',
             'Dark Mode': 'डार्क मोड',
             'Light Mode': 'लाइट मोड',
-            'Velora': 'वेलोरा',
+            'Nexora': 'नेक्सोरा',
             'ERP': 'सिस्टम'
         },
 
@@ -309,7 +309,7 @@ function aiChatWidget() {
                     
                     // Trigger greeting once voices are ready and if on dashboard
                     const onDashboard = window.location.pathname.includes('/dashboard');
-                    if (onDashboard && !sessionStorage.getItem('velora_greeted')) {
+                    if (onDashboard && !sessionStorage.getItem('nexorabyte_greeted')) {
                         setTimeout(() => this.greetUser(), 1500);
                     }
                 };
@@ -320,11 +320,11 @@ function aiChatWidget() {
             }
 
             // Persistence Watchers
-            this.$watch('open', val => sessionStorage.setItem('velora_open', val));
-            this.$watch('isExpanded', val => sessionStorage.setItem('velora_expanded', val));
-            this.$watch('activeTab', val => sessionStorage.setItem('velora_tab', val));
+            this.$watch('open', val => sessionStorage.setItem('nexorabyte_open', val));
+            this.$watch('isExpanded', val => sessionStorage.setItem('nexorabyte_expanded', val));
+            this.$watch('activeTab', val => sessionStorage.setItem('nexorabyte_tab', val));
             this.$watch('conversationMode', val => {
-                sessionStorage.setItem('velora_voice', val);
+                sessionStorage.setItem('nexorabyte_voice', val);
                 if (!val) {
                     this.clearSilenceTimer();
                     try { this.recognition.stop(); } catch(e) {}
@@ -661,7 +661,7 @@ function aiChatWidget() {
 
         async greetUser() {
             try {
-                sessionStorage.setItem('velora_greeted', 'true');
+                sessionStorage.setItem('nexorabyte_greeted', 'true');
                 const response = await fetch('{{ route('api.ai.brief') }}');
                 const data = await response.json();
                 
