@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NexoraByteInsight extends Model
 {
     use HasFactory;
+    protected $table = 'nexorabyte_insights';
 
     protected $fillable = ['user_id', 'category', 'content', 'importance'];
 

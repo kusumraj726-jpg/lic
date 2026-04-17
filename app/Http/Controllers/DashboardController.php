@@ -116,12 +116,6 @@ class DashboardController extends Controller
         return view('dashboard', array_merge($data, compact('urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'birthday_template', 'anniversary_template', 'revenueForecast')));
     }
 
-        $user = auth()->user();
-        $birthday_template = $user->birthday_template ?? "Happy Birthday, [NAME]! 🎂 Wishing you a year filled with happiness and success. - Best regards, " . ($user->company_name ?? $user->name);
-        $anniversary_template = $user->anniversary_template ?? "Happy Anniversary, [NAME]! 🥂 Wishing you many more years of love and togetherness. - Regards, " . ($user->company_name ?? $user->name);
-
-        return view('dashboard', compact('stats', 'chartData', 'urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'executive_briefs', 'birthday_template', 'anniversary_template', 'revenueForecast'));
-    }
 
     public function updateTemplate(\Illuminate\Http\Request $request)
     {
