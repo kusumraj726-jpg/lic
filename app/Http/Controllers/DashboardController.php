@@ -15,267 +15,106 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         $context = $user->context();
+        $cacheKey = "dashboard_stats_{$context->id}";
         $now = \Carbon\Carbon::now();
-        
-        // 1. Core Statistics & Trend Analysis
+        $startOfMonth = $now->copy()->startOfMonth();
         $lastMonth = $now->copy()->subMonth();
-        
-        $currentClients = $context->clients()->count();
-        $prevClients = $context->clients()->whereDate('created_at', '<', $now->copy()->startOfMonth())->count();
-        
-        $stats = [
-            'clients_count' => $currentClients,
-            'clients_trend' => $this->calculateTrend($currentClients, $prevClients),
+
+        // 1 & 2. Stats and Briefs (Cached for 10 mins)
+        $data = \Cache::remember($cacheKey, 600, function() use ($context, $now, $lastMonth, $startOfMonth) {
             
-            'open_queries' => $context->queries()->whereIn('status', ['pending', 'open', 'in-progress'])->count(),
-            'queries_trend' => $this->calculateTrend(
-                $context->queries()->whereMonth('created_at', $now->month)->count(),
-                $context->queries()->whereMonth('created_at', $lastMonth->month)->count()
-            ),
+            // Core Statistics 
+            $currentClients = $context->clients()->count();
+            $prevClients = $context->clients()->whereDate('created_at', '<', $startOfMonth)->count();
             
-            'pending_claims' => $context->claims()->whereIn('status', ['pending', 'submitted'])->count(),
-            'claims_trend' => $this->calculateTrend(
-                $context->claims()->whereMonth('created_at', $now->month)->count(),
-                $context->claims()->whereMonth('created_at', $lastMonth->month)->count()
-            ),
+            $queryCounts = $context->queries()
+                ->selectRaw("count(case when status in ('pending', 'open', 'in-progress') then 1 end) as open")
+                ->selectRaw("count(case when month(created_at) = ? then 1 end) as current_month", [$now->month])
+                ->selectRaw("count(case when month(created_at) = ? then 1 end) as last_month", [$lastMonth->month])
+                ->first();
+
+            $claimCounts = $context->claims()
+                ->selectRaw("count(case when status in ('pending', 'submitted') then 1 end) as pending")
+                ->selectRaw("count(case when month(created_at) = ? then 1 end) as current_month", [$now->month])
+                ->selectRaw("count(case when month(created_at) = ? then 1 end) as last_month", [$lastMonth->month])
+                ->first();
+
+            $stats = [
+                'clients_count' => $currentClients,
+                'clients_trend' => $this->calculateTrend($currentClients, $prevClients),
+                'open_queries' => $queryCounts->open ?? 0,
+                'queries_trend' => $this->calculateTrend($queryCounts->current_month ?? 0, $queryCounts->last_month ?? 0),
+                'pending_claims' => $claimCounts->pending ?? 0,
+                'claims_trend' => $this->calculateTrend($claimCounts->current_month ?? 0, $claimCounts->last_month ?? 0),
+                'upcoming_renewals' => $context->renewals()->where('status', 'pending')->whereDate('expiry_date', '>=', $now)->count(),
+                'total_expected_comm' => $context->commissions()->where('status', 'pending')->sum('expected_amount'),
+                'received_comm_month' => $context->commissions()->where('status', 'received')->whereMonth('received_at', $now->month)->sum('received_amount'),
+            ];
+
+            // Briefs
+            $executive_briefs = collect();
+            if ($stats['open_queries'] > 5) $executive_briefs->push(['title' => 'High Query Volume', 'message' => 'Incoming communication is trending above average. Consider reallocating staff resources.', 'type' => 'warning', 'id' => 'brief_queries']);
+            if ($stats['pending_claims'] > 3) $executive_briefs->push(['title' => 'Claim Pulse Detected', 'message' => 'Multiple cases are awaiting resolution. Early intervention today will improve weekly resolution rates.', 'type' => 'info', 'id' => 'brief_claims']);
             
-            'upcoming_renewals' => $context->renewals()->where('status', 'pending')->whereDate('expiry_date', '>=', $now)->count(),
-            
-            'total_expected_comm' => $context->commissions()->where('status', 'pending')->sum('expected_amount'),
-            'received_comm_month' => $context->commissions()->where('status', 'received')->whereMonth('received_at', $now->month)->sum('received_amount'),
-        ];
+            $renewalsSevenDays = $context->renewals()->where('status', 'pending')->whereBetween('expiry_date', [$now->copy()->startOfDay(), $now->copy()->addDays(7)->endOfDay()])->count();
+            if ($renewalsSevenDays > 0) $executive_briefs->push(['title' => 'Renewal Alert', 'message' => "{$renewalsSevenDays} renewals approaching in the next 7 days.", 'type' => 'success', 'id' => 'brief_renewals']);
 
-        // 2. Executive Insights (Premium Intelligence)
-        $executive_briefs = collect();
-        
-        if ($stats['open_queries'] > 5) {
-            $executive_briefs->push([
-                'title' => 'High Query Volume',
-                'message' => 'Incoming communication is trending above average. Consider reallocating staff resources to the query desk.',
-                'type' => 'warning',
-                'id' => 'brief_queries'
-            ]);
-        }
+            // Chart Data
+            $sixMonthsAgo = $now->copy()->subMonths(5)->startOfMonth();
+            $queryChart = $context->queries()->where('created_at', '>=', $sixMonthsAgo)->selectRaw("count(*) as count, DATE_FORMAT(created_at, '%b') as month, MONTH(created_at) as month_num")->groupBy('month', 'month_num')->orderBy('month_num')->get()->pluck('count', 'month');
+            $claimChart = $context->claims()->where('created_at', '>=', $sixMonthsAgo)->selectRaw("count(*) as count, DATE_FORMAT(created_at, '%b') as month, MONTH(created_at) as month_num")->groupBy('month', 'month_num')->orderBy('month_num')->get()->pluck('count', 'month');
+            $months = collect(range(5, 0))->map(fn($i) => $now->copy()->subMonths($i)->format('M'));
+            $chartData = ['labels' => $months, 'queries' => $months->map(fn($m) => $queryChart->get($m, 0)), 'claims' => $months->map(fn($m) => $claimChart->get($m, 0))];
 
-        if ($stats['pending_claims'] > 3) {
-            $executive_briefs->push([
-                'title' => 'Claim Pulse Detected',
-                'message' => 'Multiple cases are awaiting resolution. Early intervention today will improve weekly resolution rates.',
-                'type' => 'info',
-                'id' => 'brief_claims'
-            ]);
-        }
-
-        $upcoming_renewals_seven_days = $context->renewals()
-            ->where('status', 'pending')
-            ->whereBetween('expiry_date', [$now->copy()->startOfDay(), $now->copy()->addDays(7)->endOfDay()])
-            ->count();
-
-        if ($upcoming_renewals_seven_days > 0) {
-            $executive_briefs->push([
-                'title' => 'Renewal Alert',
-                'message' => "{$upcoming_renewals_seven_days} renewals approaching in the next 7 days.",
-                'type' => 'success',
-                'id' => 'brief_renewals'
-            ]);
-        }
-
-        // Add Birthdays to Velora Intelligence
-        $today_birthdays = collect();
-        $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($c) => $today_birthdays->push($c->name));
-        $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(fn($s) => $today_birthdays->push($s->name));
-        if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
-            $today_birthdays->push("You (Admin)");
-        }
-
-        if ($today_birthdays->count() > 0) {
-            $executive_briefs->push([
-                'title' => 'Birthday',
-                'message' => "Today is " . $today_birthdays->implode(', ') . "'s birthday! Send a gift or greeting.",
-                'type' => 'brand',
-                'id' => 'brief_birthdays'
-            ]);
-        }
-
-        // Add Anniversaries to Velora Intelligence
-        $today_anniversaries = collect();
-        $context->clients()->whereMonth('marriage_anniversary', $now->month)->whereDay('marriage_anniversary', $now->day)->get()->each(fn($c) => $today_anniversaries->push($c->name));
-
-        if ($today_anniversaries->count() > 0) {
-            $executive_briefs->push([
-                'title' => 'Anniversary',
-                'message' => "Today is " . $today_anniversaries->implode(', ') . "'s anniversary! Send a flower or greeting.",
-                'type' => 'brand',
-                'id' => 'brief_anniversaries'
-            ]);
-        }
-
-        // 2. Chart Data (Last 6 Months)
-        $months = collect(range(5, 0))->map(function ($i) use ($now) {
-            return $now->copy()->subMonths($i)->format('M');
-        });
-
-        $chartData = [
-            'labels' => $months,
-            'queries' => collect(range(5, 0))->map(function ($i) use ($context, $now) {
-                return $context->queries()->whereMonth('created_at', $now->copy()->subMonths($i)->month)->count();
-            }),
-            'claims' => collect(range(5, 0))->map(function ($i) use ($context, $now) {
-                return $context->claims()->whereMonth('created_at', $now->copy()->subMonths($i)->month)->count();
-            }),
-        ];
-
-        // 3. Financial Forecast (Next 12 Months)
-        $forecastMonths = collect(range(0, 11))->map(function ($i) use ($now) {
-            return $now->copy()->addMonths($i)->format('M y');
-        });
-
-        $rates = $context->commission_rates ?? ['default' => 15];
-        $forecastData = collect(range(0, 11))->map(function ($i) use ($context, $now, $rates) {
-            $monthStart = $now->copy()->addMonths($i)->startOfMonth();
-            $monthEnd = $now->copy()->addMonths($i)->endOfMonth();
-            
-            $renewals = $context->renewals()
-                ->whereBetween('expiry_date', [$monthStart, $monthEnd])
-                ->get();
-            
-            return $renewals->sum(function($r) use ($rates) {
-                $type = strtolower($r->policy_type);
-                $rate = $rates[$type] ?? ($rates['default'] ?? 15);
-                return ($r->premium_amount * $rate) / 100;
+            // Forecast
+            $forecastMonths = collect(range(0, 11))->map(fn($i) => $now->copy()->addMonths($i)->format('M y'));
+            $rates = $context->commission_rates ?? ['default' => 15];
+            $futureRenewals = $context->renewals()->whereBetween('expiry_date', [$now->copy()->startOfMonth(), $now->copy()->addMonths(11)->endOfMonth()])->get()->groupBy(fn($r) => \Carbon\Carbon::parse($r->expiry_date)->format('M y'));
+            $forecastData = $forecastMonths->map(function ($m) use ($futureRenewals, $rates) {
+                return $futureRenewals->get($m, collect())->sum(fn($r) => ($r->premium_amount * ($rates[strtolower($r->policy_type)] ?? ($rates['default'] ?? 15))) / 100);
             });
+
+            return compact('stats', 'executive_briefs', 'chartData', 'revenueForecast', 'forecastMonths', 'forecastData');
         });
 
-        $revenueForecast = [
-            'labels' => $forecastMonths,
-            'data' => $forecastData
-        ];
-
-
-        // 4. Attention Required — all active queries and claims
-        $urgent_queries = $context->queries()->with('client')->whereIn('status', ['pending', 'open', 'in-progress'])->latest()->get()->map(function($q) {
-            $q->type = 'Query';
-            $q->color = 'rose';
-            $q->url = route('queries.index', ['id' => $q->id]);
-            return $q;
+        // 3. Dynamic Data (Always Fresh)
+        $urgent_queries = $context->queries()->with('client')->whereIn('status', ['pending', 'open', 'in-progress'])->latest()->take(5)->get()->map(function($q) {
+            $q->type = 'Query'; $q->color = 'rose'; $q->url = route('queries.index', ['id' => $q->id]); return $q;
         });
 
-        $urgent_claims = $context->claims()->with('client')->whereIn('status', ['pending', 'submitted'])->latest()->get()->map(function($c) {
-            $c->type = 'Claim';
-            $c->color = 'amber';
-            $c->url = route('claims.index', ['id' => $c->id]);
-            return $c;
+        $urgent_claims = $context->claims()->with('client')->whereIn('status', ['pending', 'submitted'])->latest()->take(5)->get()->map(function($c) {
+            $c->type = 'Claim'; $c->color = 'amber'; $c->url = route('claims.index', ['id' => $c->id]); return $c;
         });
 
-        $urgent_renewals = $context->renewals()->with('client')->where('status', 'pending')->whereDate('expiry_date', '<=', $now)->latest()->get()->map(function($r) {
-            $r->type = 'Renewal';
-            $r->color = 'emerald';
-            $r->url = route('renewals.index');
-            return $r;
+        $urgent_renewals = $context->renewals()->with('client')->where('status', 'pending')->whereDate('expiry_date', '<=', $now)->latest()->take(5)->get()->map(function($r) {
+            $r->type = 'Renewal'; $r->color = 'emerald'; $r->url = route('renewals.index'); return $r;
         });
 
         $urgent_items = $urgent_queries->concat($urgent_claims)->concat($urgent_renewals)->sortByDesc('created_at')->take(8);
 
-        // 5. Calendar Events (Birthdays + Renewals)
+        // 4. Birthdays & Events (Optimized DB Query)
+        $targetMonths = [$now->month, $now->copy()->addMonth()->month];
         $calendar_events = collect();
-        
-        // Add Birthdays to Calendar
-        $context->clients()->whereNotNull('dob')->get()->each(function($client) use ($calendar_events) {
-            $dob = \Carbon\Carbon::parse($client->dob);
-            $calendar_events->push([
-                'day' => (int)$dob->day,
-                'month' => (int)$dob->month,
-                'type' => 'birthday',
-                'title' => 'Birthday',
-                'message' => "Today is {$client->name}'s birthday! Send a gift or greeting.",
-                'color' => 'indigo',
-                'name' => $client->name,
-                'phone' => $client->phone
-            ]);
+        $context->clients()->whereIn(\DB::raw('MONTH(dob)'), $targetMonths)->select('name', 'phone', 'dob')->get()->each(function($c) use ($calendar_events) {
+            $dob = \Carbon\Carbon::parse($c->dob); $calendar_events->push(['day' => (int)$dob->day, 'month' => (int)$dob->month, 'type' => 'birthday', 'title' => 'Birthday', 'message' => "Today is {$c->name}'s birthday!", 'color' => 'indigo', 'name' => $c->name, 'phone' => $c->phone]);
         });
-
-        // Add Anniversaries to Calendar
-        $context->clients()->whereNotNull('marriage_anniversary')->get()->each(function($client) use ($calendar_events) {
-            $ann = \Carbon\Carbon::parse($client->marriage_anniversary);
-            $calendar_events->push([
-                'day' => (int)$ann->day,
-                'month' => (int)$ann->month,
-                'type' => 'anniversary',
-                'title' => 'Anniversary Milestone',
-                'message' => "Today is {$client->name}'s marriage anniversary! Send a flower or greeting.",
-                'color' => 'pink',
-                'name' => $client->name,
-                'phone' => $client->phone
-            ]);
+        $context->clients()->whereIn(\DB::raw('MONTH(marriage_anniversary)'), $targetMonths)->select('name', 'phone', 'marriage_anniversary')->get()->each(function($c) use ($calendar_events) {
+            $ann = \Carbon\Carbon::parse($c->marriage_anniversary); $calendar_events->push(['day' => (int)$ann->day, 'month' => (int)$ann->month, 'type' => 'anniversary', 'title' => 'Anniversary', 'message' => "Today is {$c->name}'s anniversary!", 'color' => 'pink', 'name' => $c->name, 'phone' => $c->phone]);
         });
-
-        // Add Staff Birthdays to Calendar
-        $context->staff()->whereNotNull('dob')->get()->each(function($staff) use ($calendar_events) {
-            $dob = \Carbon\Carbon::parse($staff->dob);
-            $calendar_events->push([
-                'day' => (int)$dob->day,
-                'month' => (int)$dob->month,
-                'type' => 'birthday',
-                'title' => 'Staff Birthday',
-                'message' => "{$staff->name} celebrates their birthday today!",
-                'color' => 'indigo',
-                'name' => $staff->name,
-                'phone' => $staff->phone
-            ]);
-        });
-
-        // Add Advisor Birthday to Calendar
-        if ($context->dob) {
-            $dob = \Carbon\Carbon::parse($context->dob);
-            $calendar_events->push([
-                'day' => (int)$dob->day,
-                'month' => (int)$dob->month,
-                'type' => 'birthday',
-                'title' => 'Personal Milestone',
-                'message' => 'Happy Birthday! Wishing you a great day.',
-                'color' => 'indigo',
-                'name' => $context->name,
-                'phone' => $context->phone
-            ]);
-        }
-
 
         $birthdays = $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get();
-        
-        // Add current staff birthdays to today's list
-        $staff_birthdays = $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get();
-        foreach($staff_birthdays as $sb) {
-            $sb->type = 'Staff';
-            $birthdays->push($sb);
-        }
+        $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(function($s) use ($birthdays) {
+            $s->type = 'Staff'; $birthdays->push($s);
+        });
 
-        // Add current admin birthday to today's list
-        if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
-            $birthdays->push((object)[
-                'name' => $context->name,
-                'type' => 'Admin'
-            ]);
-        }
-        $upcoming_birthdays = $context->clients()
-            ->where(function($q) use ($now) {
-                $start = $now->copy()->addDay();
-                $end = $now->copy()->addDays(7);
-                
-                if ($start->month == $end->month) {
-                    $q->whereMonth('dob', $start->month)
-                      ->whereDay('dob', '>=', $start->day)
-                      ->whereDay('dob', '<=', $end->day);
-                } else {
-                    $q->where(function($sub) use ($start) {
-                        $sub->whereMonth('dob', $start->month)->whereDay('dob', '>=', $start->day);
-                    })->orWhere(function($sub) use ($end) {
-                        $sub->whereMonth('dob', $end->month)->whereDay('dob', '<=', $end->day);
-                    });
-                }
-            })
-            ->orderByRaw("MONTH(dob), DAY(dob)")
-            ->take(3)
-            ->get();
+        $upcoming_birthdays = $context->clients()->whereBetween(\DB::raw("DATE_FORMAT(dob, '%m-%d')"), [$now->copy()->addDay()->format('m-d'), $now->copy()->addDays(7)->format('m-d')])->orderByRaw("MONTH(dob), DAY(dob)")->take(3)->get();
+
+        $revenueForecast = ['labels' => $data['forecastMonths'], 'data' => $data['forecastData']];
+        $birthday_template = $user->birthday_template ?? "Happy Birthday, [NAME]! 🎂 - Best regards, " . ($user->company_name ?? $user->name);
+        $anniversary_template = $user->anniversary_template ?? "Happy Anniversary, [NAME]! 🥂 - Regards, " . ($user->company_name ?? $user->name);
+
+        return view('dashboard', array_merge($data, compact('urgent_items', 'birthdays', 'calendar_events', 'upcoming_birthdays', 'birthday_template', 'anniversary_template', 'revenueForecast')));
+    }
 
         $user = auth()->user();
         $birthday_template = $user->birthday_template ?? "Happy Birthday, [NAME]! 🎂 Wishing you a year filled with happiness and success. - Best regards, " . ($user->company_name ?? $user->name);

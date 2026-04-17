@@ -16,10 +16,10 @@
                     <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
                     <div class="p-6 relative z-10 flex flex-col h-full justify-between text-white">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
+                            <div class="h-10 w-10 shrink-0 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                             </div>
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Portfolio</span>
+                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Clients</span>
                         </div>
                         <div>
                             <div class="text-3xl font-black mb-1 leading-none">{{ $stats['clients_count'] }}</div>
@@ -34,10 +34,10 @@
                     <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
                     <div class="p-6 relative z-10 flex flex-col h-full justify-between text-white">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                            <div class="h-10 w-10 shrink-0 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
+                                <svg class="h-5 w-5 transform translate-y-[2px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                             </div>
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Intelligence</span>
+                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Queries</span>
                         </div>
                         <div>
                             <div class="text-3xl font-black mb-1 leading-none">{{ $stats['open_queries'] }}</div>
@@ -52,10 +52,10 @@
                     <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
                     <div class="p-6 relative z-10 flex flex-col h-full justify-between text-white">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
+                            <div class="h-10 w-10 shrink-0 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                             </div>
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Safety</span>
+                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Claims</span>
                         </div>
                         <div>
                             <div class="text-3xl font-black mb-1 leading-none">{{ $stats['pending_claims'] }}</div>
@@ -70,32 +70,32 @@
                     <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
                     <div class="p-6 relative z-10 flex flex-col h-full justify-between text-white">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
+                            <div class="h-10 w-10 shrink-0 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Renewals</span>
                         </div>
                         <div>
                             <div class="text-3xl font-black mb-1 leading-none">{{ $stats['upcoming_renewals'] }}</div>
-                            <div class="text-[9px] font-bold uppercase tracking-widest opacity-60">Due within 30d</div>
+                            <div class="text-[9px] font-bold uppercase tracking-widest opacity-60">Active Renewals</div>
                         </div>
                     </div>
                 </a>
 
-                <!-- Expected Commission Card -->
+                <!-- Expected Commission Card (Revenue) -->
                 <a href="{{ route('commissions.index') }}"
-                    class="group block rounded-[2rem] overflow-hidden border-none shadow-xl hover:shadow-2xl hover:translate-y-[-4px] transition-all duration-500 relative bg-gradient-to-br from-purple-600 via-violet-700 to-indigo-900 h-[140px]">
+                    class="group block rounded-[2rem] overflow-hidden border-none shadow-xl hover:shadow-2xl hover:translate-y-[-4px] transition-all duration-500 relative bg-gradient-to-br from-fuchsia-500 via-fuchsia-600 to-pink-700 h-[140px]">
                     <div class="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
                     <div class="p-6 relative z-10 flex flex-col h-full justify-between text-white">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
+                            <div class="h-10 w-10 shrink-0 flex items-center justify-center bg-white/20 rounded-xl backdrop-blur-md">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Revenue</span>
                         </div>
                         <div>
                             <div class="text-3xl font-black mb-1 leading-none">₹{{ number_format($stats['total_expected_comm'] ?? 0, 0) }}</div>
-                            <div class="text-[9px] font-bold uppercase tracking-widest opacity-60">Expected Comm.</div>
+                            <div class="text-[9px] font-bold uppercase tracking-widest opacity-60">Total Revenue</div>
                         </div>
                     </div>
                 </a>
@@ -249,32 +249,32 @@
                     
                     <div x-data="calendarData()" class="space-y-6">
                         <!-- Celebration Pulse Feed -->
-                        <div class="premium-card bg-slate-900 border-none shadow-2xl relative overflow-hidden p-6 text-white min-h-[350px]">
+                        <div class="premium-card border-none shadow-2xl relative overflow-hidden p-6 min-h-[350px]">
                             <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
                             <div class="relative z-10 flex items-center justify-between mb-8">
-                                <h4 class="text-[11px] font-black text-white uppercase tracking-[0.25em] flex items-center gap-3">
+                                <h4 class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em] flex items-center gap-3">
                                     <div class="h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></div>
                                     Relationship Intel
                                 </h4>
-                                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full border border-white/5" x-text="selectedDate + ' ' + monthName"></span>
+                                <span class="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest bg-indigo-50 dark:bg-white/5 px-3 py-1 rounded-full border border-indigo-100 dark:border-white/5" x-text="selectedDate + ' ' + monthName"></span>
                             </div>
 
                             <div class="space-y-2">
                                 <template x-if="dailyEvents.length === 0">
-                                    <div class="py-8 text-center bg-white/5 rounded-[1.5rem] border border-white/5">
-                                        <div class="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3 border border-white/10">
-                                            <svg class="h-5 w-5 text-indigo-300/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <div class="py-8 text-center bg-slate-50 dark:bg-white/5 rounded-[1.5rem] border border-slate-100 dark:border-white/5">
+                                        <div class="h-10 w-10 rounded-xl bg-white dark:bg-white/5 shadow-sm dark:shadow-none flex items-center justify-center mx-auto mb-3 border border-slate-200 dark:border-white/10">
+                                            <svg class="h-5 w-5 text-slate-400 dark:text-indigo-300/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
                                         </div>
-                                        <p class="text-[9px] font-black text-indigo-300/40 uppercase tracking-[0.15em]">Silent Pulse</p>
+                                        <p class="text-[9px] font-black text-slate-400 dark:text-indigo-300/40 uppercase tracking-[0.15em]">Silent Pulse</p>
                                     </div>
                                 </template>
                                 <template x-for="(event, i) in dailyEvents" :key="i">
                                     <button @click="$dispatch('open-messaging-modal', event)" 
-                                       class="relative p-3.5 rounded-[1.5rem] bg-white/5 border border-white/5 flex items-center gap-4 group hover:bg-brand/10 hover:border-brand/20 transition-all duration-300 overflow-hidden block w-full text-left">
+                                       class="relative p-3.5 rounded-[1.5rem] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 flex items-center gap-4 group hover:bg-indigo-50 hover:border-indigo-100 dark:hover:bg-indigo-500/10 dark:hover:border-indigo-500/20 transition-all duration-300 overflow-hidden block w-full text-left">
                                         <div class="relative z-10 h-11 w-11 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl group-hover:scale-105"
-                                            :class="event.type === 'anniversary' ? 'bg-pink-500/10 text-pink-300' : 'bg-amber-500/10 text-amber-300'">
+                                            :class="event.type === 'anniversary' ? 'bg-pink-100 text-pink-600 dark:bg-pink-500/10 dark:text-pink-300' : 'bg-amber-100 text-amber-600 dark:bg-amber-500/10 dark:text-amber-300'">
                                             <template x-if="event.type === 'birthday'">
                                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V6a2 2 0 10-2 2h2zm0 0H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V10a2 2 0 00-2-2h-5z" />
@@ -289,12 +289,12 @@
 
                                         <div class="relative z-10 flex-1 min-w-0">
                                             <div class="flex items-center justify-between mb-1">
-                                                <h5 class="text-[11px] font-black text-white uppercase tracking-tight truncate" x-text="event.title"></h5>
-                                                <svg class="h-3 w-3 text-indigo-400 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <h5 class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-tight truncate" x-text="event.title"></h5>
+                                                <svg class="h-3 w-3 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                 </svg>
                                             </div>
-                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity" x-text="event.message"></p>
+                                            <p class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity" x-text="event.message"></p>
                                         </div>
                                     </button>
                                 </template>
