@@ -365,8 +365,8 @@
         <div class="absolute -bottom-48 left-1/2 -translate-x-1/2 w-full h-96 bg-rose-500/10 blur-[120px] rounded-full"></div>
         
         <div class="max-w-7xl mx-auto px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-8 mb-16">
-                <div class="md:col-span-2">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-8 mb-16">
+                <div class="col-span-2 md:col-span-2">
                     <div class="flex items-center gap-4 mb-6">
                         <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1) brightness(1.2);">
                         <span class="text-xl font-black text-white tracking-[0.2em]">nexorabyte</span>

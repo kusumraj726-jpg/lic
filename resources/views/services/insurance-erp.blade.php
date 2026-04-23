@@ -2728,8 +2728,8 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-8 mb-16">
-                <div class="md:col-span-2">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-8 mb-16">
+                <div class="col-span-2 md:col-span-2">
                     <div class="flex items-center gap-4 mb-6">
                         <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte"
                             class="h-10 w-auto object-contain"
