@@ -50,25 +50,25 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Full Name</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Full Name</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                                     {{ $staff->name }}
                                 </div>
                             </div>
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Email Address</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Email Address</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                                     {{ $staff->email }}
                                 </div>
                             </div>
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Phone Number</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Phone Number</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                                     {{ $staff->phone ?? 'Not Listed' }}
                                 </div>
                             </div>
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Designation</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Designation</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                                     {{ $staff->designation ?? 'Senior Advisor' }}
                                 </div>
@@ -88,13 +88,13 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Agency Advisor ID</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Agency Advisor ID</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                                     #{{ $staff->advisor_id }}
                                 </div>
                             </div>
                             <div class="space-y-2.5">
-                                <label class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest ml-1">Onboarding Timestamp</label>
+                                <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest ml-1">Onboarding Timestamp</label>
                                 <div class="w-full bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-2xl px-6 py-4 text-sm font-bold text-slate-600 dark:text-slate-300 flex items-center justify-between">
                                     {{ $staff->created_at->format('d F, Y - H:i') }}
                                     <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Verified Access</span>
@@ -130,7 +130,7 @@
                                     <div class="h-12 w-12 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-400">
                                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $p['icon'] }}" /></svg>
                                     </div>
-                                    <span class="text-[10px] font-black text-slate-700 dark:text-white uppercase tracking-widest">{{ $p['label'] }}</span>
+                                    <span class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">{{ $p['label'] }}</span>
                                 </div>
                                 <div class="relative inline-flex items-center opacity-70">
                                     <div class="w-11 h-6 rounded-full transition-all {{ $staff->{$p['key']} ? 'bg-indigo-600' : 'bg-rose-500' }}">
@@ -144,7 +144,7 @@
 
                     <!-- 5. Account Status -->
                     <div class="space-y-6 pt-4">
-                        <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Account Status</label>
+                        <label class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] ml-1">Account Status</label>
                         <div class="flex gap-4 max-w-2xl">
                             <div class="flex-1 py-4 text-center text-xs font-black uppercase tracking-widest border border-slate-100 dark:border-slate-800 rounded-xl transition-all {{ $staff->status == 'active' ? 'bg-indigo-600 text-white shadow-xl' : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/50' }}">Active</div>
                             <div class="flex-1 py-4 text-center text-xs font-black uppercase tracking-widest border border-slate-100 dark:border-slate-800 rounded-xl transition-all {{ $staff->status == 'inactive' ? 'bg-white dark:bg-rose-500 text-slate-900 dark:text-white shadow-md' : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/50' }}">Locked</div>

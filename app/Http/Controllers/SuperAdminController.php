@@ -32,9 +32,9 @@ class SuperAdminController extends Controller
             if ($isActive) {
                 $stats['active']++;
                 // Add to revenue based on plan
-                if ($tenant->subscription_plan === 'monthly') $stats['monthly_mrr'] += 999;
-                if ($tenant->subscription_plan === 'yearly') $stats['yearly_arr'] += 9990;
-                if ($tenant->subscription_plan === 'trial') $stats['trial_revenue'] += 99;
+                if ($tenant->subscription_plan === 'monthly') $stats['monthly_mrr'] += 1999;
+                if ($tenant->subscription_plan === 'yearly') $stats['yearly_arr'] += 14999;
+                if ($tenant->subscription_plan === 'trial') $stats['trial_revenue'] += 0;
             } else {
                 $stats['expired']++;
             }

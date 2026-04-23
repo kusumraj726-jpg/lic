@@ -7,7 +7,7 @@
             @if(Auth::user()->logo_url)
                 <img src="{{ Auth::user()->logo_url }}" alt="Logo" class="h-10 w-10 object-cover rounded-xl shadow-lg bg-white">
             @else
-                <div class="h-10 w-10 rounded-xl bg-rose-600 text-white flex shrink-0 items-center justify-center font-black text-xl shadow-lg shadow-rose-200 group-hover:scale-105 transition-transform">
+                <div class="h-10 w-10 rounded-xl bg-rose-600 text-white flex shrink-0 items-center justify-center font-black text-xl shadow-lg shadow-rose-200 dark:shadow-none group-hover:scale-105 transition-transform">
                     {{ substr($sidebarContext->company_name ?? 'V', 0, 1) }}
                 </div>
             @endif

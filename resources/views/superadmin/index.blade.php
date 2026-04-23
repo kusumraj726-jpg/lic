@@ -50,21 +50,21 @@
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Monthly MRR</p>
                     <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['monthly_mrr'] ?? 0) }}</p>
                 </div>
-                <span class="bg-indigo-50 text-indigo-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">999/mo</span>
+                <span class="bg-indigo-50 text-indigo-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">1,999/mo</span>
             </div>
             <div class="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Yearly ARR</p>
                     <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['yearly_arr'] ?? 0) }}</p>
                 </div>
-                <span class="bg-amber-50 text-amber-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">9,990/yr</span>
+                <span class="bg-amber-50 text-amber-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">14,999/yr</span>
             </div>
             <div class="bg-white p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Trial Revenue</p>
                     <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['trial_revenue'] ?? 0) }}</p>
                 </div>
-                <span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">99 Trial</span>
+                <span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-3 py-1 rounded-full uppercase">FREE TRIAL</span>
             </div>
         </div>
 

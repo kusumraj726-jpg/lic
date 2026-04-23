@@ -87,14 +87,18 @@
             filter: blur(120px);
         }
 
-        @keyframes auraMove {
-            0% {
-                transform: translate(-5%, -5%) scale(1);
-            }
+        @keyframes flagshipGlow {
+            0% { box-shadow: 0 0 0px rgba(79, 70, 229, 0); border-color: rgba(226, 232, 240, 1); }
+            50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.25); border-color: rgba(79, 70, 229, 0.4); }
+            100% { box-shadow: 0 0 0px rgba(79, 70, 229, 0); border-color: rgba(226, 232, 240, 1); }
+        }
+        .flagship-card {
+            animation: flagshipGlow 4s infinite ease-in-out;
+        }
 
-            100% {
-                transform: translate(15%, 20%) scale(1.15);
-            }
+        @keyframes auraMove {
+            0% { transform: translate(-5%, -5%) scale(1); }
+            100% { transform: translate(15%, 20%) scale(1.15); }
         }
 
         /* Subtle Engineering Grid (Darker lines for light mode) */
@@ -2658,18 +2662,19 @@
                     <div>
                         <h3
                             class="text-xl font-black text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-4">
-                            60-Day Trial Plan</h3>
-                        <div class="text-4xl font-black text-indigo-600 mb-8">₹99 <span
-                                class="text-xs text-slate-500 font-medium">one-time</span></div>
+                            30-Day Free Trial</h3>
+                        <div class="text-4xl font-black text-indigo-600 mb-8">₹0 <span
+                                class="text-xs text-slate-500 font-medium text-slate-400">one-time</span></div>
                         <ul class="text-left space-y-4 mb-8 text-sm font-medium text-slate-700">
                             <li class="flex items-center gap-3">✓ Full Module Access</li>
                             <li class="flex items-center gap-3">✓ Multi-User Sync</li>
+                            <li class="flex items-center gap-3 text-slate-400">✕ No Renewal</li>
                         </ul>
                     </div>
                     <button @click="pay('trial')" :disabled="loadingPlan !== null"
                         class="elite-btn bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-200">
-                        <span x-show="loadingPlan !== 'trial'">Try For ₹99</span>
-                        <span x-show="loadingPlan === 'trial'" class="animate-pulse">Processing...</span>
+                        <span x-show="loadingPlan !== 'trial'">Try For Free</span>
+                        <span x-show="loadingPlan === 'trial'" class="animate-pulse">Activating...</span>
                     </button>
                 </div>
                 <!-- Starter -->
@@ -2680,38 +2685,52 @@
                         <h3
                             class="text-xl font-black text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-4">
                             Monthly Pro Plan</h3>
-                        <div class="text-4xl font-black text-indigo-600 mb-8">₹999 <span
+                        <div class="text-4xl font-black text-indigo-600 mb-8">₹1,999 <span
                                 class="text-xs text-slate-500 font-medium">/mo</span></div>
                         <ul class="text-left space-y-4 mb-8 text-sm font-medium text-slate-700">
                             <li class="flex items-center gap-3">✓ Unlimited Clients</li>
                             <li class="flex items-center gap-3">✓ Priority Support</li>
+                            <li class="flex items-center gap-3">✓ Renewable Monthly</li>
                         </ul>
                     </div>
                     <button @click="pay('monthly')" :disabled="loadingPlan !== null"
                         class="elite-btn bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-200">
-                        <span x-show="loadingPlan !== 'monthly'">Pay ₹999/mo</span>
+                        <span x-show="loadingPlan !== 'monthly'">Pay ₹1,999/mo</span>
                         <span x-show="loadingPlan === 'monthly'" class="animate-pulse">Processing...</span>
                     </button>
                 </div>
                 <!-- Yearly Elite -->
                 <div
-                    class="crystal-card p-10 rounded-[3.5rem] relative flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                    class="crystal-card p-10 rounded-[3.5rem] relative flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flagship-card border-2 border-indigo-200">
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-gradient-to-l from-rose-600 to-pink-500 text-white text-[9px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-bl-3xl shadow-lg animate-pulse">
+                            Founder's Sale
+                        </div>
+                    </div>
                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-500/5 rounded-full blur-[100px]"></div>
                     <div>
-                        <h3
-                            class="text-xl font-black text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-4">
-                            Yearly Elite Plan</h3>
-                        <div class="text-4xl font-black text-indigo-600 mb-8">₹9,990 <span
-                                class="text-xs text-slate-500 font-medium">/yr</span></div>
+                        <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+                            <h3 class="text-xl font-black text-slate-900 uppercase tracking-widest">Founder's Elite</h3>
+                            <span class="bg-indigo-50 text-indigo-600 text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Flagship Choice</span>
+                        </div>
+                        <div class="flex items-baseline gap-3 mb-2">
+                            <div class="text-4xl font-black text-indigo-600">₹14,999 <span class="text-xs text-slate-500 font-medium">/yr</span></div>
+                            <div class="text-sm text-slate-400 line-through font-bold">₹17,999</div>
+                        </div>
+                        <div class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-8 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                            Founder's Discount — First 50 Users Only
+                        </div>
                         <ul class="text-left space-y-4 mb-8 text-sm font-medium text-slate-700">
                             <li class="flex items-center gap-3">✓ Everything in Pro</li>
                             <li class="flex items-center gap-3">✓ Dedicated Manager</li>
                             <li class="flex items-center gap-3 text-indigo-600">✓ VIP Priority Access</li>
+                            <li class="flex items-center gap-3">✓ Best Value Savings</li>
                         </ul>
                     </div>
                     <button @click="pay('yearly')" :disabled="loadingPlan !== null"
                         class="elite-btn bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-200">
-                        <span x-show="loadingPlan !== 'yearly'">Pay ₹9,990/yr</span>
+                        <span x-show="loadingPlan !== 'yearly'">Claim ₹14,999/yr Offer</span>
                         <span x-show="loadingPlan === 'yearly'" class="animate-pulse">Processing...</span>
                     </button>
                 </div>
@@ -3026,6 +3045,12 @@
                             console.error('Payment Initialization Failed:', data.message);
                             alert(data.message || 'Error initializing payment.');
                             this.loadingPlan = null;
+                            return;
+                        }
+
+                        // Handle Free Trial (No Razorpay needed)
+                        if (data.is_free) {
+                            window.location.href = redirectUrl + "?plan=" + plan + "&status=free_trial";
                             return;
                         }
 

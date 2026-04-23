@@ -60,7 +60,7 @@
         </div>
 
         <div class="pt-4 flex flex-col gap-4">
-            <button class="w-full bg-rose-600 hover:bg-rose-500 text-white font-black py-4 rounded-2xl text-[10px] shadow-lg shadow-rose-200 uppercase tracking-[0.2em] transition-all active:scale-95 transform">
+            <button class="w-full bg-rose-600 hover:bg-rose-500 text-white font-black py-4 rounded-2xl text-[10px] shadow-lg shadow-rose-200 dark:shadow-none uppercase tracking-[0.2em] transition-all active:scale-95 transform">
                 {{ __('Provision Account') }}
             </button>
             

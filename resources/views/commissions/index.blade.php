@@ -208,12 +208,12 @@
                             @csrf
                             <div class="space-y-4">
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹)</label>
-                                    <input type="number" name="amount" x-model="commission.received_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 font-bold text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Received Amount (₹)</label>
+                                    <input type="number" name="amount" x-model="commission.received_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 font-bold text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                 </div>
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Date</label>
-                                    <input type="date" name="received_at" x-model="commission.received_at" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Received Date</label>
+                                    <input type="date" name="received_at" x-model="commission.received_at" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                 </div>
                             </div>
 
@@ -249,8 +249,8 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Client <span class="text-rose-500">*</span></label>
-                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Client <span class="text-rose-500">*</span></label>
+                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
                                         <option value="">-- Select Client --</option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -258,12 +258,12 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Policy Number <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Policy Number <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
                                 </div>
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Provider / Company <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="provider" x-model="commission.provider" list="provider_list" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Provider / Company <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="provider" x-model="commission.provider" list="provider_list" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
                                     <datalist id="provider_list">
                                         <option value="{{ auth()->user()->context()->company_name ?? 'Vantage ERP' }}">
                                         <option value="LIC of India">
@@ -275,30 +275,30 @@
                                     </datalist>
                                 </div>
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Expected Amount (₹) <span class="text-rose-500">*</span></label>
-                                    <input type="number" name="expected_amount" x-model="commission.expected_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-black text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Expected Amount (₹) <span class="text-rose-500">*</span></label>
+                                    <input type="number" name="expected_amount" x-model="commission.expected_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
                                 </div>
                                 <div>
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Status</label>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Status</label>
                                     <select name="status" x-model="commission.status" 
                                         @change="if(commission.status === 'received') commission.received_amount = commission.expected_amount"
-                                        class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                                        class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                         <option value="pending">Pending</option>
                                         <option value="received">Received</option>
                                         <option value="partial">Partial</option>
                                     </select>
                                 </div>
                                 <div x-show="commission.status === 'received' || commission.status === 'partial'">
-                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹) <span class="text-rose-500">*</span></label>
+                                    <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Received Amount (₹) <span class="text-rose-500">*</span></label>
                                     <input type="number" name="received_amount" x-model="commission.received_amount" step="0.01" 
                                         :required="commission.status === 'received' || commission.status === 'partial'"
-                                        class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-black text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                                        class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                 </div>
                             </div>
 
                             <div class="mt-6">
-                                <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Internal Notes</label>
-                                <textarea name="notes" x-model="commission.notes" rows="2" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" placeholder="Optional notes..."></textarea>
+                                <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Internal Notes</label>
+                                <textarea name="notes" x-model="commission.notes" rows="2" class="w-full rounded-xl border-slate-200 focus:border-violet-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Optional notes..."></textarea>
                             </div>
 
                             <div class="mt-10 flex gap-4">
@@ -357,7 +357,7 @@
 
                                     @foreach($types as $key => $label)
                                         <div class="p-6 rounded-[2rem] bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-slate-800 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
-                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 block">{{ $label }}</label>
+                                            <label class="text-[9px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] mb-3 block">{{ $label }}</label>
                                             <div class="flex items-center gap-3">
                                                 <input type="number" name="rates[{{ $key }}]" value="{{ $rates[$key] ?? 15 }}" step="0.5" class="w-full bg-transparent border-none p-0 text-2xl font-black text-slate-900 dark:text-white focus:ring-0">
                                                 <span class="text-xl font-black text-slate-400">%</span>

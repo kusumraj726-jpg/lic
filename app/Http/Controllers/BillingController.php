@@ -32,9 +32,17 @@ class BillingController extends Controller
     {
         $request->validate(['plan' => 'required|in:monthly,yearly,trial']);
 
-        $amounts = ['trial' => 99, 'monthly' => 999, 'yearly' => 9990];
+        $amounts = ['trial' => 0, 'monthly' => 1999, 'yearly' => 14999];
         $amount = $amounts[$request->plan];
         $amountInPaise = $amount * 100;
+
+        if ($amount === 0) {
+            return response()->json([
+                'success' => true,
+                'is_free' => true,
+                'plan'    => $request->plan,
+            ]);
+        }
 
         try {
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
@@ -117,7 +125,7 @@ class BillingController extends Controller
     {
         $request->validate(['plan' => 'required|in:monthly,yearly']);
 
-        $amount = $request->plan === 'yearly' ? 9990 : 999;
+        $amount = $request->plan === 'yearly' ? 14999 : 1999;
         $amountInPaise = $amount * 100;
 
         try {
@@ -164,7 +172,7 @@ class BillingController extends Controller
 
             $user = auth()->user();
             $daysToAdd = match($request->plan) {
-                'trial'   => 60,
+                'trial'   => 30,
                 'yearly'  => 365,
                 default   => 30,
             };
