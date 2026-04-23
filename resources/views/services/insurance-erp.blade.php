@@ -223,6 +223,65 @@
         .float-anim {
             animation: float 4s ease-in-out infinite;
         }
+
+        /* ── NAV MOBILE ─────────────────────────────────── */
+        .nav-desktop-links  { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-back-link      { display: flex; }
+        .nav-hamburger      { display: none; }
+        .nav-mobile-menu    { display: none; }
+
+        @media (max-width: 767px) {
+            .nav-desktop-links { display: none !important; }
+            .nav-back-link     { display: none !important; }
+            .nav-hamburger     { display: flex !important; align-items: center; justify-content: center;
+                                 width: 2.5rem; height: 2.5rem;
+                                 background: rgba(255,255,255,0.85);
+                                 border: 1px solid #e2e8f0; border-radius: 0.75rem;
+                                 cursor: pointer; }
+            .nav-mobile-menu.open {
+                display: flex !important;
+                flex-direction: column;
+                gap: 1.25rem;
+                position: fixed;
+                top: 4rem; left: 0; right: 0;
+                background: rgba(255,255,255,0.97);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid #f1f5f9;
+                box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1);
+                padding: 1.5rem;
+                z-index: 60;
+            }
+            .nav-mobile-menu a {
+                font-size: 0.875rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #334155;
+                text-decoration: none;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            .nav-mobile-menu a:last-child {
+                border-bottom: none;
+                background: #e11d48;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.75rem;
+                text-align: center;
+                margin-top: 0.25rem;
+            }
+        }
+
+        /* ── HERO MOBILE ─────────────────────────────────── */
+        @media (max-width: 767px) {
+            .erp-hero-h1 { font-size: 2.25rem !important; line-height: 1.15 !important; }
+            .erp-hero-p  { font-size: 1rem !important; }
+            .erp-section-px { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .erp-section-pt { padding-top: 6rem !important; }
+        }
+        @media (max-width: 480px) {
+            .erp-hero-h1 { font-size: 1.75rem !important; }
+        }
     </style>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
@@ -244,72 +303,91 @@
     </svg>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center" x-data="{ mobileOpen: false }">
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <a href="/" class="flex items-center gap-3">
+    <nav style="position:fixed; width:100%; top:0; left:0; z-index:50; height:4rem; display:flex; align-items:center; background:rgba(255,255,255,0.85); backdrop-filter:blur(40px); border-bottom:1px solid rgba(255,255,255,0.3); box-shadow:0 10px 30px -10px rgba(0,0,0,0.05);">
+        <div style="max-width:80rem; margin:0 auto; width:100%; padding:0 1rem; display:flex; justify-content:space-between; align-items:center; height:4rem; position:relative;">
+
+            <!-- Logo + back link -->
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <a href="/" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;">
                     <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte"
-                        class="h-9 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                    <span class="text-lg font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
+                        style="height:2.25rem; width:auto; object-fit:contain; filter: url(#chroma-key-black) contrast(1.1);">
+                    <span style="font-size:1rem; font-weight:900; color:#0f172a; letter-spacing:0.15em;">nexorabyte</span>
                 </a>
-                <a href="{{ route('services') }}"
-                    class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-rose-600 transition-colors group">
-                    <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ route('services') }}" class="nav-back-link"
+                    style="align-items:center; gap:0.5rem; font-size:0.625rem; font-weight:900; text-transform:uppercase; letter-spacing:0.2em; color:#64748b; text-decoration:none;">
+                    <svg style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                     Back to Services
                 </a>
             </div>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-6">
+            <!-- Desktop nav links -->
+            <div class="nav-desktop-links">
                 <a href="{{ route('force-login') }}"
-                    class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign In</a>
+                    style="font-size:0.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#374151; text-decoration:none;">Sign In</a>
                 <a href="#pricing"
-                    class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Subscription Models</a>
+                    style="background:#e11d48; color:white; font-size:0.6875rem; font-weight:700; padding:0.625rem 1.5rem; border-radius:9999px; text-transform:uppercase; letter-spacing:0.1em; text-decoration:none;">Subscription Models</a>
             </div>
 
-            <!-- Mobile Hamburger -->
-            <button @click="mobileOpen = !mobileOpen" class="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 border border-slate-200 shadow-sm">
-                <svg x-show="!mobileOpen" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Hamburger (mobile only) -->
+            <button id="erp-nav-hamburger" class="nav-hamburger" aria-label="Open menu">
+                <svg id="erp-ham-icon" style="width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
-                <svg x-show="mobileOpen" style="display:none" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg id="erp-close-icon" style="display:none;width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <div x-show="mobileOpen" @click.away="mobileOpen = false"
-             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
-             style="display:none"
-             class="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl px-6 py-6 flex flex-col gap-5 md:hidden z-50">
-            <a href="{{ route('services') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">← Back to Services</a>
-            <a href="{{ route('force-login') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>
-            <a href="#pricing" class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Subscription Models</a>
+        <!-- Mobile dropdown menu -->
+        <div id="erp-mobile-menu" class="nav-mobile-menu">
+            <a href="{{ route('services') }}">← Back to Services</a>
+            <a href="{{ route('force-login') }}">Sign In</a>
+            <a href="#pricing">Subscription Models</a>
         </div>
     </nav>
 
+    <script>
+        (function() {
+            var btn  = document.getElementById('erp-nav-hamburger');
+            var menu = document.getElementById('erp-mobile-menu');
+            var ham  = document.getElementById('erp-ham-icon');
+            var cls  = document.getElementById('erp-close-icon');
+            if (!btn || !menu) return;
+            btn.addEventListener('click', function() {
+                var isOpen = menu.classList.toggle('open');
+                ham.style.display  = isOpen ? 'none'  : 'block';
+                cls.style.display  = isOpen ? 'block' : 'none';
+            });
+            // Close on outside click
+            document.addEventListener('click', function(e) {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('open');
+                    ham.style.display = 'block';
+                    cls.style.display = 'none';
+                }
+            });
+        })();
+    </script>
+
     <!-- Hero Specific to ERP -->
-    <section class="pt-32 sm:pt-44 pb-16 sm:pb-24 px-4 sm:px-8 text-center relative overflow-hidden">
-        <div class="max-w-5xl mx-auto relative z-10">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 text-[10px] font-black uppercase tracking-[0.3em] mb-6 animate-fade-in-up">
-                Architectural Command • Operational Velocity
+    <section class="erp-section-pt erp-section-px" style="padding-top:11rem; padding-bottom:6rem; padding-left:2rem; padding-right:2rem; text-align:center; position:relative; overflow:hidden;">
+        <div style="max-width:64rem; margin:0 auto; position:relative; z-index:10;">
+            <div style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.5rem 1rem; border-radius:9999px; background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.2); color:#e11d48; font-size:0.625rem; font-weight:900; text-transform:uppercase; letter-spacing:0.3em; margin-bottom:1.5rem;" class="animate-fade-in-up">
+                Architectural Command &bull; Operational Velocity
             </div>
-            <h1 class="hero-h1 text-4xl sm:text-6xl md:text-8xl font-extrabold text-slate-900 mb-6 tracking-tighter animate-fade-in-up delay-100 leading-tight">
-                Insurance Agency <br class="hidden sm:block" /> <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Performance Engineering.</span>
+            <h1 class="erp-hero-h1 animate-fade-in-up delay-100" style="font-size:4.5rem; font-weight:800; color:#0f172a; margin-bottom:1.5rem; letter-spacing:-0.03em; line-height:1.1;">
+                Insurance Agency<br />
+                <span style="background:linear-gradient(to right, #e11d48, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Performance Engineering.</span>
             </h1>
-            <p class="text-base sm:text-lg md:text-2xl text-slate-700 font-medium max-w-3xl mx-auto mb-10 animate-fade-in-up delay-200">
+            <p class="erp-hero-p animate-fade-in-up delay-200" style="font-size:1.25rem; color:#334155; font-weight:500; max-width:48rem; margin:0 auto 2.5rem;">
                 A high-precision ERP infrastructure designed to eliminate administrative friction and scale your agency
                 through automated intelligence and unified command.
             </p>
-            <div class="flex items-center justify-center animate-fade-in-up delay-300">
-                <a href="#demo"
-                    class="elite-btn bg-rose-600 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl hover:bg-rose-500">Live Demo</a>
+            <div style="display:flex; align-items:center; justify-content:center;" class="animate-fade-in-up delay-300">
+                <a href="#demo" class="elite-btn" style="background:#e11d48; color:white; padding:1rem 2.5rem; border-radius:1rem; font-size:0.75rem; font-weight:900; text-transform:uppercase; letter-spacing:0.1em; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); text-decoration:none;">Live Demo</a>
             </div>
         </div>
     </section>

@@ -108,6 +108,20 @@
 
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
+        .m-nav-links { display: flex; align-items: center; gap: 1.5rem; }
+        .m-hamburger { display: none; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 0.625rem; cursor: pointer; }
+        .m-mobile-menu { display: none; }
+        @media (max-width: 767px) {
+            .m-nav-links { display: none !important; }
+            .m-hamburger { display: flex !important; }
+            .m-mobile-menu.open { display: flex !important; flex-direction: column; gap: 1rem; position: fixed; top: 4rem; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 1.5rem; z-index: 60; }
+            .m-mobile-menu.open a { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #334155; text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid #f1f5f9; }
+            .m-mobile-menu.open a:last-child { border-bottom: none; background: #0f172a; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; text-align: center; }
+            h1 { font-size: 2.5rem !important; line-height: 1.1 !important; }
+            main { padding-left: 1rem !important; padding-right: 1rem !important; padding-top: 5.5rem !important; padding-bottom: 3rem !important; }
+            .crystal-card { padding: 1.25rem !important; border-radius: 1.5rem !important; }
+        }
+        @media (max-width: 480px) { h1 { font-size: 2rem !important; } }
     </style>
 </head>
 
@@ -125,25 +139,27 @@
     </svg>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
-        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
-            <div class="flex items-center gap-6">
-                <a href="/" class="flex items-center">
-                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                </a>
-                <a href="/" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-rose-600 transition-colors group">
-                    <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Back to Home
-                </a>
+    <nav style="position:fixed;width:100%;top:0;left:0;z-index:50;height:4rem;display:flex;align-items:center;background:rgba(255,255,255,0.85);backdrop-filter:blur(40px);border-bottom:1px solid rgba(255,255,255,0.3);box-shadow:0 10px 30px -10px rgba(0,0,0,0.05);">
+        <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;height:4rem;">
+            <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
+                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
+            </a>
+            <div class="m-nav-links" style="display:flex;align-items:center;gap:1.5rem;">
+                <a href="{{ route('services') }}" style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#374151;text-decoration:none;">Services</a>
+                <a href="{{ route('force-login') }}" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Sign In</a>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="{{ route('services') }}" class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors">Services</a>
-                <a href="{{ route('force-login') }}" class="elite-btn bg-slate-900 text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-slate-800">Sign In</a>
-            </div>
+            <button id="ab-hamburger" class="m-hamburger" aria-label="Menu">
+                <svg id="ab-ham" style="width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="ab-cls" style="display:none;width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div id="ab-menu" class="m-mobile-menu">
+            <a href="{{ route('services') }}">Services</a>
+            <a href="{{ route('force-login') }}">Sign In</a>
         </div>
     </nav>
+    <script>(function(){var b=document.getElementById('ab-hamburger'),m=document.getElementById('ab-menu'),h=document.getElementById('ab-ham'),c=document.getElementById('ab-cls');if(!b)return;b.addEventListener('click',function(){var o=m.classList.toggle('open');h.style.display=o?'none':'block';c.style.display=o?'block':'none';});document.addEventListener('click',function(e){if(!b.contains(e.target)&&!m.contains(e.target)){m.classList.remove('open');h.style.display='block';c.style.display='none';}});})();</script>
 
     <main class="pt-44 pb-24 px-8">
         <div class="max-w-5xl mx-auto">

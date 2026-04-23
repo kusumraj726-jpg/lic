@@ -32,6 +32,21 @@
         .elite-btn { transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        /* ── Mobile Nav ── */
+        .m-nav-links  { display: flex; align-items: center; gap: 1.5rem; }
+        .m-hamburger  { display: none; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 0.625rem; cursor: pointer; }
+        .m-mobile-menu { display: none; }
+        @media (max-width: 767px) {
+            .m-nav-links  { display: none !important; }
+            .m-hamburger  { display: flex !important; }
+            .m-mobile-menu.open { display: flex !important; flex-direction: column; gap: 1rem; position: fixed; top: 4rem; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 1.5rem; z-index: 60; }
+            .m-mobile-menu.open a { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #334155; text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid #f1f5f9; }
+            .m-mobile-menu.open a:last-child { border-bottom: none; background: #e11d48; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; text-align: center; }
+            h1 { font-size: 2.5rem !important; line-height: 1.15 !important; }
+            section, main { padding-left: 1rem !important; padding-right: 1rem !important; padding-top: 5.5rem !important; }
+            .crystal-card { padding: 1.25rem !important; border-radius: 1.5rem !important; }
+        }
+        @media (max-width: 480px) { h1 { font-size: 2rem !important; } }
     </style>
 </head>
 
@@ -84,24 +99,31 @@
     </svg>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
-        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
-            <div class="flex items-center gap-8">
-                <a href="/" class="flex items-center gap-4">
-                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                    <span class="text-xl font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
-                </a>
-                <div class="h-4 w-px bg-slate-200 hidden md:block"></div>
-                <a href="{{ route('services') }}" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-rose-600 transition-colors group">
-                    <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-                    Back to Services
-                </a>
+    <nav style="position:fixed;width:100%;top:0;left:0;z-index:50;height:4rem;display:flex;align-items:center;background:rgba(255,255,255,0.85);backdrop-filter:blur(40px);border-bottom:1px solid rgba(255,255,255,0.3);box-shadow:0 10px 30px -10px rgba(0,0,0,0.05);">
+        <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;height:4rem;">
+            <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
+                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
+            </a>
+            <!-- Desktop links -->
+            <div class="m-nav-links">
+                <a href="#consultation-section" style="background:#e11d48;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:1rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Consult Now</a>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="#consultation-section" class="elite-btn bg-rose-600 text-white text-[11px] font-bold px-8 py-3 rounded-2xl uppercase tracking-widest hover:bg-rose-500 shadow-xl shadow-rose-200 flex items-center justify-center">Consult Now</a>
-            </div>
+            <!-- Hamburger -->
+            <button id="wd-hamburger" class="m-hamburger" aria-label="Menu">
+                <svg id="wd-ham" style="width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="wd-cls" style="display:none;width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <!-- Mobile dropdown -->
+        <div id="wd-menu" class="m-mobile-menu">
+            <a href="{{ route('services') }}">← Back to Services</a>
+            <a href="#consultation-section">Consult Now</a>
         </div>
     </nav>
+    <script>
+        (function(){var b=document.getElementById('wd-hamburger'),m=document.getElementById('wd-menu'),h=document.getElementById('wd-ham'),c=document.getElementById('wd-cls');if(!b)return;b.addEventListener('click',function(){var o=m.classList.toggle('open');h.style.display=o?'none':'block';c.style.display=o?'block':'none';});document.addEventListener('click',function(e){if(!b.contains(e.target)&&!m.contains(e.target)){m.classList.remove('open');h.style.display='block';c.style.display='none';}});})();
+    </script>
 
     <!-- Hero -->
     <section class="pt-44 pb-24 px-8 text-center relative overflow-hidden">
