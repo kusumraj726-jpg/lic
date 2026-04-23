@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Insurance Management Engine | nexorabyte</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -282,11 +282,16 @@
         @media (max-width: 480px) {
             .erp-hero-h1 { font-size: 1.75rem !important; }
         }
+        @media (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
     </style>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
-<body class="text-slate-700 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="text-slate-700 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col">
     <!-- Premium Background Layers -->
     <div class="premium-bg">
         <div class="aura aura-1"></div>
@@ -372,6 +377,7 @@
         })();
     </script>
 
+    <main class="flex-grow">
     <!-- Hero Specific to ERP -->
     <section class="erp-section-pt erp-section-px" style="padding-top:11rem; padding-bottom:6rem; padding-left:2rem; padding-right:2rem; text-align:center; position:relative; overflow:hidden;">
         <div style="max-width:64rem; margin:0 auto; position:relative; z-index:10;">
@@ -2713,6 +2719,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <footer x-data="{}" class="py-20 border-t border-white/5 bg-[#0f111a] relative overflow-hidden">
         <!-- Footer Aurora Glow -->

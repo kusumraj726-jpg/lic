@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'NexoraByte') }}</title>
@@ -23,6 +23,11 @@
                 background: rgba(15, 23, 42, 0.8);
                 backdrop-filter: blur(12px);
                 border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            @media (max-width: 768px) {
+                input, select, textarea {
+                    font-size: 16px !important;
+                }
             }
         </style>
         

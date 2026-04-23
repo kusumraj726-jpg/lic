@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Custom Web Engineering | nexorabyte</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -36,7 +36,7 @@
         .m-nav-links  { display: flex; align-items: center; gap: 1.5rem; }
         .m-hamburger  { display: none; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0; border-radius: 0.625rem; cursor: pointer; }
         .m-mobile-menu { display: none; }
-        @media (max-width: 767px) {
+        @media (max-width: 1279px) {
             .m-nav-links  { display: none !important; }
             .m-hamburger  { display: flex !important; }
             .m-mobile-menu.open { display: flex !important; flex-direction: column; gap: 1rem; position: fixed; top: 4rem; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 1.5rem; z-index: 60; }
@@ -47,6 +47,11 @@
             .crystal-card { padding: 1.25rem !important; border-radius: 1.5rem !important; }
         }
         @media (max-width: 480px) { h1 { font-size: 2rem !important; } }
+        @media (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 
@@ -106,7 +111,7 @@
                 <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
             </a>
             <!-- Desktop links -->
-            <div class="m-nav-links">
+            <div class="m-nav-links hidden xl:flex">
                 <a href="#consultation-section" style="background:#e11d48;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:1rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Consult Now</a>
             </div>
             <!-- Hamburger -->
