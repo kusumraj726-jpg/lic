@@ -76,6 +76,16 @@
 
         <div class="erp-layout">
             @auth
+                {{-- Hamburger toggle button (mobile only) --}}
+                <button id="sidebar-toggle" class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+                    <svg id="hamburger-icon" class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                {{-- Sidebar overlay --}}
+                <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
                 @include('layouts.sidebar')
             @endauth
 
@@ -540,5 +550,49 @@
             </div>
         </div>
         @endauth
+    @auth
+    <script>
+        (function() {
+            const toggleBtn  = document.getElementById('sidebar-toggle');
+            const sidebar    = document.querySelector('.glass-sidebar');
+            const overlay    = document.getElementById('sidebar-overlay');
+
+            if (!toggleBtn || !sidebar || !overlay) return;
+
+            function openSidebar() {
+                sidebar.classList.add('sidebar-open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('sidebar-open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar();
+            });
+
+            overlay.addEventListener('click', closeSidebar);
+
+            // Close sidebar on nav-item click (mobile UX)
+            sidebar.querySelectorAll('.nav-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth < 1024) closeSidebar();
+                });
+            });
+
+            // Auto-close on resize to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    closeSidebar();
+                    document.body.style.overflow = '';
+                }
+            });
+        })();
+    </script>
+    @endauth
     </body>
 </html>

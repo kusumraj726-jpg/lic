@@ -244,13 +244,13 @@
     </svg>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
-        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
-            <div class="flex items-center gap-6">
-                <a href="/" class="flex items-center gap-4">
+    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center" x-data="{ mobileOpen: false }">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte"
-                        class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                    <span class="text-xl font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
+                        class="h-9 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <span class="text-lg font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
                 </a>
                 <a href="{{ route('services') }}"
                     class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-rose-600 transition-colors group">
@@ -262,56 +262,70 @@
                 </a>
             </div>
 
-            <div class="flex items-center gap-6">
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-6">
                 <a href="{{ route('force-login') }}"
-                    class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign
-                    In</a>
+                    class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign In</a>
                 <a href="#pricing"
-                    class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Subscription
-                    Models</a>
+                    class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Subscription Models</a>
             </div>
+
+            <!-- Mobile Hamburger -->
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 border border-slate-200 shadow-sm">
+                <svg x-show="!mobileOpen" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg x-show="mobileOpen" style="display:none" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileOpen" @click.away="mobileOpen = false"
+             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+             style="display:none"
+             class="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl px-6 py-6 flex flex-col gap-5 md:hidden z-50">
+            <a href="{{ route('services') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">← Back to Services</a>
+            <a href="{{ route('force-login') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>
+            <a href="#pricing" class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Subscription Models</a>
         </div>
     </nav>
 
     <!-- Hero Specific to ERP -->
-    <section class="pt-44 pb-24 px-8 text-center relative overflow-hidden">
+    <section class="pt-32 sm:pt-44 pb-16 sm:pb-24 px-4 sm:px-8 text-center relative overflow-hidden">
         <div class="max-w-5xl mx-auto relative z-10">
-            <div
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 text-[10px] font-black uppercase tracking-[0.3em] mb-8 animate-fade-in-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 text-[10px] font-black uppercase tracking-[0.3em] mb-6 animate-fade-in-up">
                 Architectural Command • Operational Velocity
             </div>
-            <h1
-                class="text-6xl md:text-8xl font-extrabold text-slate-900 mb-8 tracking-tighter animate-fade-in-up delay-100 leading-tight">
-                Insurance Agency <br /> <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Performance
-                    Engineering.</span>
+            <h1 class="hero-h1 text-4xl sm:text-6xl md:text-8xl font-extrabold text-slate-900 mb-6 tracking-tighter animate-fade-in-up delay-100 leading-tight">
+                Insurance Agency <br class="hidden sm:block" /> <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Performance Engineering.</span>
             </h1>
-            <p
-                class="text-lg md:text-2xl text-slate-700 font-medium max-w-3xl mx-auto mb-12 animate-fade-in-up delay-200">
+            <p class="text-base sm:text-lg md:text-2xl text-slate-700 font-medium max-w-3xl mx-auto mb-10 animate-fade-in-up delay-200">
                 A high-precision ERP infrastructure designed to eliminate administrative friction and scale your agency
                 through automated intelligence and unified command.
             </p>
             <div class="flex items-center justify-center animate-fade-in-up delay-300">
                 <a href="#demo"
-                    class="elite-btn bg-rose-600 text-white px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl hover:bg-rose-500">Live
-                    Demo</a>
+                    class="elite-btn bg-rose-600 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl hover:bg-rose-500">Live Demo</a>
             </div>
         </div>
     </section>
 
     <!-- Core Capabilities (The 6 Pillars) -->
-    <section id="capabilities" class="py-32 px-8 bg-white/30 backdrop-blur-sm relative">
+    <section id="capabilities" class="py-16 sm:py-32 px-4 sm:px-8 bg-white/30 backdrop-blur-sm relative">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 animate-fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">The Pillars of Command
-                </h2>
+            <div class="text-center mb-12 sm:mb-20 animate-fade-in-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">The Pillars of Command</h2>
                 <p class="text-slate-600 font-medium max-w-2xl mx-auto">Every module is engineered to provide absolute
                     clarity and control over your business ecosystem.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <!-- Client Intelligence -->
                 <div
-                    class="crystal-card p-12 rounded-[3.5rem] relative overflow-hidden group animate-fade-in-up delay-100">
+                    class="crystal-card p-6 sm:p-12 rounded-[2rem] sm:rounded-[3.5rem] relative overflow-hidden group animate-fade-in-up delay-100">
                     <div
                         class="absolute -right-16 -top-16 w-48 h-48 bg-rose-500/5 rounded-full blur-[60px] group-hover:bg-rose-500/10 transition-all duration-700">
                     </div>
@@ -451,36 +465,31 @@
     </section>
 
     <!-- Live Interactive Experience (Pixel-Perfect Replica) -->
-    <section id="demo" class="py-32 px-8 bg-[#0f111a] relative overflow-hidden" x-data="simulationDashboard()">
+    <section id="demo" class="py-16 sm:py-32 px-4 sm:px-8 bg-[#0f111a] relative overflow-hidden" x-data="simulationDashboard()">
 
         <!-- App-Style Background System -->
         <div class="absolute inset-0 bg-[#fdfdff] opacity-10"></div>
-        <div
-            class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/20 rounded-full blur-[140px] animate-pulse">
-        </div>
-        <div
-            class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-500/20 rounded-full blur-[120px] animate-pulse">
-        </div>
+        <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/20 rounded-full blur-[140px] animate-pulse"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-500/20 rounded-full blur-[120px] animate-pulse"></div>
 
         <div class="max-w-[1440px] mx-auto relative z-10">
-            <div class="text-center mb-16">
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
+            <div class="text-center mb-10 sm:mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
                     Production Simulation
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-white mb-6">The Elite Command Center.</h2>
-                <p class="text-slate-400 font-medium max-w-2xl mx-auto">This is a pixel-perfect, read-only simulation of
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6">The Elite Command Center.</h2>
+                <p class="text-slate-400 font-medium max-w-2xl mx-auto px-4">This is a pixel-perfect, read-only simulation of
                     the actual NexoraByte ERP environment. Every pixel and data point mirrors our production
                     engineering.</p>
             </div>
 
             <!-- Interface Container -->
-            <div class="bg-[#fdfdff] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden flex flex-col md:flex-row h-[880px] scale-95 opacity-0 transition-all duration-1000"
+            <div class="bg-[#fdfdff] rounded-[2rem] sm:rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden flex flex-col md:flex-row md:h-[880px] h-auto scale-95 opacity-0 transition-all duration-1000"
                 :class="isLoaded ? 'scale-100 opacity-100' : ''">
 
-                <!-- Sidebar Replica -->
+                <!-- Sidebar Replica (hidden on mobile, shown on md+) -->
                 <aside
-                    class="w-full md:w-[280px] bg-white flex flex-col pt-8 pb-4 shrink-0 border-r border-slate-100 selection:bg-indigo-500">
+                    class="hidden md:flex w-full md:w-[280px] bg-white flex-col pt-8 pb-4 shrink-0 border-r border-slate-100 selection:bg-indigo-500">
                     <div class="px-6 mb-10">
                         <div class="flex items-center gap-4">
                             <div class="h-10 w-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-indigo-200"
@@ -545,7 +554,7 @@
 
                 <!-- Content Area -->
                 <main
-                    class="flex-1 bg-[#fdfdff] overflow-y-auto p-10 relative selection:bg-indigo-500 custom-scrollbar">
+                    class="flex-1 bg-[#fdfdff] overflow-y-auto p-4 sm:p-10 relative selection:bg-indigo-500 custom-scrollbar">
 
                     <!-- Top Bar Header (Perfect Production Replica) -->
                     <div class="flex items-center justify-between mb-10 px-2">

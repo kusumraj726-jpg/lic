@@ -253,52 +253,69 @@
     </svg>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
-        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-4">
-                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                <span class="text-xl font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
+    <nav class="fixed w-full z-50 glass-nav h-16 flex items-center" x-data="{ mobileOpen: false }">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3">
+                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-9 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                <span class="text-lg font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
             </a>
 
-            <div class="flex items-center gap-10">
-                <div
-                    class="hidden lg:flex items-center gap-8 text-[11px] font-semibold text-slate-500 uppercase tracking-widest">
-                </div>
-
-                <div class="flex items-center gap-6">
-                    <a href="{{ route('services') }}"
-                        class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors border-r border-slate-200 pr-6 text-slate-700">Services</a>
-                    @auth
-                        <a href="{{ route('force-login') }}"
-                            class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign
-                            In</a>
-                        <a href="{{ route('billing.index') }}"
-                            class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign
-                            Up</a>
-                    @else
-                        <a href="{{ route('force-login') }}"
-                            class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign
-                            In</a>
-                        <a href="{{ route('get-started') }}"
-                            class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign
-                            Up</a>
-                    @endauth
-                </div>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="{{ route('services') }}"
+                    class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors border-r border-slate-200 pr-6 text-slate-700">Services</a>
+                @auth
+                    <a href="{{ route('force-login') }}"
+                        class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign In</a>
+                    <a href="{{ route('billing.index') }}"
+                        class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign Up</a>
+                @else
+                    <a href="{{ route('force-login') }}"
+                        class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign In</a>
+                    <a href="{{ route('get-started') }}"
+                        class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign Up</a>
+                @endauth
             </div>
+
+            <!-- Mobile Hamburger -->
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 border border-slate-200 shadow-sm">
+                <svg x-show="!mobileOpen" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg x-show="mobileOpen" style="display:none" class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileOpen" @click.away="mobileOpen = false"
+             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+             style="display:none"
+             class="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl px-6 py-6 flex flex-col gap-5 md:hidden z-50">
+            <a href="{{ route('services') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Services</a>
+            @auth
+                <a href="{{ route('force-login') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>
+                <a href="{{ route('billing.index') }}" class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Sign Up</a>
+            @else
+                <a href="{{ route('force-login') }}" class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>
+                <a href="{{ route('get-started') }}" class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Sign Up</a>
+            @endauth
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-44 pb-24 px-8 text-center relative overflow-hidden">
-        <div class="max-w-7xl mx-auto relative z-10 pt-10">
+    <section class="pt-36 pb-16 px-4 sm:px-8 text-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10 pt-6">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50 border border-rose-100 text-rose-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-8 animate-fade-in-up">
                 <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
                 Studio for High-Performance Digital Architecture
             </div>
-            <h1 class="text-6xl md:text-8xl font-extrabold text-slate-900 mb-8 leading-[0.95] tracking-tight animate-fade-in-up delay-100">
-                Architecting the <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400">Digital Backbone.</span>
+            <h1 class="hero-h1 text-5xl md:text-7xl lg:text-8xl font-extrabold text-slate-900 mb-8 leading-[0.95] tracking-tight animate-fade-in-up delay-100">
+                Architecting the <br class="hidden sm:block"/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400">Digital Backbone.</span>
             </h1>
-            <p class="text-lg md:text-2xl text-slate-700 font-bold tracking-tight leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up delay-200">
+            <p class="text-base sm:text-lg md:text-2xl text-slate-700 font-bold tracking-tight leading-relaxed max-w-4xl mx-auto mb-12 animate-fade-in-up delay-200">
                 We engineer high-velocity ERP ecosystems and bespoke web architectures that unify fragmented operations into a single, high-performance pulse.
             </p>
             <!-- Capability Matrix Bar -->
