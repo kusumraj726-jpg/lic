@@ -5,13 +5,6 @@
                 CLAIMS
             </h2>
             
-            <div class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-                </span>
-                <span class="relative text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.15em]">Simulation Active</span>
-            </div>
         </div>
     </x-slot>
 
@@ -92,10 +85,10 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <form action="{{ route('claims.index') }}" method="GET" class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="h-4 w-4 text-slate-400 group-focus-within:text-rose-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search policy # or client..." class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-rose-500 focus:ring-rose-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-72 transition-all uppercase font-bold tracking-tight">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search policy # or client..." class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-rose-500 focus:ring-rose-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-72 transition-all uppercase font-bold tracking-tight">
                     </form>
                     <a href="{{ route('claims.create') }}" class="inline-flex items-center gap-2 bg-rose-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rose-200 hover:bg-rose-500 transition-all">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
@@ -264,12 +257,12 @@
                             <!-- Client & Policy Info -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase mb-1 block">Client</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Client</label>
                                     <div class="p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-slate-700 dark:text-slate-200 font-bold" x-text="claim.client_name"></div>
                                     <input type="hidden" name="client_id" :value="claim.client_id">
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Policy Number</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Policy Number</label>
                                     <template x-if="mode === 'view'">
                                         <div class="p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-indigo-600 dark:text-indigo-400 font-mono font-bold uppercase" x-text="claim.policy_number"></div>
                                     </template>
@@ -282,7 +275,7 @@
                             <!-- Policy Type & Amount -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Policy Type</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Policy Type</label>
                                     <template x-if="mode === 'view'">
                                         <div class="p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-slate-700 dark:text-slate-200 capitalize" x-text="claim.policy_type"></div>
                                     </template>
@@ -296,7 +289,7 @@
                                     </template>
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Claim Amount (₹)</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Claim Amount (₹)</label>
                                     <template x-if="mode === 'view'">
                                         <div class="p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-slate-900 dark:text-slate-100 font-black text-lg" x-text="'₹' + Number(claim.claim_amount).toLocaleString()"></div>
                                     </template>
@@ -309,7 +302,7 @@
                             <!-- Date & Status -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Incident Date</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Incident Date</label>
                                     <template x-if="mode === 'view'">
                                         <div class="p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-slate-700 dark:text-slate-200 font-bold" x-text="claim.incident_date"></div>
                                     </template>
@@ -318,7 +311,7 @@
                                     </template>
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Status</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Status</label>
                                     <template x-if="mode === 'view'">
                                         <div class="p-2 border border-slate-100 dark:border-slate-600 rounded-lg inline-block text-xs font-black uppercase tracking-widest" 
                                              :class="claim.status === 'approved' ? 'text-emerald-600' : (claim.status === 'rejected' ? 'text-rose-600' : (claim.status === 'submitted' ? 'text-indigo-600' : 'text-amber-600'))"

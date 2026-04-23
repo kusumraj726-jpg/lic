@@ -109,6 +109,7 @@ Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(funct
     Route::resource('claims', ClaimController::class)->middleware('checkModule:access_claims');
     Route::resource('renewals', \App\Http\Controllers\RenewalController::class)->middleware('checkModule:access_renewals');
     Route::resource('commissions', \App\Http\Controllers\CommissionController::class)->middleware('checkModule:access_renewals'); // Linked to renewal access
+    Route::get('/commissions-export', [\App\Http\Controllers\CommissionController::class, 'export'])->name('commissions.export');
     Route::post('/commissions/{commission}/received', [\App\Http\Controllers\CommissionController::class, 'markAsReceived'])->name('commissions.received');
     Route::resource('staff', \App\Http\Controllers\StaffController::class);
 

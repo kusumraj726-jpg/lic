@@ -82,22 +82,6 @@
                                     </select>
                                     <x-input-error class="mt-2" :messages="$errors->get('policy_type')" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-2">Commission (%)</label>
-                                    <div class="relative group/comm flex items-center">
-                                        <div class="relative flex-1">
-                                            <input type="number" step="0.01" id="custom_commission_rate" name="custom_commission_rate" value="{{ old('custom_commission_rate') }}" class="w-full pl-4 pr-12 py-2 bg-white dark:bg-[#0f172a] rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-bold focus:ring-2 focus:ring-indigo-500/20 text-slate-900 dark:text-slate-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder="Enter %">
-                                            <span class="absolute inset-y-0 right-0 pr-4 flex items-center justify-center text-sm font-black text-indigo-500 pointer-events-none tracking-tighter">%</span>
-                                        </div>
-                                        <button type="button" 
-                                                @click="let p = availablePolicies.find(p => p.number === policyNumberInput); if(p) { $el.closest('.form-group').querySelector('input').value = p.commission || '' }"
-                                                class="ml-2 p-1.5 text-slate-300 hover:text-indigo-500 dark:text-slate-600 dark:hover:text-indigo-400 transition-all opacity-0 group-hover/comm:opacity-100 flex-shrink-0" 
-                                                title="Reset to Client Default">
-                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                                        </button>
-                                    </div>
-                                    <p class="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-1 uppercase tracking-widest">Affects only this entry (Overrides Master Default).</p>
-                                </div>
                             </div>
 
                             <div x-show="policyTypeMode === 'custom'" x-collapse class="p-5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700/50">

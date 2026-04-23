@@ -44,14 +44,10 @@ class ClientController extends Controller
             'marriage_anniversary' => 'nullable|date',
             'address' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'policy_number' => 'nullable|string|max:255',
-            'policy_type' => 'nullable|string|max:255',
-            'premium_amount' => 'nullable|numeric|min:0',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $clientData = $validated;
-        unset($clientData['photo'], $clientData['policy_number'], $clientData['policy_type'], $clientData['premium_amount'], $clientData['custom_commission_rate']);
+        unset($clientData['photo']);
         
         $client = $context->clients()->create($clientData);
 
@@ -60,19 +56,6 @@ class ClientController extends Controller
             $client->update(['photo' => $path]);
         }
 
-        // Automated Policy Creation
-        if ($request->filled('policy_number')) {
-            $renewal = $client->renewals()->create([
-                'user_id' => $context->id,
-                'policy_number' => $request->policy_number,
-                'policy_type' => $request->policy_type ?? 'Other',
-                'premium_amount' => $request->premium_amount ?? 0,
-                'custom_commission_rate' => $request->custom_commission_rate,
-                'expiry_date' => now()->addYear(), // Default to 1 year
-                'status' => 'pending',
-            ]);
-            $renewal->generateCommission();
-        }
 
         return redirect()->route('clients.index')->with('success', 'Client created successfully.');
     }
@@ -107,14 +90,10 @@ class ClientController extends Controller
             'marriage_anniversary' => 'nullable|date',
             'address' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'policy_number' => 'nullable|string|max:255',
-            'policy_type' => 'nullable|string|max:255',
-            'premium_amount' => 'nullable|numeric|min:0',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $clientData = $validated;
-        unset($clientData['photo'], $clientData['policy_number'], $clientData['policy_type'], $clientData['premium_amount'], $clientData['custom_commission_rate']);
+        unset($clientData['photo']);
 
         if ($request->hasFile('photo')) {
             // Delete old photo
@@ -126,19 +105,6 @@ class ClientController extends Controller
 
         $client->update($clientData);
 
-        // Update/Create Policy Logic for Edit
-        if ($request->filled('policy_number')) {
-            $client->renewals()->updateOrCreate(
-                ['policy_number' => $request->policy_number, 'user_id' => $context->id],
-                [
-                    'policy_type' => $request->policy_type ?? 'Other',
-                    'premium_amount' => $request->premium_amount ?? 0,
-                    'custom_commission_rate' => $request->custom_commission_rate,
-                    'expiry_date' => now()->addYear(),
-                    'status' => 'pending',
-                ]
-            );
-        }
 
         return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
     }

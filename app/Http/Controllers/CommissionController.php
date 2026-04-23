@@ -39,17 +39,15 @@ class CommissionController extends Controller
         $commissions = $query->latest()->paginate(15);
         
         $stats = [
-            'total_pending' => $context->commissions()->where('status', 'pending')->sum('expected_amount'),
-            'total_received_month' => $context->commissions()
-                ->where('status', 'received')
-                ->whereMonth('received_at', now()->month)
-                ->sum('received_amount'),
-            'pending_count' => $context->commissions()->where('status', 'pending')->count(),
+            'total_pending' => $context->commissions()->where('status', '!=', 'received')->sum('expected_amount'),
+            'total_received_month' => $context->commissions()->where('status', 'received')->whereMonth('received_at', now()->month)->sum('received_amount'),
+            'pending_count' => $context->commissions()->where('status', '!=', 'received')->count(),
         ];
 
         $providers = $context->commissions()->distinct()->pluck('provider');
+        $clients = $context->clients()->orderBy('name')->get();
 
-        return view('commissions.index', compact('commissions', 'stats', 'providers', 'context'));
+        return view('commissions.index', compact('commissions', 'stats', 'providers', 'clients', 'context'));
     }
 
     public function store(Request $request)
@@ -63,13 +61,47 @@ class CommissionController extends Controller
             'policy_number' => 'required|string|max:255',
             'provider' => 'required|string|max:255',
             'expected_amount' => 'required|numeric|min:0',
+            'received_amount' => 'nullable|numeric|min:0',
             'status' => 'required|in:pending,received,partial',
             'notes' => 'nullable|string',
         ]);
 
+        if (in_array($validated['status'], ['received', 'partial']) && !isset($validated['received_amount'])) {
+            $validated['received_amount'] = ($validated['status'] === 'received') ? $validated['expected_amount'] : 0;
+        }
+
+        if (in_array($validated['status'], ['received', 'partial'])) {
+            $validated['received_at'] = now();
+        }
+
         $context->commissions()->create($validated);
 
         return redirect()->route('commissions.index')->with('success', 'Commission record created.');
+    }
+
+    public function update(Request $request, Commission $commission)
+    {
+        $context = auth()->user()->context();
+        if ($commission->user_id !== $context->id) abort(403);
+
+        $validated = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'renewal_id' => 'nullable|exists:renewals,id',
+            'policy_number' => 'required|string|max:255',
+            'provider' => 'required|string|max:255',
+            'expected_amount' => 'required|numeric|min:0',
+            'received_amount' => 'nullable|numeric|min:0',
+            'status' => 'required|in:pending,received,partial',
+            'notes' => 'nullable|string',
+        ]);
+
+        $commission->update($validated);
+
+        if (in_array($commission->status, ['received', 'partial']) && !$commission->received_at) {
+            $commission->update(['received_at' => now()]);
+        }
+
+        return back()->with('success', 'Commission record updated.');
     }
 
     public function markAsReceived(Request $request, Commission $commission)
@@ -97,5 +129,43 @@ class CommissionController extends Controller
         if ($commission->user_id !== $context->id) abort(403);
         $commission->delete();
         return redirect()->route('commissions.index')->with('success', 'Commission record deleted.');
+    }
+    public function export()
+    {
+        $context = auth()->user()->context();
+        $commissions = $context->commissions()->with('client')->latest()->get();
+
+        $filename = "Commission_Ledger_" . now()->format('Y_m_d') . ".csv";
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['Date', 'Client', 'Policy Number', 'Provider', 'Expected (₹)', 'Received (₹)', 'Status', 'Notes'];
+
+        $callback = function() use ($commissions, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($commissions as $comm) {
+                fputcsv($file, [
+                    $comm->created_at->format('Y-m-d'),
+                    $comm->client->name,
+                    $comm->policy_number,
+                    $comm->provider,
+                    $comm->expected_amount,
+                    $comm->received_amount,
+                    strtoupper($comm->status),
+                    $comm->notes
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

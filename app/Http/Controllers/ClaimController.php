@@ -74,7 +74,7 @@ class ClaimController extends Controller
             'incident_date' => 'required|date',
             'status' => 'required|in:submitted,pending,approved,rejected',
             'description' => 'nullable|string',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
+
         ]);
 
         $context->claims()->create($validated);
@@ -123,7 +123,7 @@ class ClaimController extends Controller
             'incident_date' => 'required|date',
             'status' => 'required|in:submitted,pending,approved,rejected',
             'description' => 'nullable|string',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
+
         ]);
 
         $claim->update($validated);

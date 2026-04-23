@@ -16,7 +16,7 @@
                 <h2 class="text-sm font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">{{ $sidebarContext->company_name ?? 'Vantage ERP' }}</h2>
                 <div class="flex items-center gap-1.5 mt-0.5">
                     <div class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></div>
-                    <p class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Live Digital Replica</p>
+                    <p class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Enterprise Business Suite</p>
                 </div>
             </div>
         </a>
@@ -28,10 +28,16 @@
             color: #e11d48 !important;
             border-color: rgba(225, 29, 72, 0.1) !important;
         }
+        .nav-item.active svg {
+            color: #e11d48 !important;
+        }
         .dark .nav-item.active {
             background-color: rgba(225, 29, 72, 0.15) !important;
             color: #fb7185 !important;
             border-color: rgba(225, 29, 72, 0.2) !important;
+        }
+        .dark .nav-item.active svg {
+            color: #fb7185 !important;
         }
     </style>
 

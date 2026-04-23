@@ -5,31 +5,40 @@
                 COMMISSIONS
             </h2>
             
-            <div class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-                </span>
-                <span class="relative text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.15em]">Simulation Active</span>
-            </div>
         </div>
     </x-slot>
 
     <div class="py-6" x-data="{ 
         openPayoutModal: false,
+        openCommissionModal: false,
         openLogicModal: false,
+        mode: 'create',
         submitting: false,
         commission: {
             id: '',
+            client_id: '',
             client_name: '',
             policy_number: '',
+            provider: '',
             expected_amount: 0,
             received_amount: 0,
+            status: 'pending',
+            notes: '',
             received_at: '{{ date('Y-m-d') }}'
         },
         openPayout(commObj) {
             this.commission = { ...commObj, received_at: '{{ date('Y-m-d') }}', received_amount: commObj.expected_amount };
             this.openPayoutModal = true;
+        },
+        openCreate() {
+            this.mode = 'create';
+            this.commission = { id: '', client_id: '', client_name: '', policy_number: '', provider: '{{ auth()->user()->context()->company_name ?? 'Vantage ERP' }}', expected_amount: 0, received_amount: 0, status: 'pending', notes: '', received_at: '{{ date('Y-m-d') }}' };
+            this.openCommissionModal = true;
+        },
+        openEdit(commObj) {
+            this.mode = 'edit';
+            this.commission = { ...commObj };
+            this.openCommissionModal = true;
         }
     }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,15 +55,19 @@
                         </a>
                     @endif
                     <form action="{{ route('commissions.index') }}" method="GET" class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="h-4 w-4 text-slate-400 group-focus-within:text-violet-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ledger..." class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-violet-500 focus:ring-violet-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-72 transition-all uppercase font-bold tracking-tight">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ledger..." class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-violet-500 focus:ring-violet-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-72 transition-all uppercase font-bold tracking-tight">
                     </form>
-                    <button class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-violet-200 hover:bg-violet-500 transition-all">
+                    <button @click="openCreate()" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-200 hover:bg-emerald-500 transition-all">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        Manual Ledger Entry
+                    </button>
+                    <a href="{{ route('commissions.export') }}" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-violet-200 hover:bg-violet-500 transition-all">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         Export Ledger
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -105,9 +118,11 @@
                                         <div class="text-[14px] font-black text-slate-900 dark:text-slate-100 tracking-tight">₹{{ number_format($comm->expected_amount, 2) }}</div>
                                     </td>
                                     <td class="px-8 py-6">
-                                        @if($comm->status === 'received')
+                                        @if($comm->received_amount > 0)
                                             <div class="text-[14px] font-black text-emerald-600 dark:text-emerald-400 tracking-tight">₹{{ number_format($comm->received_amount, 2) }}</div>
-                                            <div class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-0.5">{{ $comm->received_at->format('M d, Y') }}</div>
+                                            @if($comm->received_at)
+                                                <div class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-0.5">{{ $comm->received_at->format('M d, Y') }}</div>
+                                            @endif
                                         @else
                                             <div class="text-[14px] font-black text-slate-200 dark:text-slate-800 tracking-tight">—</div>
                                         @endif
@@ -118,21 +133,44 @@
                                         </span>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        @if($comm->status !== 'received')
+                                        <div class="flex items-center justify-end gap-4">
+                                            @if($comm->status !== 'received')
+                                                <button 
+                                                    data-comm='{{ json_encode([
+                                                        "id" => $comm->id,
+                                                        "client_name" => $comm->client->name,
+                                                        "policy_number" => $comm->policy_number,
+                                                        "expected_amount" => $comm->expected_amount
+                                                    ]) }}'
+                                                    @click="openPayout(JSON.parse($el.dataset.comm))"
+                                                    class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-900 transition-all">
+                                                    Mark Paid
+                                                </button>
+                                            @endif
                                             <button 
                                                 data-comm='{{ json_encode([
                                                     "id" => $comm->id,
+                                                    "client_id" => $comm->client_id,
                                                     "client_name" => $comm->client->name,
                                                     "policy_number" => $comm->policy_number,
-                                                    "expected_amount" => $comm->expected_amount
+                                                    "provider" => $comm->provider,
+                                                    "expected_amount" => $comm->expected_amount,
+                                                    "received_amount" => $comm->received_amount,
+                                                    "status" => $comm->status,
+                                                    "notes" => $comm->notes
                                                 ]) }}'
-                                                @click="openPayout(JSON.parse($el.dataset.comm))"
-                                                class="text-[10px] font-black uppercase tracking-widest text-violet-600 dark:text-violet-400 hover:text-violet-900 dark:hover:text-violet-300 transition-all hover:scale-110">
-                                                Mark Paid
+                                                @click="openEdit(JSON.parse($el.dataset.comm))"
+                                                class="text-[10px] font-black uppercase tracking-widest text-violet-600 hover:text-violet-900 transition-all">
+                                                Edit
                                             </button>
-                                        @else
-                                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-300 dark:text-slate-700 italic">Settled</span>
-                                        @endif
+                                            <form action="{{ route('commissions.destroy', $comm) }}" method="POST" class="inline" onsubmit="return confirm('Archive this financial record?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-900 transition-all">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -170,11 +208,11 @@
                             @csrf
                             <div class="space-y-4">
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Received Amount (₹)</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹)</label>
                                     <input type="number" name="amount" x-model="commission.received_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 font-bold text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                 </div>
                                 <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Received Date</label>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Date</label>
                                     <input type="date" name="received_at" x-model="commission.received_at" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                 </div>
                             </div>
@@ -182,6 +220,90 @@
                             <div class="mt-8 flex gap-3">
                                 <button type="button" @click="openPayoutModal = false" class="flex-1 px-4 py-3 rounded-xl font-bold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                                 <button type="submit" class="flex-1 px-4 py-3 rounded-xl font-bold text-white bg-emerald-600 shadow-lg shadow-emerald-100">Confirm Payout</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manual Commission Modal -->
+        <div x-show="openCommissionModal" class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <div x-show="openCommissionModal" @click="openCommissionModal = false" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                <div x-show="openCommissionModal" class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-[2rem] text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-slate-100 dark:border-slate-800">
+                    <div class="p-8">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-2xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight" x-text="mode === 'create' ? 'New Commission' : 'Edit Commission'"></h3>
+                            <button @click="openCommissionModal = false" class="text-slate-400 hover:text-slate-600 transition-colors">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        
+                        <form :action="mode === 'create' ? '{{ route('commissions.store') }}' : `/commissions/${commission.id}`" method="POST">
+                            @csrf
+                            <template x-if="mode === 'edit'">
+                                <input type="hidden" name="_method" value="PATCH">
+                            </template>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Client <span class="text-rose-500">*</span></label>
+                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                        <option value="">-- Select Client --</option>
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Policy Number <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                </div>
+                                <div>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Provider / Company <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="provider" x-model="commission.provider" list="provider_list" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <datalist id="provider_list">
+                                        <option value="{{ auth()->user()->context()->company_name ?? 'Vantage ERP' }}">
+                                        <option value="LIC of India">
+                                        <option value="HDFC Life">
+                                        <option value="ICICI Prudential">
+                                        <option value="SBI Life">
+                                        <option value="Tata AIA">
+                                        <option value="Bajaj Allianz">
+                                    </datalist>
+                                </div>
+                                <div>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Expected Amount (₹) <span class="text-rose-500">*</span></label>
+                                    <input type="number" name="expected_amount" x-model="commission.expected_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                </div>
+                                <div>
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Status</label>
+                                    <select name="status" x-model="commission.status" 
+                                        @change="if(commission.status === 'received') commission.received_amount = commission.expected_amount"
+                                        class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                        <option value="pending">Pending</option>
+                                        <option value="received">Received</option>
+                                        <option value="partial">Partial</option>
+                                    </select>
+                                </div>
+                                <div x-show="commission.status === 'received' || commission.status === 'partial'">
+                                    <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹) <span class="text-rose-500">*</span></label>
+                                    <input type="number" name="received_amount" x-model="commission.received_amount" step="0.01" 
+                                        :required="commission.status === 'received' || commission.status === 'partial'"
+                                        class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                </div>
+                            </div>
+
+                            <div class="mt-6">
+                                <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Internal Notes</label>
+                                <textarea name="notes" x-model="commission.notes" rows="2" class="w-full rounded-xl border-slate-200 focus:border-violet-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Optional notes..."></textarea>
+                            </div>
+
+                            <div class="mt-10 flex gap-4">
+                                <button type="button" @click="openCommissionModal = false" class="flex-1 px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-slate-400 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 transition-colors">Cancel</button>
+                                <button type="submit" class="flex-1 px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest text-white bg-violet-600 shadow-xl shadow-violet-100 hover:bg-violet-500 transition-all" x-text="mode === 'create' ? 'Create Record' : 'Save Changes'"></button>
                             </div>
                         </form>
                     </div>

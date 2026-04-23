@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 ->where('status', 'pending')
                 ->whereBetween('expiry_date', [$now->copy()->startOfDay(), $now->copy()->addDays(7)->endOfDay()])
                 ->count();
+            $pending_commissions = $context->commissions()->where('status', '!=', 'received')->count();
 
             // Intelligence Logic (Trigger on ANY critical pending to sync with Priority Diagnostic)
             if ($open_queries > 0) {
@@ -54,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
             }
             if ($upcoming_renewals_7d > 0) {
                 $briefs->push(['title' => 'Upcoming Renewals', 'message' => "{$upcoming_renewals_7d} renewals in 7 days.", 'type' => 'success', 'url' => route('renewals.index')]);
+            }
+            if ($pending_commissions > 0) {
+                $briefs->push(['title' => 'Pending Commission', 'message' => "{$pending_commissions} settlements are pending.", 'type' => 'warning', 'url' => route('commissions.index')]);
             }
 
             // High Priority Queries (Individual)

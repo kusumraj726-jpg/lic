@@ -63,14 +63,14 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                                     <div class="space-y-4">
                                         <div>
-                                            <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1 mb-2 block">Company Entity</label>
+                                             <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-[0.2em] ml-1 mb-2 block">Company Entity</label>
                                             <input type="text" name="company_name" value="{{ old('company_name', $context->company_name) }}" class="w-full px-6 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-[1.5rem] border {{ $errors->has('company_name') ? 'border-rose-300' : 'border-slate-100 dark:border-slate-700 focus:border-indigo-500' }} text-slate-900 dark:text-white font-black text-lg focus:bg-white dark:focus:bg-[#1e293b] focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600" placeholder="e.g. Sharma Insurance" required>
                                             @error('company_name')
                                                 <p class="text-[10px] font-bold text-rose-500 mt-2 uppercase tracking-widest">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1 mb-2">Workspace Logo</label>
+                                             <label class="block text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-[0.2em] ml-1 mb-2">Workspace Logo</label>
                                             <div class="flex items-center gap-6">
                                                 <div class="h-24 w-24 rounded-3xl bg-slate-50 dark:bg-[#0f172a] border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden shrink-0 shadow-inner group-hover/card:bg-white transition-colors relative">
                                                     @if($context->brand_logo)
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="space-y-4">
                                         <div>
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1 mb-2 block">Global Workspace ID</label>
+                                             <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-[0.2em] ml-1 mb-2 block">Global Workspace ID</label>
                                             <div class="w-full px-6 py-4 bg-slate-50/50 dark:bg-[#0f172a] rounded-[1.5rem] border border-slate-100 dark:border-slate-700 font-mono text-slate-400 dark:text-slate-500 font-black text-lg uppercase tracking-widest cursor-not-allowed select-all flex items-center justify-between">
                                                 {{ $context->unique_id ?? 'SIC-2024-001' }}
                                                 <svg class="h-5 w-5 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>

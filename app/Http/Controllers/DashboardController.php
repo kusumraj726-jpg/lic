@@ -90,7 +90,11 @@ class DashboardController extends Controller
             $r->type = 'Renewal'; $r->color = 'emerald'; $r->url = route('renewals.index'); return $r;
         });
 
-        $urgent_items = $urgent_queries->concat($urgent_claims)->concat($urgent_renewals)->sortByDesc('created_at')->take(8);
+        $urgent_commissions = $context->commissions()->with('client')->where('status', '!=', 'received')->latest()->take(5)->get()->map(function($c) {
+            $c->type = 'Commission'; $c->color = 'fuchsia'; $c->url = route('commissions.index'); return $c;
+        });
+
+        $urgent_items = $urgent_queries->concat($urgent_claims)->concat($urgent_renewals)->concat($urgent_commissions)->sortByDesc('created_at')->take(8);
 
         // 4. Birthdays & Events (Optimized DB Query)
         $targetMonths = [$now->month, $now->copy()->addMonth()->month];

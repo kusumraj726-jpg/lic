@@ -583,8 +583,7 @@
                                     x-text="workspace.name"></h2>
                                 <div class="flex items-center gap-1.5 mt-0.5">
                                     <div class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Live
-                                        Digital Replica</p>
+                                    <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Enterprise Business Suite</p>
                                 </div>
                             </div>
                         </div>
@@ -1140,7 +1139,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-4 w-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1148,7 +1147,7 @@
                                         </svg>
                                     </div>
                                     <input type="text" placeholder="Search clients..."
-                                        class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
+                                        class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
                                 </div>
                                 <button
                                     class="elite-btn bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-200">+
@@ -1272,7 +1271,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-4 w-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1280,7 +1279,7 @@
                                         </svg>
                                     </div>
                                     <input type="text" placeholder="Search queries..."
-                                        class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
+                                        class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
                                 </div>
                                 <button
                                     class="elite-btn bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-200 flex items-center gap-2">
@@ -1416,7 +1415,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-4 w-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1424,7 +1423,7 @@
                                         </svg>
                                     </div>
                                     <input type="text" placeholder="Search policy # or client..."
-                                        class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
+                                        class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
                                 </div>
                                 <button
                                     class="elite-btn bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-200 flex items-center gap-2">
@@ -1573,7 +1572,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-4 w-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1581,7 +1580,7 @@
                                         </svg>
                                     </div>
                                     <input type="text" placeholder="Search policy #..."
-                                        class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-emerald-500 focus:ring-emerald-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
+                                        class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-emerald-500 focus:ring-emerald-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
                                 </div>
                                 <button
                                     class="elite-btn bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-200 flex items-center gap-2">
@@ -1697,7 +1696,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-4 w-4 text-slate-400 group-focus-within:text-fuchsia-500 transition-colors"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1705,7 +1704,7 @@
                                         </svg>
                                     </div>
                                     <input type="text" placeholder="Search ledger..."
-                                        class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-fuchsia-500 focus:ring-fuchsia-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
+                                        class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 focus:border-fuchsia-500 focus:ring-fuchsia-500 bg-white shadow-sm w-64 transition-all uppercase font-bold text-slate-900 tracking-tight">
                                 </div>
                                 <button
                                     class="elite-btn bg-fuchsia-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-fuchsia-200 flex items-center gap-2">

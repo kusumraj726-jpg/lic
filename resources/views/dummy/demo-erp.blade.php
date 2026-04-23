@@ -105,7 +105,7 @@
                                 <h2 class="text-sm font-black text-slate-900 uppercase tracking-tight">Vantage ERP</h2>
                                 <div class="flex items-center gap-1.5 mt-0.5">
                                     <div class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Live Digital Replica</p>
+                                    <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Enterprise Business Suite</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
                             </span>
-                            <span class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Simulation Active</span>
+                            <span class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Live System</span>
                         </div>
                     </div>
 

@@ -84,13 +84,11 @@ class RenewalController extends Controller
             'policy_number' => 'required|string|max:255',
             'policy_type' => 'required|string|max:255',
             'premium_amount' => 'required|numeric|min:0',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
             'expiry_date' => 'required|date',
             'status' => 'required|in:pending,renewed,lapsed',
         ]);
 
         $renewal = $context->renewals()->create($validated);
-        $renewal->generateCommission();
         
         if ($request->ajax()) {
             return response()->json(['message' => 'Renewal created successfully.']);
@@ -133,13 +131,11 @@ class RenewalController extends Controller
             'policy_number' => 'required|string|max:255',
             'policy_type' => 'required|string|max:255',
             'premium_amount' => 'required|numeric|min:0',
-            'custom_commission_rate' => 'nullable|numeric|min:0|max:100',
             'expiry_date' => 'required|date',
             'status' => 'required|in:pending,renewed,lapsed',
         ]);
 
         $renewal->update($validated);
-        $renewal->generateCommission();
 
         if ($request->ajax()) {
             return response()->json(['message' => 'Renewal updated successfully.']);

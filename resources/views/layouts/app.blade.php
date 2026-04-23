@@ -30,6 +30,9 @@
                 color: var(--brand-primary) !important;
                 border-color: var(--brand-primary) !important;
             }
+            .nav-item.active svg {
+                color: var(--brand-primary) !important;
+            }
             @media (max-width: 768px) {
                 input, select, textarea {
                     font-size: 16px !important;
