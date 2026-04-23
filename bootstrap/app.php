@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'subscribed'   => \App\Http\Middleware\EnsureActiveSubscription::class,
             'superadmin'   => \App\Http\Middleware\SuperAdminOnly::class,
             'noDirect'     => \App\Http\Middleware\PreventDirectAccess::class,
+            'noCache'      => \App\Http\Middleware\NoCache::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

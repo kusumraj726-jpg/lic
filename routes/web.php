@@ -14,6 +14,38 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/services', function () {
+    return view('services');
+})->name('services');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/get-started', function () {
+    return view('auth.service-selection');
+})->name('get-started');
+
+// Payment-First flow for Guests (Insurance ERP)
+Route::post('/get-started/checkout', [\App\Http\Controllers\BillingController::class, 'guestCheckout'])->middleware('noCache')->name('get.started.checkout');
+Route::post('/get-started/verify', [\App\Http\Controllers\BillingController::class, 'guestVerify'])->middleware('noCache')->name('get.started.verify');
+
+Route::get('/lifecycle', function () {
+    return view('lifecycle');
+})->name('lifecycle');
+
+Route::get('/services/web-development', function () {
+    return view('services.web-development');
+})->name('services.web-development');
+
+Route::get('/services/insurance-erp', function () {
+    return view('services.insurance-erp');
+})->name('services.insurance-erp');
+
+Route::post('/consultation', [\App\Http\Controllers\StudioInquiryController::class, 'store'])->name('consultation.store');
+
+Route::get('/demo-erp', [\App\Http\Controllers\DummyController::class, 'index'])->name('demo.erp');
+
 // Force Login flow: Ensures users are always asked for credentials from the landing page
 Route::get('/force-login', function () {
     \Illuminate\Support\Facades\Auth::logout();
@@ -57,10 +89,6 @@ Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-contro
     Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
 
-// Payment-First flow: Public pricing page (no auth needed)
-Route::get('/get-started', [\App\Http\Controllers\BillingController::class, 'guestIndex'])->name('get.started');
-Route::post('/get-started/checkout', [\App\Http\Controllers\BillingController::class, 'guestCheckout'])->name('get.started.checkout');
-Route::post('/get-started/verify', [\App\Http\Controllers\BillingController::class, 'guestVerify'])->name('get.started.verify');
 
 // Billing renewal for existing logged-in users
 Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(function () {

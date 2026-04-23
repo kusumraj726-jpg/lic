@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         $context = $user->context();
-        $cacheKey = "dashboard_stats_{$context->id}";
+        $cacheKey = "nexorabyte_stats_{$context->id}";
         $now = \Carbon\Carbon::now();
         $startOfMonth = $now->copy()->startOfMonth();
         $lastMonth = $now->copy()->subMonth();
@@ -74,7 +74,7 @@ class DashboardController extends Controller
                 return $futureRenewals->get($m, collect())->sum(fn($r) => ($r->premium_amount * ($rates[strtolower($r->policy_type)] ?? ($rates['default'] ?? 15))) / 100);
             });
 
-            return compact('stats', 'executive_briefs', 'chartData', 'revenueForecast', 'forecastMonths', 'forecastData');
+            return compact('stats', 'executive_briefs', 'chartData', 'forecastMonths', 'forecastData');
         });
 
         // 3. Dynamic Data (Always Fresh)

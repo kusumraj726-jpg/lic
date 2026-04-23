@@ -42,7 +42,9 @@ class SuperAdminController extends Controller
 
         $stats['total_revenue'] = $stats['monthly_mrr'] + $stats['yearly_arr'] + $stats['trial_revenue'];
 
-        return view('superadmin.index', compact('tenants', 'stats'));
+        $inquiries = \App\Models\StudioInquiry::latest()->get();
+
+        return view('superadmin.index', compact('tenants', 'stats', 'inquiries'));
     }
 
     public function toggleStatus(Request $request, User $user)

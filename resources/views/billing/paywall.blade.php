@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NexoraByte | Paywall</title>
+    <title>nexorabyte | Paywall</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,7 +147,7 @@
                             "key": data.key,
                             "amount": data.amount,
                             "currency": "INR",
-                            "name": "NexoraByte",
+                            "name": "nexorabyte",
                             "description": plan === 'yearly' ? "Professional Yearly Subscription" : "Starter Monthly Subscription",
                             "image": "{{ asset('images/logo.png') }}",
                             "order_id": data.order_id,

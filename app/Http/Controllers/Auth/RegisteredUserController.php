@@ -26,9 +26,10 @@ class RegisteredUserController extends Controller
             return redirect()->route('dashboard');
         }
 
-        // Block guest registration if payment has not been completed first
+        // Force payment-first: Redirect to Insurance ERP pricing if no payment done
         if (!session('nexorabyte_payment_done')) {
-            return redirect()->route('get.started')->with('error', 'Please complete payment first to create your account.');
+            return redirect()->route('services.insurance-erp', ['#pricing'])
+                ->with('error', 'Please select a plan and complete payment first.');
         }
 
         return view('auth.register');
@@ -78,19 +79,16 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // ── PAYMENT FLOW (highest priority) ──────────────────────────────
-        // If this registration came from the /get-started payment flow,
-        // clear the one-time session immediately — no second account can be made
-        if (session('nexorabyte_payment_done')) {
-            session()->forget([
-                'nexorabyte_payment_done',
-                'nexorabyte_payment_plan',
-                'nexorabyte_payment_id',
-                'nexorabyte_payment_order_id',
-            ]);
-            return redirect()->route('login', ['flow' => 'onboarding', 'step' => 3])
-                ->with('status', 'Registration complete! Please login to access your workspace.');
-        }
+        // Clear the one-time payment session
+        session()->forget([
+            'nexorabyte_payment_done',
+            'nexorabyte_payment_plan',
+            'nexorabyte_payment_id',
+            'nexorabyte_payment_order_id',
+        ]);
+
+        return redirect()->route('login', ['flow' => 'onboarding', 'step' => 3])
+            ->with('status', 'Registration complete! Please login to access your workspace.');
 
         // ── INTERNAL FLOW (admin creating staff from inside portal) ───────
         if (Auth::check()) {

@@ -431,13 +431,17 @@ class GroqChatService
                 return ['__action' => 'navigate', 'url' => $formRoutes[$form] ?? '/clients/create'];
 
             case 'save_preference':
-                $pref = $arguments['preference'] ?? '';
-                $cat = $arguments['category'] ?? 'habit';
-                \App\Models\NexoraByteInsight::updateOrCreate(
-                    ['user_id' => $user->id, 'content' => $pref],
-                    ['category' => $cat, 'importance' => 8]
-                );
-                return ['success' => true, 'message' => 'Memory saved.'];
+                try {
+                    $pref = $arguments['preference'] ?? '';
+                    $cat = $arguments['category'] ?? 'habit';
+                    \App\Models\NexoraByteInsight::updateOrCreate(
+                        ['user_id' => $user->id, 'content' => $pref],
+                        ['category' => $cat, 'importance' => 8]
+                    );
+                    return ['success' => true, 'message' => 'Memory saved.'];
+                } catch (\Exception $e) {
+                    return ['error' => 'Database update pending. Please run migrations.'];
+                }
 
             default:
                 return ['error' => 'Tool not found.'];

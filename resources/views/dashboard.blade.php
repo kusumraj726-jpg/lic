@@ -108,8 +108,8 @@
                 <div class="lg:col-span-8 space-y-8">
                     
                     <!-- 1. Priority Diagnostic Hub -->
-                    <div class="premium-card bg-white border-none shadow-2xl relative overflow-hidden group h-full flex flex-col">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                    <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-2xl relative overflow-hidden group h-full flex flex-col transition-colors duration-300">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 dark:bg-indigo-500/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
                         <div class="relative z-10 flex items-center justify-between mb-8">
                             <div class="flex items-center gap-4">
                                 <div class="h-12 w-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 duration-500">
@@ -128,13 +128,17 @@
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">High-Authority Operational Alerts</p>
                                 </div>
                             </div>
-                            <span class="text-[11px] font-black text-slate-900 px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm dark:text-slate-100 dark:bg-slate-800/50">{{ $urgent_items->count() }} ALERTS</span>
+                            <span class="text-[11px] font-black text-slate-900 px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm dark:text-white dark:bg-slate-800/80 dark:border-slate-700">{{ $urgent_items->count() }} ALERTS</span>
                         </div>
                         <div class="space-y-4 relative z-10 flex-1 overflow-y-auto pr-1 custom-scrollbar">
                             @forelse($urgent_items as $item)
-                                <a href="{{ $item->url }}" class="flex items-center gap-5 p-4 rounded-[1.5rem] bg-slate-50/50 border border-slate-50 group/item hover:bg-white hover:shadow-xl hover:border-indigo-100 transition-all duration-300">
+                                <a href="{{ $item->url }}" class="flex items-center gap-5 p-4 rounded-[1.5rem] bg-slate-50/50 dark:bg-slate-800/30 border border-slate-50 dark:border-slate-800/50 group/item hover:bg-white dark:hover:bg-slate-800/50 hover:shadow-xl hover:border-indigo-100 dark:hover:border-indigo-500/30 transition-all duration-300">
                                     <div class="h-12 w-12 rounded-xl flex items-center justify-center transition-all duration-300 shadow-inner"
-                                        :class="{ 'bg-rose-50 text-rose-600 group-hover/item:bg-rose-600 group-hover/item:text-white': '{{ $item->type }}' === 'Query', 'bg-amber-50 text-amber-600 group-hover/item:bg-amber-600 group-hover/item:text-white': '{{ $item->type }}' === 'Claim', 'bg-emerald-50 text-emerald-600 group-hover/item:bg-emerald-600 group-hover/item:text-white': '{{ $item->type }}' === 'Renewal' }">
+                                        :class="{ 
+                                            'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400 group-hover/item:bg-rose-600 group-hover/item:text-white': '{{ $item->type }}' === 'Query', 
+                                            'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400 group-hover/item:bg-amber-600 group-hover/item:text-white': '{{ $item->type }}' === 'Claim', 
+                                            'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 group-hover/item:bg-emerald-600 group-hover/item:text-white': '{{ $item->type }}' === 'Renewal' 
+                                        }">
                                         @if($item->type === 'Query')
                                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -152,7 +156,11 @@
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-2 mb-0.5">
                                             <span class="text-[9px] font-black uppercase tracking-[0.15em] px-2 py-0.5 rounded-md"
-                                                :class="{ 'bg-rose-100 text-rose-700': '{{ $item->type }}' === 'Query', 'bg-amber-100 text-amber-700': '{{ $item->type }}' === 'Claim', 'bg-emerald-100 text-emerald-700': '{{ $item->type }}' === 'Renewal' }">{{ $item->type }}</span>
+                                                :class="{ 
+                                                    'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300': '{{ $item->type }}' === 'Query', 
+                                                    'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300': '{{ $item->type }}' === 'Claim', 
+                                                    'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300': '{{ $item->type }}' === 'Renewal' 
+                                                }">{{ $item->type }}</span>
                                             <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ $item->created_at->diffForHumans() }}</span>
                                         </div>
                                         <h4 class="text-sm font-black text-slate-900 uppercase tracking-tight truncate group-hover/item:text-indigo-600 transition-colors dark:text-slate-100">
@@ -182,43 +190,109 @@
                     <!-- 2. Performance Analytics Grid -->
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Query Intelligence Card -->
-                        <div class="premium-card bg-white border-none shadow-xl transition-all duration-300">
-                            <div class="flex items-center justify-between mb-6 px-2">
-                                <div>
-                                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">Query Intelligence</h3>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Volume Analysis</p>
-                                </div>
-                                <div class="h-10 w-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center border border-rose-100/50">
-                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                                    </svg>
+                        <div x-data="{ expanded: false }">
+                            <!-- Overlay for expansion -->
+                            <div x-show="expanded" class="fixed inset-0 z-[100] p-6 lg:p-12 bg-white/80 dark:bg-slate-900/95 backdrop-blur-2xl flex items-center justify-center transition-all duration-500" x-cloak>
+                                <div class="premium-card bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col w-full max-w-6xl h-full max-h-[90vh] p-12 transition-all duration-500">
+                                    <div class="flex items-center justify-between mb-8">
+                                        <div class="flex gap-4">
+                                            <div class="h-12 w-12 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 dark:text-rose-400 flex items-center justify-center border border-rose-100/50 dark:border-rose-500/20">
+                                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Query Intelligence</h3>
+                                                <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">Volume Analysis</p>
+                                            </div>
+                                        </div>
+                                        <button @click="expanded = false" class="h-12 w-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-rose-600 dark:hover:text-white transition-all flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </div>
+                                    <div class="flex-1 relative">
+                                        <canvas id="queryPulseChartExpanded"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="h-[18rem] px-2">
-                                <canvas id="queryPulseChart"></canvas>
+
+                            <!-- Original In-Grid Card -->
+                            <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-xl transition-all duration-300">
+                                <div class="flex items-center justify-between mb-6 px-2">
+                                    <div class="flex gap-4">
+                                        <div class="h-10 w-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 dark:text-rose-400 flex items-center justify-center border border-rose-100/50 dark:border-rose-500/20">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">Query Intelligence</h3>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Volume Analysis</p>
+                                        </div>
+                                    </div>
+                                    <button @click="expanded = true; $nextTick(() => renderExpandedQueryChart())" class="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 dark:hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700">
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+                                    </button>
+                                </div>
+                                <div class="h-[18rem] px-2">
+                                    <canvas id="queryPulseChart"></canvas>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Claim Analytics Card -->
-                        <div class="premium-card bg-white border-none shadow-xl transition-all duration-300">
-                            <div class="flex items-center justify-between mb-6 px-2">
-                                <div>
-                                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">Claim Analytics</h3>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Case Metrics</p>
-                                </div>
-                                <div class="h-10 w-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center border border-amber-100/50">
-                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                    </svg>
+                        <div x-data="{ expanded: false }">
+                            <!-- Overlay for expansion -->
+                            <div x-show="expanded" class="fixed inset-0 z-[100] p-6 lg:p-12 bg-white/80 dark:bg-slate-900/95 backdrop-blur-2xl flex items-center justify-center transition-all duration-500" x-cloak>
+                                <div class="premium-card bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col w-full max-w-6xl h-full max-h-[90vh] p-12 transition-all duration-500">
+                                    <div class="flex items-center justify-between mb-8">
+                                        <div class="flex gap-4">
+                                            <div class="h-12 w-12 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center border border-amber-100/50 dark:border-amber-500/20">
+                                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Claim Analytics</h3>
+                                                <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">Case Metrics</p>
+                                            </div>
+                                        </div>
+                                        <button @click="expanded = false" class="h-12 w-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-rose-600 dark:hover:text-white transition-all flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm">
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </div>
+                                    <div class="flex-1 relative">
+                                        <canvas id="claimPulseChartExpanded"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="h-[18rem] px-2">
-                                <canvas id="claimPulseChart"></canvas>
+
+                            <!-- Original In-Grid Card -->
+                            <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-xl transition-all duration-300">
+                                <div class="flex items-center justify-between mb-6 px-2">
+                                    <div class="flex gap-4">
+                                        <div class="h-10 w-10 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center border border-amber-100/50 dark:border-amber-500/20">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">Claim Analytics</h3>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Case Metrics</p>
+                                        </div>
+                                    </div>
+                                    <button @click="expanded = true; $nextTick(() => renderExpandedClaimChart())" class="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 dark:hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700">
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+                                    </button>
+                                </div>
+                                <div class="h-[18rem] px-2">
+                                    <canvas id="claimPulseChart"></canvas>
+                                </div>
                             </div>
                         </div>
 
                          <!-- 3. Revenue Forecasting (Next 12 Months) -->
-                        <div class="premium-card bg-white border-none shadow-2xl relative overflow-hidden group md:col-span-2">
+                        <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-2xl relative overflow-hidden group md:col-span-2 transition-colors duration-300">
                             <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
                             <div class="relative z-10 flex items-center justify-between mb-8">
                                 <div class="flex items-center gap-4">
@@ -249,7 +323,7 @@
                     
                     <div x-data="calendarData()" class="space-y-6">
                         <!-- Celebration Pulse Feed -->
-                        <div class="premium-card border-none shadow-2xl relative overflow-hidden p-6 min-h-[350px]">
+                        <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-2xl relative overflow-hidden p-6 min-h-[350px] transition-colors duration-300">
                             <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
                             <div class="relative z-10 flex items-center justify-between mb-8">
                                 <h4 class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-[0.25em] flex items-center gap-3">
@@ -302,7 +376,7 @@
                         </div>
 
                         <!-- Sidebar Interactive Calendar -->
-                        <div class="premium-card bg-white border-none shadow-xl p-8 items-center justify-center">
+                        <div class="premium-card bg-white dark:bg-slate-900/50 border-none dark:border dark:border-slate-800 shadow-xl p-8 items-center justify-center transition-colors duration-300">
                             <div class="flex items-center justify-between mb-8">
                                 <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight dark:text-slate-100" x-text="monthName"></h3>
                                 <div class="flex gap-2">
@@ -415,6 +489,96 @@
                     }
                 }
             });
+
+            // Helper to render expanded Query chart
+            window.renderExpandedQueryChart = function() {
+                const expandedCtx = document.getElementById('queryPulseChartExpanded').getContext('2d');
+                const expandedGradient = expandedCtx.createLinearGradient(0, 0, 0, 600);
+                expandedGradient.addColorStop(0, 'rgba(244, 63, 94, 0.2)');
+                expandedGradient.addColorStop(1, 'rgba(244, 63, 94, 0)');
+
+                new Chart(expandedCtx, {
+                    type: 'line',
+                    data: {
+                        labels: @json($chartData['labels']),
+                        datasets: [{
+                            label: 'Queries',
+                            data: @json($chartData['queries']),
+                            borderColor: '#f43f5e',
+                            backgroundColor: expandedGradient,
+                            borderWidth: 4,
+                            pointBackgroundColor: '#f43f5e',
+                            pointBorderColor: '#fff',
+                            pointHoverRadius: 8,
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#0f172a',
+                                titleFont: { size: 14, weight: '900' },
+                                bodyFont: { size: 13, weight: '700' },
+                                padding: 16,
+                                cornerRadius: 16
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, suggestedMax: 10, grid: { color: 'rgba(148, 163, 184, 0.2)', drawBorder: false }, ticks: { color: '#94a3b8', font: { size: 12, weight: '700' } } },
+                            x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 12, weight: '700' } } }
+                        }
+                    }
+                });
+            };
+
+            // Helper to render expanded Claim chart
+            window.renderExpandedClaimChart = function() {
+                const expandedCtx = document.getElementById('claimPulseChartExpanded').getContext('2d');
+                const expandedGradient = expandedCtx.createLinearGradient(0, 0, 0, 600);
+                expandedGradient.addColorStop(0, 'rgba(245, 158, 11, 0.2)');
+                expandedGradient.addColorStop(1, 'rgba(245, 158, 11, 0)');
+
+                new Chart(expandedCtx, {
+                    type: 'line',
+                    data: {
+                        labels: @json($chartData['labels']),
+                        datasets: [{
+                            label: 'Claims',
+                            data: @json($chartData['claims']),
+                            borderColor: '#f59e0b',
+                            backgroundColor: expandedGradient,
+                            borderWidth: 4,
+                            pointBackgroundColor: '#f59e0b',
+                            pointBorderColor: '#fff',
+                            pointHoverRadius: 8,
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#0f172a',
+                                titleFont: { size: 14, weight: '900' },
+                                bodyFont: { size: 13, weight: '700' },
+                                padding: 16,
+                                cornerRadius: 16
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, suggestedMax: 10, grid: { color: 'rgba(148, 163, 184, 0.2)', drawBorder: false }, ticks: { color: '#94a3b8', font: { size: 12, weight: '700' } } },
+                            x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 12, weight: '700' } } }
+                        }
+                    }
+                });
+            };
 
             // 3. Revenue Forecast Chart
             const revenueCtx = document.getElementById('revenueForecastChart').getContext('2d');

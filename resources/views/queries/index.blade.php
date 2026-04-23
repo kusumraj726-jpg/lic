@@ -1,8 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-900 dark:text-slate-100 uppercase tracking-tight">
-            {{ __('Client Queries') }}
-        </h2>
+        <div class="flex items-center gap-8">
+            <h2 class="font-black text-3xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
+                QUERIES
+            </h2>
+            
+            <div class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                </span>
+                <span class="relative text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.15em]">Simulation Active</span>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-6" x-data="{ 
@@ -76,119 +86,96 @@
     
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center justify-between mb-10 px-2">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">Service Queries</h2>
-                    <p class="text-gray-500 dark:text-slate-400 mt-1">Track and respond to client inquiries and support requests.</p>
+                    <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tight dark:text-white">Service Queries</h2>
+                    <p class="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Track and respond to client inquiries and support requests.</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-4">
                     @if(request('search'))
-                        <a href="{{ route('queries.index') }}" class="text-sm font-bold text-rose-600 hover:text-rose-800 flex items-center gap-1 bg-rose-50 px-3 py-2 rounded-xl transition-colors">
+                        <a href="{{ route('queries.index') }}" class="text-[10px] font-black text-rose-600 hover:text-rose-800 flex items-center gap-1 bg-rose-50 dark:bg-rose-900/30 px-3 py-2.5 rounded-xl transition-colors uppercase tracking-widest">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                            Clear Filters
+                            Clear
                         </a>
                     @endif
                     <form action="{{ route('queries.index') }}" method="GET" class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                            <svg class="h-4 w-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search queries..." class="search-input pl-11 pr-4 py-2.5 rounded-xl border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-64 transition-all">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search queries..." class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-64 transition-all uppercase font-bold tracking-tight">
                     </form>
-                    <a href="{{ route('queries.create') }}" class="premium-btn premium-btn-primary flex items-center gap-2">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                        New Query Request
+                    <a href="{{ route('queries.create') }}" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-200 hover:bg-indigo-500 transition-all">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        New Inquiry
                     </a>
                 </div>
             </div>
 
             <!-- Query Analytics Grid -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="premium-card !p-5 border-none bg-white dark:bg-slate-800/80 shadow-md">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-lg text-indigo-600 dark:text-indigo-400">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                @foreach([
+                    ['label' => 'TOTAL', 'sub' => 'Total Queries', 'val' => $stats['total'], 'color' => 'indigo', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'],
+                    ['label' => 'SAFE', 'sub' => 'Approved', 'val' => $stats['approved'], 'color' => 'emerald', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'],
+                    ['label' => 'WAITING', 'sub' => 'Pending', 'val' => $stats['pending'], 'color' => 'amber', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
+                    ['label' => 'DENIED', 'sub' => 'Rejected', 'val' => $stats['rejected'], 'color' => 'rose', 'icon' => 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z']
+                ] as $s)
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-5 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="p-2 rounded-lg bg-{{ $s['color'] }}-50 dark:bg-{{ $s['color'] }}-900/30 text-{{ $s['color'] }}-600 dark:text-{{ $s['color'] }}-400">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $s['icon'] }}" /></svg>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $s['label'] }}</span>
                         </div>
-                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500">TOTAL</span>
+                        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">{{ $s['val'] }}</div>
+                        <div class="text-[10px] font-bold text-slate-500 mt-1 uppercase tracking-tight">{{ $s['sub'] }}</div>
                     </div>
-                    <div class="text-2xl font-black text-slate-900 dark:text-slate-100">{{ $stats['total'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 dark:text-slate-500 mt-1 uppercase">Total Queries</div>
-                </div>
-
-                <div class="premium-card !p-5 border-none bg-white dark:bg-slate-800/80 shadow-md">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-emerald-50 dark:bg-emerald-500/10 rounded-lg text-emerald-600 dark:text-emerald-400">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">SAFE</span>
-                    </div>
-                    <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400">{{ $stats['approved'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 dark:text-slate-500 mt-1 uppercase">Approved</div>
-                </div>
-
-                <div class="premium-card !p-5 border-none bg-white dark:bg-slate-800/80 shadow-md">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-amber-50 dark:bg-amber-500/10 rounded-lg text-amber-600 dark:text-amber-400">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <span class="text-xs font-bold text-amber-600 dark:text-amber-400">WAITING</span>
-                    </div>
-                    <div class="text-2xl font-black text-amber-600 dark:text-amber-400">{{ $stats['pending'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 dark:text-slate-500 mt-1 uppercase">Pending</div>
-                </div>
-
-                <div class="premium-card !p-5 border-none bg-white dark:bg-slate-800/80 shadow-md">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-rose-50 dark:bg-rose-500/10 rounded-lg text-rose-600 dark:text-rose-400">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <span class="text-xs font-bold text-rose-600 dark:text-rose-400">DENIED</span>
-                    </div>
-                    <div class="text-2xl font-black text-rose-600 dark:text-rose-400">{{ $stats['rejected'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 dark:text-slate-500 mt-1 uppercase">Rejected</div>
-                </div>
+                @endforeach
             </div>
 
-            <div class="premium-card overflow-hidden !p-0 border-none shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="premium-table">
-                        <thead>
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th class="text-left">Client / Subject</th>
-                                <th class="text-left">Priority</th>
-                                <th class="text-left">Status</th>
-                                <th class="text-left">Received</th>
-                                <th class="text-right">Action</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Client / Subject</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Priority</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Status</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Received</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em] text-right">Action Hub</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
                             @forelse($queries as $query)
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="font-bold text-gray-900 dark:text-slate-100">{{ $query->subject }}</div>
-                                        <div class="text-xs text-indigo-600 dark:text-indigo-400 mt-0.5">{{ $query->client->name ?? 'Direct Inquiry' }}</div>
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-all duration-300 group">
+                                    <td class="px-8 py-6">
+                                        <div class="font-black text-slate-900 dark:text-slate-100 uppercase text-[13px]">{{ $query->subject }}</div>
+                                        <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mt-0.5">{{ $query->client->name ?? 'Direct Inquiry' }}</div>
                                         @if($query->document)
-                                            <a href="{{ asset('storage/' . $query->document) }}" target="_blank" class="inline-flex items-center gap-1 text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md mt-2 hover:bg-slate-200 transition-colors dark:text-slate-300 dark:bg-slate-800">
+                                            <a href="{{ asset('storage/' . $query->document) }}" target="_blank" class="inline-flex items-center gap-1.5 text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-md mt-2 font-bold uppercase transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
-                                                View Attachment
+                                                Supporting Doc
                                             </a>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold {{ $query->priority == 'high' ? 'bg-rose-100 text-rose-700' : ($query->priority == 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700') }}">
-                                            {{ ucfirst($query->priority) }}
+                                    <td class="px-8 py-6">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest {{ $query->priority == 'high' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : ($query->priority == 'medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300') }}">
+                                            {{ $query->priority }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="badge {{ $query->status == 'approved' ? 'badge-success' : ($query->status == 'rejected' ? 'badge-danger' : 'badge-warning') }}">
-                                            {{ ucfirst($query->status) }}
-                                        </span>
+                                    <td class="px-8 py-6">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-2 w-2 rounded-full {{ $query->status == 'approved' ? 'bg-emerald-500' : ($query->status == 'rejected' ? 'bg-rose-500' : 'bg-amber-500') }}"></div>
+                                            <span class="text-[10px] font-black uppercase tracking-widest {{ $query->status == 'approved' ? 'text-emerald-700 dark:text-emerald-400' : ($query->status == 'rejected' ? 'text-rose-700 dark:text-rose-400' : 'text-amber-700 dark:text-amber-400') }}">
+                                                {{ $query->status }}
+                                            </span>
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 dark:text-slate-400">
-                                        {{ $query->created_at->format('M d, Y') }}
-                                        <div class="text-xs text-gray-400 dark:text-slate-500 italic mt-0.5">{{ $query->created_at->diffForHumans() }}</div>
+                                    <td class="px-8 py-6">
+                                        <div class="text-[11px] font-black text-slate-900 dark:text-slate-100">{{ $query->created_at->format('M d, Y') }}</div>
+                                        <div class="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-0.5 uppercase">{{ $query->created_at->diffForHumans() }}</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-sm font-bold uppercase tracking-wider">
+                                    <td class="px-8 py-6 text-right">
+                                        <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
                                             <button 
                                                 data-query='{{ json_encode([
                                                     "id" => $query->id,
@@ -202,10 +189,8 @@
                                                     "created_at" => $query->created_at->format("M d, Y")
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'view')" 
-                                                class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 flex items-center gap-1 transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                                View
-                                            </button>
+                                                class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 flex items-center gap-1.5 transition-transform hover:scale-105">View</button>
+                                            <span class="text-slate-200 dark:text-slate-700">|</span>
                                             <button 
                                                 data-query='{{ json_encode([
                                                     "id" => $query->id,
@@ -219,26 +204,16 @@
                                                     "created_at" => $query->created_at->format("M d, Y")
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'edit')" 
-                                                class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1 transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('queries.destroy', $query) }}" method="POST" class="inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 flex items-center gap-1" onclick="return confirm('Archive query?')">
-                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                                    Delete
-                                                </button>
-                                            </form>
+                                                class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1.5 transition-transform hover:scale-105">Edit</button>
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-slate-500">
+                                    <td colspan="5" class="px-8 py-20 text-center text-gray-500 dark:text-slate-500">
                                         <div class="flex flex-col items-center">
-                                            <svg class="h-12 w-12 text-gray-300 dark:text-slate-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
-                                            <p>No active queries found. Everything is calm!</p>
+                                            <svg class="h-12 w-12 text-slate-200 dark:text-slate-800 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                                            <p class="text-[10px] font-black uppercase tracking-widest">No active queries found. Everything is calm!</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -247,7 +222,7 @@
                     </table>
                 </div>
                 @if($queries->hasPages())
-                    <div class="bg-gray-50 dark:bg-slate-800/50 px-6 py-4 border-t border-gray-100 dark:border-slate-700/50">
+                    <div class="bg-slate-50/50 dark:bg-slate-800/50 px-8 py-5 border-t border-slate-100 dark:border-slate-700">
                         {{ $queries->links() }}
                     </div>
                 @endif

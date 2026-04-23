@@ -59,18 +59,23 @@ class NexoraByteIntelligenceService
      */
     public function getMemoriesForPrompt(User $user): string
     {
-        $insights = NexoraByteInsight::where('user_id', $user->id)
-            ->orderBy('importance', 'desc')
-            ->take(5)
-            ->get();
+        try {
+            $insights = NexoraByteInsight::where('user_id', $user->id)
+                ->orderBy('importance', 'desc')
+                ->take(5)
+                ->get();
 
-        if ($insights->isEmpty()) return "";
+            if ($insights->isEmpty()) return "";
 
-        $memoryString = "\n**AUTONOMOUS BRAIN CONTEXT (Your evolved knowledge of this user)**:\n";
-        foreach ($insights as $insight) {
-            $memoryString .= "- " . $insight->content . "\n";
+            $memoryString = "\n**AUTONOMOUS BRAIN CONTEXT (Your evolved knowledge of this user)**:\n";
+            foreach ($insights as $insight) {
+                $memoryString .= "- " . $insight->content . "\n";
+            }
+
+            return $memoryString;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning("NexoraByte Intelligence Memory Fetch Failed: " . $e->getMessage());
+            return "";
         }
-
-        return $memoryString;
     }
 }

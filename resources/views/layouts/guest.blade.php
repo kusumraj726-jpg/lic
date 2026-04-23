@@ -17,7 +17,7 @@
 
         <style>
             body {
-                font-family: 'Inter', sans-serif;
+                font-family: 'Cambria', Georgia, serif;
             }
             .glass-panel {
                 background: rgba(15, 23, 42, 0.8);
@@ -25,55 +25,85 @@
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
         </style>
+        
+        <script>
+            // 🛡️ NexoraByte Anti-History-Hijack Security
+            // Prevents users from using the back button to reach sensitive forms (like registration) 
+            // after the session has been cleared or the flow is complete.
+            (function() {
+                window.addEventListener('pageshow', function(event) {
+                    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                        // If page reached via back button, force a reload to let the server-side middleware 
+                        // check the current session state and redirect if necessary.
+                        window.location.reload();
+                    }
+                });
+            })();
+        </script>
     </head>
-    <body class="antialiased text-slate-200">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#020617] relative overflow-hidden">
-            <!-- Simple Dark Theme Background without heavy blue gradients -->
+    <body class="antialiased text-slate-900 selection:bg-rose-500 selection:text-white">
+        <!-- Premium Background Layers -->
+        <div class="fixed inset-0 z-[-1] bg-gradient-to-br from-white via-rose-50 to-white overflow-hidden">
+            <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-radial-gradient(circle, rgba(251, 113, 133, 0.4) 0%, transparent 70%) animate-aura"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[80%] h-[80%] bg-radial-gradient(circle, rgba(251, 113, 133, 0.45) 0%, transparent 70%) animate-aura-reverse"></div>
+            <div class="absolute top-[30%] left-[50%] w-[50%] h-[50%] bg-radial-gradient(circle, rgba(244, 114, 182, 0.5) 0%, transparent 70%) animate-aura" style="filter: blur(120px);"></div>
+            
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=\"0 0 250 250\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')] opacity-[0.03] mix-blend-multiply"></div>
+            <div class="absolute inset-0" style="background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(circle at center, black, transparent 90%);"></div>
+        </div>
 
-            <div class="mb-6 text-center z-10 w-full flex justify-center">
-                <a href="/" class="flex flex-col items-center justify-center gap-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="h-40 w-auto object-contain">
-                    <span class="text-3xl font-extrabold text-white tracking-widest">NexoraByte</span>
+        <!-- SVG Filter for Logo Transparency -->
+        <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+            <filter id="chroma-key-black"><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 1 1 0 -0.1" /></filter>
+        </svg>
+
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative px-4">
+            <div class="mb-12 text-center z-10 w-full animate-fade-in-up">
+                <a href="/" class="flex flex-col items-center justify-center gap-4 group">
+                    <div class="relative">
+                        <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-20 w-auto object-contain transition-transform group-hover:scale-110 duration-500 shadow-2xl rounded-2xl" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    </div>
+                    <span class="text-4xl font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md z-10 px-4">
+            <div class="w-full sm:max-w-md z-10">
                 @if(request()->has('flow'))
                     @php
                         $currentStep = request()->input('step', 1);
                     @endphp
                     <!-- Onboarding Progress Bar -->
-                    <div class="mb-10 flex justify-center items-center gap-3 text-[9px] uppercase font-black tracking-widest transition-all animate-in fade-in slide-in-from-top-4 duration-700">
-                        <div class="flex items-center gap-2 {{ $currentStep >= 1 ? 'text-emerald-400' : 'text-slate-600' }}">
-                            <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep > 1 ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-emerald-500 ' }}">
+                    <div class="mb-10 flex justify-center items-center gap-3 text-[9px] uppercase font-black tracking-[0.4em] text-slate-400">
+                        <div class="flex items-center gap-2 {{ $currentStep >= 1 ? 'text-rose-600' : '' }}">
+                            <span class="flex items-center justify-center w-6 h-6 rounded-full border-2 {{ $currentStep > 1 ? 'bg-rose-600 border-rose-600 text-white' : 'border-rose-600' }}">
                                 {{ $currentStep > 1 ? '✓' : '1' }}
                             </span>
-                            <span class="{{ $currentStep == 1 ? 'opacity-100' : 'opacity-60' }}">Pay</span>
+                            <span class="{{ $currentStep == 1 ? 'text-slate-900 font-black' : '' }}">Pay</span>
                         </div>
-                        <div class="w-6 h-[2px] rounded-full {{ $currentStep >= 2 ? 'bg-emerald-500' : 'bg-slate-800' }}"></div>
-                        <div class="flex items-center gap-2 {{ $currentStep >= 2 ? 'text-indigo-400' : 'text-slate-600' }}">
-                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 2 ? 'border-indigo-400 ' : ($currentStep > 2 ? 'bg-indigo-400 border-indigo-400 text-slate-950' : 'border-slate-800') }}">
+                        <div class="w-12 h-px {{ $currentStep >= 2 ? 'bg-rose-500' : 'bg-slate-200' }}"></div>
+                        <div class="flex items-center gap-2 {{ $currentStep >= 2 ? 'text-rose-600' : '' }}">
+                             <span class="flex items-center justify-center w-6 h-6 rounded-full border-2 {{ $currentStep == 2 ? 'border-rose-600 text-rose-600' : ($currentStep > 2 ? 'bg-rose-600 border-rose-600 text-white' : 'border-slate-300') }}">
                                 {{ $currentStep > 2 ? '✓' : '2' }}
                             </span>
-                            <span class="{{ $currentStep == 2 ? 'opacity-100' : 'opacity-60' }}">Register</span>
+                            <span class="{{ $currentStep == 2 ? 'text-slate-900 font-black' : '' }}">Register</span>
                         </div>
-                        <div class="w-6 h-[2px] rounded-full {{ $currentStep >= 3 ? 'bg-indigo-400' : 'bg-slate-800' }}"></div>
-                        <div class="flex items-center gap-2 {{ $currentStep >= 3 ? 'text-indigo-400' : 'text-slate-600' }}">
-                             <span class="flex items-center justify-center w-5 h-5 rounded-full border-2 {{ $currentStep == 3 ? 'border-indigo-400 ' : 'border-slate-800' }}">
+                        <div class="w-12 h-px {{ $currentStep >= 3 ? 'bg-rose-500' : 'bg-slate-200' }}"></div>
+                        <div class="flex items-center gap-2 {{ $currentStep >= 3 ? 'text-rose-600' : '' }}">
+                             <span class="flex items-center justify-center w-6 h-6 rounded-full border-2 {{ $currentStep == 3 ? 'border-rose-600 text-rose-600' : 'border-slate-300' }}">
                                 3
                             </span>
-                            <span class="{{ $currentStep == 3 ? 'opacity-100' : 'opacity-60' }}">Login</span>
+                            <span class="{{ $currentStep == 3 ? 'text-slate-900 font-black' : '' }}">Login</span>
                         </div>
                     </div>
                 @endif
 
-                <div class="bg-[#0f172a] px-8 py-8 shadow-2xl rounded-[1.5rem] relative border border-slate-800">
+                <div class="bg-white/40 backdrop-blur-3xl border border-white/80 px-10 py-12 shadow-2xl rounded-[3rem] relative animate-fade-in-up delay-100">
                     {{ $slot }}
                 </div>
                 
-                <div class="mt-6 text-center">
-                    <p class="text-slate-500 text-xs font-medium uppercase tracking-widest dark:text-slate-400">
-                        Official Enterprise Resource Planning Portal
+                <div class="mt-10 text-center animate-fade-in-up delay-200">
+                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">
+                        Elite Command Center &bull; Verified Access Only
                     </p>
                 </div>
             </div>

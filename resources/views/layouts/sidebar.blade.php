@@ -1,23 +1,39 @@
 <aside class="glass-sidebar shadow-xl transition-colors duration-300">
-    <div class="sidebar-header border-b border-gray-100/50 dark:border-slate-700 mb-4 pb-4 px-2 transition-colors duration-300">
+    <div class="px-6 mb-10 transition-colors duration-300">
         @php
             $sidebarContext = auth()->user()->context();
         @endphp
-        <a href="{{ route('dashboard') }}" class="sidebar-logo flex items-center gap-3 py-2">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-4 group">
             @if(Auth::user()->logo_url)
-                <img src="{{ Auth::user()->logo_url }}" alt="Logo" class="h-10 w-10 object-cover rounded-[0.5rem] shadow-sm bg-white">
+                <img src="{{ Auth::user()->logo_url }}" alt="Logo" class="h-10 w-10 object-cover rounded-xl shadow-lg bg-white">
             @else
-                <div class="h-10 w-10 rounded-[0.5rem] bg-brand text-white flex shrink-0 items-center justify-center font-black text-xl shadow-lg">
+                <div class="h-10 w-10 rounded-xl bg-rose-600 text-white flex shrink-0 items-center justify-center font-black text-xl shadow-lg shadow-rose-200 group-hover:scale-105 transition-transform">
                     {{ substr($sidebarContext->company_name ?? 'V', 0, 1) }}
                 </div>
             @endif
             
             <div class="flex flex-col overflow-hidden">
-                <span class="tracking-tight text-[11px] font-black uppercase text-slate-900 dark:text-slate-100 group-hover:text-brand transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $sidebarContext->company_name ?? config('app.name', 'NexoraByte ERP') }}</span>
-                <span class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Command Center</span>
+                <h2 class="text-sm font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">{{ $sidebarContext->company_name ?? 'Vantage ERP' }}</h2>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <div class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <p class="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Live Digital Replica</p>
+                </div>
             </div>
         </a>
     </div>
+
+    <style>
+        .nav-item.active { 
+            background-color: rgba(225, 29, 72, 0.05) !important; 
+            color: #e11d48 !important;
+            border-color: rgba(225, 29, 72, 0.1) !important;
+        }
+        .dark .nav-item.active {
+            background-color: rgba(225, 29, 72, 0.15) !important;
+            color: #fb7185 !important;
+            border-color: rgba(225, 29, 72, 0.2) !important;
+        }
+    </style>
 
     <nav class="sidebar-nav">
         @php

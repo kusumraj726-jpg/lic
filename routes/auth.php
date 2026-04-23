@@ -28,8 +28,10 @@ Route::post('reset-password', [NewPasswordController::class, 'store'])
 
 // Private Admin Creation console (Kept public so you can create the first admin)
 Route::get('register', [RegisteredUserController::class, 'create'])
+    ->middleware('noCache')
     ->name('register');
-Route::post('register', [RegisteredUserController::class, 'store']);
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware('noCache');
 
 // Protected Routes
 Route::middleware('auth')->group(function () {

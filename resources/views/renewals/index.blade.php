@@ -1,8 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
-            {{ __('Policy Renewals') }}
-        </h2>
+        <div class="flex items-center gap-8">
+            <h2 class="font-black text-3xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
+                RENEWALS
+            </h2>
+            
+            <div class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                </span>
+                <span class="relative text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.15em]">Simulation Active</span>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-6" x-data="{ 
@@ -53,125 +63,121 @@
         }
     }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center justify-between mb-10 px-2">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100">Policy Renewals</h2>
-                    <p class="text-gray-500 mt-1 dark:text-slate-400">Manage upcoming expirations and renewal processes.</p>
+                    <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tight dark:text-white">Policy Renewals</h2>
+                    <p class="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Manage upcoming expirations and renewal processes.</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    @if(request('search') || request('status') || request('upcoming'))
-                        <a href="{{ route('renewals.index') }}" class="text-sm font-bold text-rose-600 hover:text-rose-800 flex items-center gap-1 bg-rose-50 px-3 py-2 rounded-xl transition-colors">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                            Clear Filters
-                        </a>
-                    @endif
+                <div class="flex items-center gap-4">
                     <form action="{{ route('renewals.index') }}" method="GET" class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                            <svg class="h-4 w-4 text-slate-400 group-focus-within:text-slate-900 dark:group-focus-within:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search policy # or client..." class="search-input pl-11 pr-4 py-2.5 rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 bg-white shadow-sm w-72 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search policy #..." class="pl-10 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-slate-900 dark:focus:border-white focus:ring-0 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-64 transition-all uppercase font-bold tracking-tight">
                     </form>
-                    <a href="{{ route('renewals.create') }}" class="premium-btn premium-btn-primary flex items-center gap-2">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                        Add Renewal Item
+                    <a href="{{ route('renewals.create') }}" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-200 hover:bg-emerald-500 transition-all">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        Add Renewal
                     </a>
                 </div>
             </div>
 
             <!-- Renewals Analytics Grid -->
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
-                <a href="{{ route('renewals.index') }}" class="premium-card !p-4 border-none bg-white shadow-md hover:shadow-lg transition-all {{ !request('status') && !request('upcoming') ? 'ring-2 ring-slate-100' : '' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-slate-100 rounded-lg text-slate-600 dark:text-slate-300 dark:bg-slate-800">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                <a href="{{ route('renewals.index') }}" class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-slate-400 group-hover:scale-110 transition-transform">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         </div>
-                        <span class="text-xs font-bold text-slate-400">AGREE</span>
+                        <span class="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest">AGREE</span>
                     </div>
-                    <div class="text-2xl font-black text-slate-900 dark:text-slate-100">{{ $stats['total'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 mt-1 uppercase dark:text-slate-400">Total Policies</div>
+                    <div class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{{ $stats['total'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total Policies</div>
                 </a>
 
-                <a href="{{ route('renewals.index', ['status' => 'pending']) }}" class="premium-card !p-4 border-none bg-white shadow-md hover:shadow-lg transition-all {{ request('status') === 'pending' ? 'ring-2 ring-amber-500 bg-amber-50/10' : '' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+                <a href="{{ route('renewals.index', ['status' => 'pending']) }}" class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-2.5 bg-amber-50 dark:bg-amber-900/20 rounded-xl text-amber-500 group-hover:scale-110 transition-transform">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
-                        <span class="text-xs font-bold text-amber-600">WAITING</span>
+                        <span class="text-[10px] font-black text-amber-300 dark:text-amber-800 uppercase tracking-widest">WAITING</span>
                     </div>
-                    <div class="text-2xl font-black text-amber-600">{{ $stats['pending'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 mt-1 uppercase dark:text-slate-400">Pending</div>
+                    <div class="text-3xl font-black text-amber-600 tracking-tight">{{ $stats['pending'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Pending</div>
                 </a>
 
-                <a href="{{ route('renewals.index', ['status' => 'renewed']) }}" class="premium-card !p-4 border-none bg-white shadow-md hover:shadow-lg transition-all {{ request('status') === 'renewed' ? 'ring-2 ring-emerald-500 bg-emerald-50/10' : '' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                <a href="{{ route('renewals.index', ['status' => 'renewed']) }}" class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl text-emerald-500 group-hover:scale-110 transition-transform">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
-                        <span class="text-xs font-bold text-emerald-600">SECURE</span>
+                        <span class="text-[10px] font-black text-emerald-300 dark:text-emerald-800 uppercase tracking-widest">SECURE</span>
                     </div>
-                    <div class="text-2xl font-black text-emerald-600">{{ $stats['renewed'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 mt-1 uppercase dark:text-slate-400">Renewed</div>
+                    <div class="text-3xl font-black text-emerald-600 tracking-tight">{{ $stats['renewed'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Renewed</div>
                 </a>
 
-                <a href="{{ route('renewals.index', ['status' => 'lapsed']) }}" class="premium-card !p-4 border-none bg-white shadow-md hover:shadow-lg transition-all {{ request('status') === 'lapsed' ? 'ring-2 ring-rose-500 bg-rose-50/10' : '' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-rose-50 rounded-lg text-rose-600">
+                <a href="{{ route('renewals.index', ['status' => 'lapsed']) }}" class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-2.5 bg-rose-50 dark:bg-rose-900/20 rounded-xl text-rose-500 group-hover:scale-110 transition-transform">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                         </div>
-                        <span class="text-xs font-bold text-rose-600">CRITICAL</span>
+                        <span class="text-[10px] font-black text-rose-300 dark:text-rose-800 uppercase tracking-widest">CRITICAL</span>
                     </div>
-                    <div class="text-2xl font-black text-rose-600">{{ $stats['lapsed'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 mt-1 uppercase dark:text-slate-400">Lapsed</div>
+                    <div class="text-3xl font-black text-rose-600 tracking-tight">{{ $stats['lapsed'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Lapsed</div>
                 </a>
 
-                <a href="{{ route('renewals.index', ['upcoming' => 1]) }}" class="premium-card !p-4 border-none bg-white shadow-md hover:shadow-lg transition-all {{ request('upcoming') ? 'ring-2 ring-indigo-500 bg-indigo-50/10' : '' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                <a href="{{ route('renewals.index', ['upcoming' => 1]) }}" class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-2.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl text-indigo-500 group-hover:scale-110 transition-transform">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
                         </div>
-                        <span class="text-xs font-bold text-indigo-600">ALERT</span>
+                        <span class="text-[10px] font-black text-indigo-300 dark:text-indigo-800 uppercase tracking-widest">ALERT</span>
                     </div>
-                    <div class="text-2xl font-black text-indigo-600">{{ $stats['upcoming'] }}</div>
-                    <div class="text-xs font-bold text-slate-500 mt-1 uppercase dark:text-slate-400">30-Day Alert</div>
+                    <div class="text-3xl font-black text-indigo-600 tracking-tight">{{ $stats['upcoming'] }}</div>
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">30-Day Alert</div>
                 </a>
             </div>
 
 
-            <div class="premium-card overflow-hidden !p-0 border-none shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="premium-table">
-                        <thead>
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th>Policy Details</th>
-                                <th>Policy #</th>
-                                <th>Premium</th>
-                                <th>Expiry / Status</th>
-                                <th class="text-right">Action</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Policy Details</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Policy #</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Premium</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Expiry / Status</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em] text-right">Action Hub</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
                             @forelse($renewals as $renewal)
-                                <tr class="hover:bg-slate-50 transition-colors dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <div class="font-bold text-gray-900 dark:text-gray-100">{{ $renewal->client?->name ?? 'Unknown Client' }}</div>
-                                        <div class="text-xs text-indigo-600 mt-0.5">{{ ucfirst($renewal->policy_type) }}</div>
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-all duration-300 group">
+                                    <td class="px-8 py-6">
+                                        <div class="font-black text-slate-900 dark:text-slate-100 uppercase text-[13px]">{{ $renewal->client?->name ?? 'Unknown Client' }}</div>
+                                        <div class="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mt-0.5">{{ $renewal->policy_type }}</div>
                                     </td>
-                                    <td class="px-6 py-4 font-mono text-sm text-gray-600 dark:text-gray-300">
-                                        {{ $renewal->policy_number }}
+                                    <td class="px-8 py-6">
+                                        <div class="font-mono text-[12px] font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">{{ $renewal->policy_number }}</div>
                                     </td>
-                                    <td class="px-6 py-4 font-bold text-slate-900 dark:text-slate-100">
-                                        ₹{{ number_format($renewal->premium_amount, 2) }}
+                                    <td class="px-8 py-6">
+                                        <div class="text-[14px] font-black text-slate-900 dark:text-slate-100 tracking-tight">₹{{ number_format($renewal->premium_amount, 2) }}</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <div class="text-sm font-bold {{ Carbon\Carbon::parse($renewal->expiry_date)->isPast() ? 'text-rose-600' : 'text-gray-900' }}">
+                                    <td class="px-8 py-6">
+                                        <div class="text-[11px] font-black {{ Carbon\Carbon::parse($renewal->expiry_date)->isPast() ? 'text-rose-600' : 'text-slate-900 dark:text-slate-100' }} tracking-tight">
                                             {{ $renewal->expiry_date }}
                                         </div>
-                                        <span class="badge mt-1 {{ $renewal->status == 'renewed' ? 'badge-success' : ($renewal->status == 'lapsed' ? 'badge-danger' : 'badge-warning') }}">
-                                            {{ ucfirst($renewal->status) }}
-                                        </span>
+                                        <div class="mt-1">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest {{ $renewal->status == 'renewed' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : ($renewal->status == 'lapsed' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400') }}">
+                                                {{ $renewal->status }}
+                                            </span>
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-sm font-bold uppercase tracking-wider">
+                                    <td class="px-8 py-6 text-right">
+                                        <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
                                             <button 
                                                 data-renewal='{{ json_encode([
                                                     "id" => $renewal->id,
@@ -184,10 +190,8 @@
                                                     "status" => $renewal->status
                                                 ]) }}'
                                                 @click="openRenewal(JSON.parse($el.dataset.renewal), 'view')" 
-                                                class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 flex items-center gap-1 transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                                View
-                                            </button>
+                                                class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors">View</button>
+                                            <span class="text-slate-200 dark:text-slate-800 text-xs">|</span>
                                             <button 
                                                 data-renewal='{{ json_encode([
                                                     "id" => $renewal->id,
@@ -200,26 +204,16 @@
                                                     "status" => $renewal->status
                                                 ]) }}'
                                                 @click="openRenewal(JSON.parse($el.dataset.renewal), 'edit')" 
-                                                class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1 transition-transform hover:scale-105">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('renewals.destroy', $renewal) }}" method="POST" class="inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 flex items-center gap-1" onclick="return confirm('Remove renewal record?')">
-                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                                    Delete
-                                                </button>
-                                            </form>
+                                                class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 transition-colors">Edit</button>
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-slate-400">
+                                    <td colspan="5" class="px-8 py-20 text-center text-gray-500 dark:text-slate-500">
                                         <div class="flex flex-col items-center">
-                                            <svg class="h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                            <p>No renewals scheduled.</p>
+                                            <svg class="h-12 w-12 text-slate-200 dark:text-slate-800 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            <p class="text-[10px] font-black uppercase tracking-widest">No renewals found.</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -228,7 +222,7 @@
                     </table>
                 </div>
                 @if($renewals->hasPages())
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 dark:bg-slate-800/50">
+                    <div class="bg-slate-50/50 dark:bg-slate-800/50 px-8 py-5 border-t border-slate-100 dark:border-slate-700">
                         {{ $renewals->links() }}
                     </div>
                 @endif
@@ -259,9 +253,9 @@
                      x-transition:leave="ease-in duration-200" 
                      x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
                      x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-                     class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-slate-100">
+                     class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-slate-100 dark:border-slate-800">
                     
-                    <div class="px-6 py-4 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                    <div class="px-6 py-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
                         <h3 class="text-lg font-black text-slate-800 dark:text-slate-200" x-text="mode === 'view' ? 'Renewal Details' : 'Edit Renewal Record'"></h3>
                         <button @click="openModal = false" class="text-slate-400 hover:text-slate-600">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -347,8 +341,8 @@
                             </div>
                         </div>
 
-                        <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex justify-end gap-3">
-                            <button type="button" @click="openModal = false" class="text-sm font-bold text-slate-400 px-4 py-2">Cancel</button>
+                        <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+                            <button type="button" @click="openModal = false" class="text-sm font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 px-4 py-2">Cancel</button>
                             <template x-if="mode === 'view'">
                                 <button type="button" @click="mode = 'edit'" class="premium-btn premium-btn-primary !px-8 flex items-center gap-2">
                                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>

@@ -491,7 +491,7 @@
              class="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
              style="display: none;">
             
-            <div class="relative w-full max-w-xl premium-card bg-white shadow-2xl overflow-hidden p-8 border border-slate-100 dark:border-slate-700" @click.away="showModal = false">
+            <div class="relative w-full max-w-xl premium-card bg-white dark:bg-slate-900 shadow-2xl overflow-hidden p-8 border border-slate-100 dark:border-slate-700" @click.away="showModal = false">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-4">
                         <div class="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
@@ -523,7 +523,7 @@
                     <div class="flex items-center gap-3 pt-4">
                         <button @click="saveAsTemplate()" 
                                 :disabled="isSaving"
-                                class="flex-1 px-6 py-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 disabled:opacity-50 dark:text-slate-300 dark:bg-slate-800">
+                                class="flex-1 px-6 py-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 disabled:opacity-50 dark:text-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700">
                             <span x-show="!isSaving">Save as Template</span>
                             <span x-show="isSaving">Saving...</span>
                             <svg x-show="!isSaving" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
