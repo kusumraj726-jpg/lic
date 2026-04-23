@@ -209,11 +209,11 @@
                             <div class="space-y-4">
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹)</label>
-                                    <input type="number" name="amount" x-model="commission.received_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 font-bold text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                    <input type="number" name="amount" x-model="commission.received_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 font-bold text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Date</label>
-                                    <input type="date" name="received_at" x-model="commission.received_at" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                    <input type="date" name="received_at" x-model="commission.received_at" class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
                                 </div>
                             </div>
 
@@ -250,7 +250,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Client <span class="text-rose-500">*</span></label>
-                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
                                         <option value="">-- Select Client --</option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -259,11 +259,11 @@
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Policy Number <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Provider / Company <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="provider" x-model="commission.provider" list="provider_list" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <input type="text" name="provider" x-model="commission.provider" list="provider_list" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
                                     <datalist id="provider_list">
                                         <option value="{{ auth()->user()->context()->company_name ?? 'Vantage ERP' }}">
                                         <option value="LIC of India">
@@ -276,13 +276,13 @@
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Expected Amount (₹) <span class="text-rose-500">*</span></label>
-                                    <input type="number" name="expected_amount" x-model="commission.expected_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <input type="number" name="expected_amount" x-model="commission.expected_amount" step="0.01" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-black text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" required>
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Status</label>
                                     <select name="status" x-model="commission.status" 
                                         @change="if(commission.status === 'received') commission.received_amount = commission.expected_amount"
-                                        class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                        class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
                                         <option value="pending">Pending</option>
                                         <option value="received">Received</option>
                                         <option value="partial">Partial</option>
@@ -292,13 +292,13 @@
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Received Amount (₹) <span class="text-rose-500">*</span></label>
                                     <input type="number" name="received_amount" x-model="commission.received_amount" step="0.01" 
                                         :required="commission.status === 'received' || commission.status === 'partial'"
-                                        class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-black text-lg dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                        class="w-full rounded-xl border-slate-200 focus:border-emerald-500 font-black text-lg text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white">
                                 </div>
                             </div>
 
                             <div class="mt-6">
                                 <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2 block">Internal Notes</label>
-                                <textarea name="notes" x-model="commission.notes" rows="2" class="w-full rounded-xl border-slate-200 focus:border-violet-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Optional notes..."></textarea>
+                                <textarea name="notes" x-model="commission.notes" rows="2" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white" placeholder="Optional notes..."></textarea>
                             </div>
 
                             <div class="mt-10 flex gap-4">

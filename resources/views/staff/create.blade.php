@@ -51,22 +51,22 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Full Name <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="staff_member_name_sec" value="{{ old('staff_member_name_sec') }}" placeholder="Enter Full Name" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" required>
+                                    <input type="text" name="staff_member_name_sec" value="{{ old('staff_member_name_sec') }}" placeholder="Enter Full Name" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" required>
                                     @error('staff_member_name_sec') <p class="text-[10px] text-rose-500 font-bold mt-1 px-1 uppercase tracking-widest">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Email Address <span class="text-rose-500">*</span></label>
-                                    <input type="email" name="staff_member_email_sec" value="{{ old('staff_member_email_sec') }}" placeholder="official@agency.com" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" required>
+                                    <input type="email" name="staff_member_email_sec" value="{{ old('staff_member_email_sec') }}" placeholder="official@agency.com" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" required>
                                     @error('staff_member_email_sec') <p class="text-[10px] text-rose-500 font-bold mt-1 px-1 uppercase tracking-widest">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Phone Number</label>
-                                    <input type="text" name="staff_member_phone_sec" value="{{ old('staff_member_phone_sec') }}" placeholder="9876543210" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
+                                    <input type="text" name="staff_member_phone_sec" value="{{ old('staff_member_phone_sec') }}" placeholder="9876543210" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
                                     @error('staff_member_phone_sec') <p class="text-[10px] text-rose-500 font-bold mt-1 px-1 uppercase tracking-widest">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Designation</label>
-                                    <input type="text" name="staff_member_designation_sec" value="{{ old('staff_member_designation_sec') }}" placeholder="e.g. Senior Advisor" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
+                                    <input type="text" name="staff_member_designation_sec" value="{{ old('staff_member_designation_sec') }}" placeholder="e.g. Senior Advisor" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
                                     @error('staff_member_designation_sec') <p class="text-[10px] text-rose-500 font-bold mt-1 px-1 uppercase tracking-widest">{{ $message }}</p> @enderror
                                 </div>
                             </div>
@@ -85,12 +85,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Create Password <span class="text-rose-500">*</span></label>
-                                    <input type="password" name="password" placeholder="••••••••" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all outline-none" required>
+                                    <input type="password" name="password" placeholder="••••••••" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all outline-none" required>
                                     @error('password') <p class="text-[10px] text-rose-500 font-bold mt-1 px-1 uppercase tracking-widest">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-2.5">
                                     <label class="text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest ml-1">Confirm Password <span class="text-rose-500">*</span></label>
-                                    <input type="password" name="password_confirmation" placeholder="••••••••" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all outline-none" required>
+                                    <input type="password" name="password_confirmation" placeholder="••••••••" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl px-6 py-4 text-sm text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all outline-none" required>
                                 </div>
                             </div>
                         </div>
