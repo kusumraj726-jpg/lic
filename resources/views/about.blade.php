@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>About Us | nexorabyte Digital Engineering</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-nb.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Fonts -->
