@@ -227,22 +227,76 @@
             animation: autoScroll 14s ease-in-out infinite alternate;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        /* Advanced Modal Animations */
+        @keyframes modalEntrance {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .animate-float {
-            animation: float 5s ease-in-out infinite;
+        @keyframes premiumFloat {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(139, 92, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+        }
+
+        @keyframes drifting {
+            0% { transform: translate(0, 0); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translate(30px, -40px); opacity: 0; }
+        }
+
+        .modal-card {
+            animation: modalEntrance 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .floating-blob {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: premiumFloat 10s ease-in-out infinite;
+        }
+
+        .drifting-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: drifting 12s linear infinite;
+        }
+
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px border rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-gradient-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
     </style>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -407,8 +461,147 @@
             </div>
         </div>
     </section>
+
+    <!-- Premium Split-Layout Modal -->
+    <div id="premiumSaleModal" class="fixed inset-0 z-[100] flex items-center justify-center px-4" style="display: none;">
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-2xl" onclick="closePremiumModal()"></div>
+
+        <!-- Modal Card -->
+        <div class="relative bg-white rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] border border-white/20 w-full max-w-4xl flex flex-col md:flex-row overflow-hidden modal-card no-scrollbar" style="font-family: Cambria, Georgia, serif;">
+            
+            <!-- Left Side: Dark Premium Visual -->
+            <div class="w-full md:w-[42%] bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] relative overflow-hidden flex items-center justify-center p-12">
+                <!-- Floating Blobs -->
+                <div class="floating-blob w-40 h-40 bg-purple-500/20 top-10 left-10" style="animation-delay: 0s;"></div>
+                <div class="floating-blob w-32 h-32 bg-indigo-500/20 bottom-10 right-10" style="animation-delay: -5s;"></div>
+                
+                <!-- Tiny Drifting Particles -->
+                @foreach(range(1, 15) as $p)
+                <div class="drifting-particle" style="width: {{ rand(2,4) }}px; height: {{ rand(2,4) }}px; top: {{ rand(5,95) }}%; left: {{ rand(5,95) }}%; animation-delay: {{ rand(0,10) }}s;"></div>
+                @endforeach
+
+                <!-- Floating Micro Icons -->
+                <div class="absolute text-xl opacity-30 animate-bounce" style="top: 20%; right: 20%; animation-duration: 8s;">🚀</div>
+                <div class="absolute text-xl opacity-30 animate-pulse" style="bottom: 25%; left: 15%; animation-duration: 10s;">⚡</div>
+                <div class="absolute text-xl opacity-30" style="top: 50%; left: 10%; animation: premiumFloat 12s infinite;">💎</div>
+
+                <!-- Glass Badge -->
+                <div class="relative z-20 glass-badge px-8 py-4 rounded-2xl border border-white/10 text-center shadow-2xl">
+                    <span class="text-white text-[10px] font-black uppercase tracking-[0.4em] opacity-60 block mb-2">Internal Engine</span>
+                    <div class="text-2xl font-black text-white uppercase tracking-tighter">Next-Gen <br/> ERP Engine</div>
+                </div>
+            </div>
+
+            <!-- Right Side: Content -->
+            <div class="w-full md:w-[58%] p-10 md:p-14 bg-white relative">
+                <!-- Close Button -->
+                <button onclick="closePremiumModal()" class="absolute top-8 right-8 text-slate-300 hover:text-slate-900 transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="mb-8">
+                    <div class="inline-flex items-center gap-2 bg-indigo-50 px-4 py-1.5 rounded-full border border-indigo-100 mb-6">
+                        <span class="text-[10px] font-black text-indigo-600 uppercase tracking-widest">Early Adopter Offer ✨</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter mb-4 leading-none">
+                        The Elite <br/> <span class="text-gradient-gold">Agency Upgrade.</span>
+                    </h2>
+                    <p class="text-slate-600 text-base font-medium leading-relaxed" style="font-family: Cambria, Georgia, serif;">
+                        Join the top 50 agents transforming their business with nexorabyte. This is your unfair advantage. 🚀
+                    </p>
+                </div>
+
+                <!-- Price Block -->
+                <div class="bg-emerald-50/50 rounded-[2.5rem] p-8 mb-8 border border-emerald-100/50 relative group overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-50"></div>
+                    <div class="relative z-10 flex flex-col items-start gap-1">
+                        <div class="flex items-baseline gap-4">
+                            <div class="text-7xl font-black tracking-tighter text-emerald-600">
+                                ₹<span id="priceCounter">0</span>
+                            </div>
+                            <div class="text-xl text-rose-500 font-black line-through decoration-2">₹17,999</div>
+                        </div>
+                        <div class="text-[11px] font-black uppercase tracking-[0.2em] bg-white/50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm text-slate-900">
+                            ✨ Founder pricing — never available again
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="flex flex-col gap-6">
+                    <a href="{{ route('services.insurance-erp') }}" 
+                       class="elite-btn cta-gradient-btn text-white font-black py-6 rounded-2xl uppercase tracking-[0.25em] text-[11px] shadow-2xl transition-all flex items-center justify-center gap-4">
+                        Claim Founder Spot ⚡
+                    </a>
+                    
+                    <div class="flex items-center justify-center px-2">
+                        <div class="flex items-center gap-3 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                            Only <span id="spotsCounter" class="text-slate-900">48</span> spots remaining
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </section> <!-- The nexorabyte Advantage Section -->
+
+    <script>
+        function closePremiumModal() {
+            document.getElementById('premiumSaleModal').style.display = 'none';
+        }
+
+        function animatePrice(target) {
+            const el = document.getElementById('priceCounter');
+            let current = 0;
+            const duration = 2000;
+            
+            const timer = setInterval(() => {
+                current += 157; // Faster increment
+                if (current >= target) {
+                    el.innerText = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    el.innerText = current.toLocaleString();
+                }
+            }, 10);
+        }
+
+        // Auto-show logic (Once per session - Immediate)
+        const showPopup = () => {
+            if (!sessionStorage.getItem('founderSaleShown')) {
+                const modal = document.getElementById('premiumSaleModal');
+                modal.style.display = 'flex';
+                animatePrice(14999);
+                
+                // Mark as shown for this session
+                sessionStorage.setItem('founderSaleShown', 'true');
+                
+                // Subtle spots fluctuation simulation
+                setTimeout(() => {
+                    const spots = document.getElementById('spotsCounter');
+                    if (spots) {
+                        spots.classList.add('text-rose-400', 'scale-110', 'transition-all');
+                        setTimeout(() => {
+                            spots.innerText = "47";
+                            spots.classList.remove('text-rose-400', 'scale-110');
+                        }, 1000);
+                    }
+                }, 5000);
+            }
+        };
+
+        // Trigger immediately on load
+        if (document.readyState === 'complete') {
+            showPopup();
+        } else {
+            window.addEventListener('load', showPopup);
+        }
+    </script>
+
+    <!-- The nexorabyte Advantage Section -->
     <section class="py-24 px-8 relative overflow-hidden bg-slate-50/30">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -468,14 +661,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="crystal-card p-10 rounded-[3rem] border border-slate-100 hover:border-rose-200 group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-8 z-20 flex flex-col items-end gap-2">
-                        <span class="text-[9px] font-black uppercase tracking-widest bg-rose-600 text-white px-4 py-1.5 rounded-full shadow-lg shadow-rose-200 flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-                            Flagship
-                        </span>
-                        <span class="text-[7px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 uppercase tracking-widest animate-bounce">Sale Live</span>
-                    </div>
+                <div class="crystal-card p-10 rounded-[3rem] border border-slate-100 hover:border-rose-200 group">
                     <div class="text-rose-600 font-black mb-6 flex items-center gap-3">
                         <span class="w-8 h-px bg-rose-200"></span> 01
                     </div>
