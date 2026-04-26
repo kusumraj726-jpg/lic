@@ -56,26 +56,27 @@
                         <div class="form-group">
                             <label for="policy_number">Policy Number</label>
                             
-                            <div class="relative min-h-[42px]">
-                                <!-- Fallback Input: ALWAYS visible if Alpine hasn't decided yet or if no policies exist -->
-                                <div x-show="!(availablePolicies && availablePolicies.length > 0) || manualInput || policyNumberInput === 'manual'">
-                                    <input type="text" name="policy_number_manual" x-model="policyNumberInput" 
-                                           class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" 
-                                           placeholder="Enter Policy Number">
-                                </div>
+                            <div class="relative">
+                                <!-- Always-visible text input (fallback / manual entry) -->
+                                <input type="text" name="policy_number_manual" x-model="policyNumberInput" 
+                                       id="policy_number"
+                                       class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" 
+                                       placeholder="Enter Policy Number">
 
-                                <!-- Dropdown: Only shows if policies exist AND we aren't in manual mode -->
-                                <div x-show="availablePolicies && availablePolicies.length > 0 && !manualInput && policyNumberInput !== 'manual'" x-cloak>
-                                    <select name="policy_number_select" x-model="policyNumberInput" 
-                                            @change="manualInput = (policyNumberInput === 'manual')"
-                                            class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
-                                        <option value="">-- Select Existing Policy --</option>
-                                        <template x-for="policy in (availablePolicies || [])" :key="policy.number">
-                                            <option :value="policy.number" x-text="policy.number + ' (' + policy.type + ')'"></option>
-                                        </template>
-                                        <option value="manual">+ Enter Different Policy Number</option>
-                                    </select>
-                                </div>
+                                <!-- Dropdown: shows BELOW input when client has known policies -->
+                                <template x-if="availablePolicies && availablePolicies.length > 0 && !manualInput">
+                                    <div>
+                                        <select name="policy_number_select" x-model="policyNumberInput" 
+                                                @change="manualInput = (policyNumberInput === 'manual')"
+                                                class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 mt-2">
+                                            <option value="">-- Select Existing Policy --</option>
+                                            <template x-for="policy in availablePolicies" :key="policy.number">
+                                                <option :value="policy.number" x-text="policy.number + ' (' + policy.type + ')'"></option>
+                                            </template>
+                                            <option value="manual">+ Enter Different Policy Number</option>
+                                        </select>
+                                    </div>
+                                </template>
                                 
                                 <!-- Safety Hidden Field to ensure 'policy_number' is always sent -->
                                 <input type="hidden" name="policy_number" :value="policyNumberInput === 'manual' ? '' : policyNumberInput">
