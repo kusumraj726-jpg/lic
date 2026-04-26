@@ -11,7 +11,7 @@ use App\Traits\BelongsToTenant;
 class Query extends Model
 {
     use HasFactory, SoftDeletes, BelongsToTenant, \App\Traits\LogsActivity;
-    protected $fillable = ['user_id', 'client_id', 'subject', 'description', 'priority', 'status', 'document'];
+    protected $fillable = ['user_id', 'client_id', 'policy_number', 'subject', 'description', 'priority', 'status', 'document'];
 
     public function user()
     {

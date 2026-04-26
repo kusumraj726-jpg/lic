@@ -21,14 +21,10 @@
                     get availablePolicies() {
                         return this.clientPolicies[String(this.selectedClient)] || [];
                     },
-                    updatePolicyInput() {
-                        let policies = this.availablePolicies;
-                        let numbers = policies.map(p => p.number);
-
-                        if (policies.length === 1) {
-                            this.policyNumberInput = policies[0].number;
-                            // Auto-select type
-                            let detectedType = policies[0].type;
+                    syncPolicyDetails() {
+                        let policy = this.availablePolicies.find(p => p.number === this.policyNumberInput);
+                        if (policy) {
+                            let detectedType = policy.type;
                             if (['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance'].includes(detectedType)) {
                                 this.policyTypeMode = detectedType;
                             } else {
@@ -38,7 +34,14 @@
                                     if (customInput) customInput.value = detectedType;
                                 });
                             }
-                        } else if (!numbers.includes(this.policyNumberInput)) {
+                        }
+                    },
+                    updatePolicyInput() {
+                        let policies = this.availablePolicies;
+                        if (policies.length === 1) {
+                            this.policyNumberInput = policies[0].number;
+                            this.syncPolicyDetails();
+                        } else {
                             this.policyNumberInput = '';
                         }
                     }
@@ -55,13 +58,24 @@
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('client_id')" />
                         </div>
-                        <div class="relative">
-                            <x-form-input label="Policy Number" name="policy_number" required x-model="policyNumberInput" list="policy_list_data" autocomplete="one-time-code" />
-                            <datalist id="policy_list_data">
-                                <template x-for="policy in availablePolicies" :key="policy.number">
-                                    <option :value="policy.number" x-text="policy.number"></option>
-                                </template>
-                            </datalist>
+                        <div class="form-group">
+                            <label for="policy_number">Policy Number <span class="text-rose-500">*</span></label>
+                            
+                            <!-- Dynamic Selector -->
+                            <template x-if="availablePolicies.length > 0">
+                                <select name="policy_number" x-model="policyNumberInput" @change="syncPolicyDetails()" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <option value="">-- Select Policy --</option>
+                                    <template x-for="policy in availablePolicies" :key="policy.number">
+                                        <option :value="policy.number" x-text="policy.number"></option>
+                                    </template>
+                                </select>
+                            </template>
+                            
+                            <template x-if="availablePolicies.length === 0">
+                                <input type="text" name="policy_number" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number" required>
+                            </template>
+                            
+                            <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                         </div>
                     </div>
 

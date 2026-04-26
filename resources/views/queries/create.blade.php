@@ -13,12 +13,29 @@
                     <p class="text-gray-500 mt-1 dark:text-slate-400">Submit a new inquiry or support request for a client.</p>
                 </div>
 
-                <form action="{{ route('queries.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" x-data="{ submitting: false }" @submit="submitting = true">
+                <form action="{{ route('queries.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" 
+                    x-data="{ 
+                        submitting: false,
+                        clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                        selectedClient: '{{ old('client_id') }}',
+                        policyNumberInput: '{{ old('policy_number') }}',
+                        get availablePolicies() {
+                            return this.clientPolicies[String(this.selectedClient)] || [];
+                        },
+                        updatePolicyInput() {
+                            let policies = this.availablePolicies;
+                            if (policies.length === 1) {
+                                this.policyNumberInput = policies[0].number;
+                            } else {
+                                this.policyNumberInput = '';
+                            }
+                        }
+                    }" @submit="submitting = true">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="form-group" x-data="{ isNew: `{{ old('client_id') }}` === 'new' }">
                             <label for="client_id">Associate Client</label>
-                            <select id="client_id" name="client_id" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" @change="isNew = $event.target.value === 'new'">
+                            <select id="client_id" name="client_id" x-model="selectedClient" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" @change="isNew = $event.target.value === 'new'; updatePolicyInput()">
                                 <option value="">-- General Query --</option>
                                 <option value="new" {{ old('client_id') == 'new' ? 'selected' : '' }}>+ Add New Client (Custom Entry)</option>
                                 @foreach($clients as $client)
@@ -33,6 +50,23 @@
                             <x-input-error class="mt-2" :messages="$errors->get('client_id')" />
                             <x-input-error class="mt-2" :messages="$errors->get('new_client_name')" />
                         </div>
+                        <div class="form-group">
+                            <label for="policy_number">Policy Number</label>
+                            <template x-if="availablePolicies.length > 0">
+                                <select name="policy_number" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <option value="">-- Select Policy --</option>
+                                    <template x-for="policy in availablePolicies" :key="policy.number">
+                                        <option :value="policy.number" x-text="policy.number"></option>
+                                    </template>
+                                </select>
+                            </template>
+                            <template x-if="availablePolicies.length === 0">
+                                <input type="text" name="policy_number" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number (Optional)">
+                            </template>
+                            <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
                         <x-form-input label="Inquiry Subject" name="subject" required />
                     </div>
 

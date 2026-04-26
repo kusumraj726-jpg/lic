@@ -9,12 +9,31 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('queries.update', $query) }}" method="POST" class="space-y-6">
+                    <form action="{{ route('queries.update', $query) }}" method="POST" class="space-y-6"
+                        x-data="{ 
+                            clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                            selectedClient: '{{ old('client_id', $query->client_id) }}',
+                            policyNumberInput: '{{ old('policy_number', $query->policy_number) }}',
+                            get availablePolicies() {
+                                return this.clientPolicies[String(this.selectedClient)] || [];
+                            },
+                            updatePolicyInput() {
+                                let policies = this.availablePolicies;
+                                if (policies.length === 1) {
+                                    this.policyNumberInput = policies[0].number;
+                                } else {
+                                    let numbers = policies.map(p => p.number);
+                                    if (!numbers.includes(this.policyNumberInput)) {
+                                        this.policyNumberInput = '';
+                                    }
+                                }
+                            }
+                        }">
                         @csrf
                         @method('PATCH')
                         <div x-data="{ isNew: false }">
                             <x-input-label for="client_id" :value="__('Select Client (Optional)')" />
-                            <select id="client_id" name="client_id" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" @change="isNew = $event.target.value === 'new'">
+                            <select id="client_id" name="client_id" x-model="selectedClient" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" @change="isNew = $event.target.value === 'new'; updatePolicyInput()">
                                 <option value="">-- General Query --</option>
                                 <option value="new">+ Add New Client (Custom Entry)</option>
                                 @foreach($clients as $client)
@@ -27,6 +46,22 @@
                             </div>
                             <x-input-error class="mt-2" :messages="$errors->get('client_id')" />
                             <x-input-error class="mt-2" :messages="$errors->get('new_client_name')" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="policy_number" :value="__('Policy Number')" />
+                            <template x-if="availablePolicies.length > 0">
+                                <select name="policy_number" x-model="policyNumberInput" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                                    <option value="">-- Select Policy --</option>
+                                    <template x-for="policy in availablePolicies" :key="policy.number">
+                                        <option :value="policy.number" x-text="policy.number"></option>
+                                    </template>
+                                </select>
+                            </template>
+                            <template x-if="availablePolicies.length === 0">
+                                <x-text-input id="policy_number" name="policy_number" type="text" class="mt-1 block w-full" x-model="policyNumberInput" placeholder="Type Policy Number (Optional)" />
+                            </template>
+                            <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                         </div>
 
                         <div>

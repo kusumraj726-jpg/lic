@@ -40,7 +40,24 @@ class QueryController extends Controller
     {
         $context = auth()->user()->context();
         $clients = $context->clients()->get();
-        return view('queries.create', compact('clients'));
+
+        // Smarter Detection: Pull policy numbers from both Renewals and Claims
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('queries.create', compact('clients', 'clientPolicies'));
     }
 
     public function store(Request $request)
@@ -51,6 +68,7 @@ class QueryController extends Controller
         $validated = $request->validate([
             'client_id' => 'nullable|string',
             'new_client_name' => 'required_if:client_id,new|nullable|string|max:255',
+            'policy_number' => 'nullable|string|max:255',
             'subject' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:low,medium,high',
@@ -89,7 +107,23 @@ class QueryController extends Controller
         $context = auth()->user()->context();
         if ($query->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
-        return view('queries.edit', compact('query', 'clients'));
+
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('queries.edit', compact('query', 'clients', 'clientPolicies'));
     }
 
     public function update(Request $request, Query $query)
@@ -100,6 +134,7 @@ class QueryController extends Controller
         $validated = $request->validate([
             'client_id' => 'nullable|string',
             'new_client_name' => 'required_if:client_id,new|nullable|string|max:255',
+            'policy_number' => 'nullable|string|max:255',
             'subject' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:low,medium,high',

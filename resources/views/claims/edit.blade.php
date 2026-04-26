@@ -17,27 +17,34 @@
                         get availablePolicies() {
                             return this.clientPolicies[String(this.selectedClient)] || [];
                         },
-                        updatePolicyInput() {
-                            let policies = this.availablePolicies;
-                            let numbers = policies.map(p => p.number);
-                            
-                            if (policies.length === 1) {
-                                this.policyNumberInput = policies[0].number;
-                                let detectedType = policies[0].type;
-                                let detectedCommission = policies[0].commission;
+                        syncPolicyDetails() {
+                            let policy = this.availablePolicies.find(p => p.number === this.policyNumberInput);
+                            if (policy) {
+                                let detectedType = policy.type;
+                                let detectedCommission = policy.commission;
+                                
                                 if (['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance'].includes(detectedType)) {
                                     this.policyTypeMode = detectedType;
                                 } else {
                                     this.policyTypeMode = 'custom';
                                     this.$nextTick(() => {
                                         let customInput = document.querySelector('input[name=\'policy_type\']');
-                                        let commissionInput = document.querySelector('input[name=\'custom_commission_rate\']');
                                         if (customInput) customInput.value = detectedType;
-                                        if (commissionInput) commissionInput.value = detectedCommission;
                                     });
                                 }
-                            } else if (!numbers.includes(this.policyNumberInput)) {
-                                this.policyNumberInput = '';
+                            }
+                        },
+                        updatePolicyInput() {
+                            let policies = this.availablePolicies;
+                            if (policies.length === 1) {
+                                this.policyNumberInput = policies[0].number;
+                                this.syncPolicyDetails();
+                            } else {
+                                // Only clear if the current number isn't in the new client's list
+                                let numbers = policies.map(p => p.number);
+                                if (!numbers.includes(this.policyNumberInput)) {
+                                    this.policyNumberInput = '';
+                                }
                             }
                         }
                     }">
@@ -54,14 +61,23 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="relative">
+                            <div class="form-group">
                                 <x-input-label for="policy_number" :value="__('Policy Number')" />
-                                <x-text-input id="policy_number" name="policy_number" type="text" class="mt-1 block w-full" x-model="policyNumberInput" list="policy_list_data" autocomplete="one-time-code" required />
-                                <datalist id="policy_list_data">
-                                    <template x-for="policy in availablePolicies" :key="policy.number">
-                                        <option :value="policy.number" x-text="policy.number"></option>
-                                    </template>
-                                </datalist>
+                                
+                                <!-- Dynamic Selector -->
+                                <template x-if="availablePolicies.length > 0">
+                                    <select name="policy_number" x-model="policyNumberInput" @change="syncPolicyDetails()" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                                        <option value="">-- Select Policy --</option>
+                                        <template x-for="policy in availablePolicies" :key="policy.number">
+                                            <option :value="policy.number" x-text="policy.number"></option>
+                                        </template>
+                                    </select>
+                                </template>
+                                
+                                <template x-if="availablePolicies.length === 0">
+                                    <x-text-input id="policy_number" name="policy_number" type="text" class="mt-1 block w-full" x-model="policyNumberInput" placeholder="Type Policy Number" required />
+                                </template>
+                                
                                 <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                             </div>
                             <div class="space-y-4">
