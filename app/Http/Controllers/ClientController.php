@@ -52,7 +52,8 @@ class ClientController extends Controller
         $client = $context->clients()->create($clientData);
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('clients/photos', 'public');
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+            $path = $request->file('photo')->store('clients/photos', $disk);
             $client->update(['photo' => $path]);
         }
 
@@ -96,11 +97,14 @@ class ClientController extends Controller
         unset($clientData['photo']);
 
         if ($request->hasFile('photo')) {
+            // Determine disk
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+            
             // Delete old photo
             if ($client->photo) {
-                Storage::disk('public')->delete($client->photo);
+                Storage::disk($disk)->delete($client->photo);
             }
-            $clientData['photo'] = $request->file('photo')->store('clients/photos', 'public');
+            $clientData['photo'] = $request->file('photo')->store('clients/photos', $disk);
         }
 
         $client->update($clientData);

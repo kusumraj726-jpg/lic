@@ -68,7 +68,8 @@ class StaffController extends Controller
 
         // 2. Handle Avatar Upload
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+            $path = $request->file('avatar')->store('avatars', $disk);
             $user->update(['avatar' => $path]);
         }
 
@@ -148,11 +149,14 @@ class StaffController extends Controller
             }
 
             if ($request->hasFile('avatar')) {
+                // Determine disk
+                $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+                
                 // Delete old avatar
                 if ($staff->staffUser->avatar) {
-                    Storage::disk('public')->delete($staff->staffUser->avatar);
+                    Storage::disk($disk)->delete($staff->staffUser->avatar);
                 }
-                $userData['avatar'] = $request->file('avatar')->store('avatars', 'public');
+                $userData['avatar'] = $request->file('avatar')->store('avatars', $disk);
             }
 
             $staff->staffUser->update($userData);

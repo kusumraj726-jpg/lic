@@ -4,7 +4,7 @@
             <h2 class="font-black text-3xl text-slate-900 uppercase tracking-tight dark:text-slate-100">
                 CLIENTS
             </h2>
-            
+
         </div>
     </x-slot>
 
@@ -64,8 +64,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-10 px-2">
                 <div>
-                    <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tight dark:text-white">Client Directory</h2>
-                    <p class="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">Manage your policyholders and their comprehensive insurance portfolios.</p>
+                    <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tight dark:text-white">Client
+                        Directory</h2>
+                    <p class="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-1">
+                        Manage your policyholders and their comprehensive insurance portfolios.</p>
                 </div>
                 <div class="flex items-center gap-4">
                     <form action="{{ route('clients.index') }}" method="GET" class="relative group">
@@ -89,111 +91,151 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
+            <div
+                class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
-                        <thead class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
+                        <thead
+                            class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
                             <tr>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Client Name</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Contact Details</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">DOB / Gender</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">Anniversary</th>
-                                <th class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em] text-right">Action Hub</th>
+                                <th
+                                    class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">
+                                    Client Name</th>
+                                <th
+                                    class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">
+                                    Contact Details</th>
+                                <th
+                                    class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">
+                                    DOB / Gender</th>
+                                <th
+                                    class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">
+                                    Anniversary</th>
+                                <th
+                                    class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em] text-right">
+                                    Action Hub</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
                             @forelse($clients as $client)
-                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-all duration-300 group">
-                                    <td class="px-8 py-5">
-                                        <div class="flex items-center gap-4">
-                                            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-sm border border-white/50 flex-shrink-0 group-hover:scale-110 transition-transform">
-                                                <div class="h-full w-full rounded-[9px] bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
-                                                    @if($client->photo)
-                                                        <img class="h-full w-full object-cover" src="{{ Storage::url($client->photo) }}" alt="">
-                                                    @else
-                                                        <span class="text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase">{{ substr($client->name, 0, 1) }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="text-[13px] font-black text-slate-900 dark:text-slate-100 uppercase">{{ $client->name }}</div>
-                                                <div class="text-[9px] font-bold text-slate-400 group-hover:text-rose-500 transition-colors uppercase tracking-widest mt-0.5">REG-ID: NX-100{{ $client->id }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-8 py-5">
-                                        <div class="text-[12px] font-bold text-slate-700 dark:text-slate-300">{{ $client->email ?: '—' }}</div>
-                                        <div class="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 tracking-tight">{{ $client->phone ?: '—' }}</div>
-                                    </td>
-                                    <td class="px-8 py-5">
-                                        <div class="text-xs font-bold text-slate-900 dark:text-slate-100">
-                                            {{ $client->dob ? \Carbon\Carbon::parse($client->dob)->format('M d, Y') : '—' }}
-                                        </div>
-                                        @if($client->gender)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black tracking-widest mt-1.5 uppercase {{ $client->gender === 'Male' ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400' : 'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' }}">
-                                                {{ $client->gender }}
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="px-8 py-5">
-                                        <div class="text-xs font-bold text-slate-600 dark:text-slate-400">
-                                            {{ $client->marriage_anniversary ? \Carbon\Carbon::parse($client->marriage_anniversary)->format('M d, Y') : '—' }}
-                                        </div>
-                                    </td>
-                                    <td class="px-8 py-5 text-right">
-                                        <div class="flex items-center justify-end gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
-                                            <button @click='openView({{ json_encode([
-                                                "id" => $client->id,
-                                                "name" => $client->name,
-                                                "email" => $client->email,
-                                                "phone" => $client->phone,
-                                                "address" => $client->address,
-                                                "dob" => $client->dob,
-                                                "gender" => $client->gender,
-                                                "marriage_anniversary" => $client->marriage_anniversary,
-                                                "photo" => $client->photo ? Storage::url($client->photo) : null
-                                            ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
-                                                class="p-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all" title="View">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg>
-                                            </button>
-                                            <button @click='openEdit({{ json_encode([
-                                                "id" => $client->id,
-                                                "name" => $client->name,
-                                                "email" => $client->email,
-                                                "phone" => $client->phone,
-                                                "address" => $client->address,
-                                                "dob" => $client->dob,
-                                                "gender" => $client->gender,
-                                                "marriage_anniversary" => $client->marriage_anniversary,
-                                                "photo" => $client->photo ? Storage::url($client->photo) : null
-                                            ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
-                                                class="p-2 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 rounded-xl transition-all" title="Edit">
-                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </button>
-                                            <form action="{{ route('clients.destroy', $client) }}" method="POST" class="inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400 rounded-xl transition-all" title="Delete" onclick="return confirm('Archive this client?')">
-                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                        <tr
+                                                            class="hover:bg-slate-50/80 dark:hover:bg-slate-800/80 transition-all duration-300 group">
+                                                            <td class="px-8 py-5">
+                                                                <div class="flex items-center gap-4">
+                                                                    <div
+                                                                        class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-sm border border-white/50 flex-shrink-0 group-hover:scale-110 transition-transform">
+                                                                        <div
+                                                                            class="h-full w-full rounded-[9px] bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+                                                                            @if($client->photo)
+                                                                                <img class="h-full w-full object-cover"
+                                                                                    src="{{ $client->photo_url }}" alt="">
+                                                                            @else
+                                                                                <span
+                                                                                    class="text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase">{{ substr($client->name, 0, 1) }}</span>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div
+                                                                            class="text-[13px] font-black text-slate-900 dark:text-slate-100 uppercase">
+                                                                            {{ $client->name }}</div>
+                                                                        <div
+                                                                            class="text-[9px] font-bold text-slate-400 group-hover:text-rose-500 transition-colors uppercase tracking-widest mt-0.5">
+                                                                            REG-ID: NX-100{{ $client->id }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-8 py-5">
+                                                                <div class="text-[12px] font-bold text-slate-700 dark:text-slate-300">
+                                                                    {{ $client->email ?: '—' }}</div>
+                                                                <div
+                                                                    class="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 tracking-tight">
+                                                                    {{ $client->phone ?: '—' }}</div>
+                                                            </td>
+                                                            <td class="px-8 py-5">
+                                                                <div class="text-xs font-bold text-slate-900 dark:text-slate-100">
+                                                                    {{ $client->dob ? \Carbon\Carbon::parse($client->dob)->format('M d, Y') : '—' }}
+                                                                </div>
+                                                                @if($client->gender)
+                                                                    <span
+                                                                        class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black tracking-widest mt-1.5 uppercase {{ $client->gender === 'Male' ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400' : 'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' }}">
+                                                                        {{ $client->gender }}
+                                                                    </span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="px-8 py-5">
+                                                                <div class="text-xs font-bold text-slate-600 dark:text-slate-400">
+                                                                    {{ $client->marriage_anniversary ? \Carbon\Carbon::parse($client->marriage_anniversary)->format('M d, Y') : '—' }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-8 py-5 text-right">
+                                                                <div
+                                                                    class="flex items-center justify-end gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                                    <button @click='openView({{ json_encode([
+                                    "id" => $client->id,
+                                    "name" => $client->name,
+                                    "email" => $client->email,
+                                    "phone" => $client->phone,
+                                    "address" => $client->address,
+                                    "dob" => $client->dob,
+                                    "gender" => $client->gender,
+                                    "marriage_anniversary" => $client->marriage_anniversary,
+                                    "photo" => $client->photo ? Storage::url($client->photo) : null
+                                ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
+                                                                        class="p-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all"
+                                                                        title="View">
+                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <button @click='openEdit({{ json_encode([
+                                    "id" => $client->id,
+                                    "name" => $client->name,
+                                    "email" => $client->email,
+                                    "phone" => $client->phone,
+                                    "address" => $client->address,
+                                    "dob" => $client->dob,
+                                    "gender" => $client->gender,
+                                    "marriage_anniversary" => $client->marriage_anniversary,
+                                    "photo" => $client->photo ? Storage::url($client->photo) : null
+                                ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
+                                                                        class="p-2 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 rounded-xl transition-all"
+                                                                        title="Edit">
+                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <form action="{{ route('clients.destroy', $client) }}" method="POST"
+                                                                        class="inline">
+                                                                        @csrf @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400 rounded-xl transition-all"
+                                                                            title="Delete" onclick="return confirm('Archive this client?')">
+                                                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                                                                stroke="currentColor">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                             @empty
                                 <tr>
                                     <td colspan="5" class="px-8 py-20 text-center text-gray-500 dark:text-slate-400">
                                         <div class="flex flex-col items-center">
-                                            <svg class="h-12 w-12 text-slate-200 dark:text-slate-800 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                            <svg class="h-12 w-12 text-slate-200 dark:text-slate-800 mb-4" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                             </svg>
-                                            <p class="text-[10px] font-black uppercase tracking-widest">No clients found in the infrastructure.</p>
+                                            <p class="text-[10px] font-black uppercase tracking-widest">No clients found in
+                                                the infrastructure.</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -202,7 +244,8 @@
                     </table>
                 </div>
                 @if($clients->hasPages())
-                    <div class="bg-slate-50/50 dark:bg-slate-800/50 px-8 py-5 border-t border-slate-100 dark:border-slate-700">
+                    <div
+                        class="bg-slate-50/50 dark:bg-slate-800/50 px-8 py-5 border-t border-slate-100 dark:border-slate-700">
                         {{ $clients->links() }}
                     </div>
                 @endif
@@ -229,7 +272,8 @@
                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full border border-slate-100 dark:border-slate-800">
 
-                    <div class="px-6 py-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+                    <div
+                        class="px-6 py-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
                         <h3 class="text-lg font-black text-slate-800 dark:text-slate-200"
                             x-text="mode === 'view' ? 'Client Details' : 'Edit Client Profile'"></h3>
                         <button @click="openModal = false" class="text-slate-400 hover:text-slate-600">
@@ -395,7 +439,8 @@
                             </div>
                         </div>
 
-                        <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+                        <div
+                            class="px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
                             <button type="button" @click="openModal = false"
                                 class="text-sm font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 px-4 py-2">Cancel</button>
                             <template x-if="mode === 'view'">

@@ -37,4 +37,10 @@ class Client extends Model
     {
         return $this->hasMany(Commission::class);
     }
+    public function getPhotoUrlAttribute(): ?string
+    {
+        if (!$this->photo) return null;
+        $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+        return \Illuminate\Support\Facades\Storage::disk($disk)->url($this->photo);
+    }
 }

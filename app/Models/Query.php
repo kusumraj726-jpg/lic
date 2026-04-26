@@ -22,4 +22,10 @@ class Query extends Model
     {
         return $this->belongsTo(Client::class);
     }
+    public function getDocumentUrlAttribute(): ?string
+    {
+        if (!$this->document) return null;
+        $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+        return \Illuminate\Support\Facades\Storage::disk($disk)->url($this->document);
+    }
 }

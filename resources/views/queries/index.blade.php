@@ -144,7 +144,7 @@
                                         <div class="font-black text-slate-900 dark:text-slate-100 uppercase text-[13px]">{{ $query->subject }}</div>
                                         <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mt-0.5">{{ $query->client->name ?? 'Direct Inquiry' }}</div>
                                         @if($query->document)
-                                            <a href="{{ asset('storage/' . $query->document) }}" target="_blank" class="inline-flex items-center gap-1.5 text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-md mt-2 font-bold uppercase transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
+                                            <a href="{{ $query->document_url }}" target="_blank" class="inline-flex items-center gap-1.5 text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-md mt-2 font-bold uppercase transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                                                 Supporting Doc
                                             </a>

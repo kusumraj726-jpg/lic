@@ -58,22 +58,22 @@ Route::get('/force-login', function () {
 // SUPER ADMIN CONTROL PANEL (Hidden — Only you)
 // URL: /nexorabyte-control
 // -----------------------------------------------
-Route::get('/run-migrations-nexorabyte-99', function() {
+Route::get('/run-migrations-nexorabyte-99', function () {
     try {
         // 1. Run migrations
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        
+
         // 2. Ensure SuperAdmin account exists
         $user = \App\Models\User::updateOrCreate(
             ['email' => 'mcauxstain@gmail.com'],
             [
-                'name'                 => 'Super Admin',
-                'company_name'         => 'NexoraByte HQ',
-                'password'             => \Illuminate\Support\Facades\Hash::make('super s.s'),
-                'role'                 => 'superadmin',
-                'unique_id'            => 'SUPER-001',
-                'subscription_status'  => 'active',
-                'subscription_plan'    => 'superadmin',
+                'name' => 'Super Admin',
+                'company_name' => 'NexoraByte HQ',
+                'password' => \Illuminate\Support\Facades\Hash::make('super s.s'),
+                'role' => 'superadmin',
+                'unique_id' => 'SUPER-001',
+                'subscription_status' => 'active',
+                'subscription_plan' => 'superadmin',
                 'subscription_ends_at' => now()->addYears(10),
             ]
         );
@@ -103,7 +103,7 @@ Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(funct
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::resource('clients', ClientController::class)->middleware('checkModule:access_clients');
     Route::resource('queries', QueryController::class)->middleware('checkModule:access_queries');
     Route::resource('claims', ClaimController::class)->middleware('checkModule:access_claims');
@@ -134,4 +134,4 @@ Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(funct
     Route::delete('/api/chat/session/{session}', [\App\Http\Controllers\AiChatController::class, 'deleteSession'])->name('api.chat.delete');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

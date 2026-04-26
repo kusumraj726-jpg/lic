@@ -59,7 +59,8 @@ class QueryController extends Controller
         ]);
 
         if ($request->hasFile('document')) {
-            $path = $request->file('document')->store('query_documents', 'public');
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+            $path = $request->file('document')->store('query_documents', $disk);
             $validated['document'] = $path;
         }
 
@@ -107,7 +108,8 @@ class QueryController extends Controller
         ]);
 
         if ($request->hasFile('document')) {
-            $path = $request->file('document')->store('query_documents', 'public');
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+            $path = $request->file('document')->store('query_documents', $disk);
             $validated['document'] = $path;
         }
 

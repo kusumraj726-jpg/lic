@@ -27,7 +27,7 @@
                         <div class="relative pt-8 pb-6 flex flex-col items-center">
                             <div class="h-32 w-32 rounded-[2.5rem] bg-indigo-100 dark:bg-slate-800 p-1 mb-4 shadow-xl">
                                 @if($client->photo)
-                                    <img src="{{ Storage::url($client->photo) }}" class="h-full w-full object-cover rounded-[2.25rem] border-4 border-white dark:border-slate-900">
+                                    <img src="{{ $client->photo_url }}" class="h-full w-full object-cover rounded-[2.25rem] border-4 border-white dark:border-slate-900">
                                 @else
                                     <div class="h-full w-full flex items-center justify-center bg-indigo-50 dark:bg-slate-900 rounded-[2.25rem] text-indigo-500 text-4xl font-black border-4 border-white dark:border-slate-800 uppercase">
                                         {{ substr($client->name, 0, 1) }}
