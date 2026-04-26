@@ -124,7 +124,7 @@ class User extends Authenticatable
     public function hasActiveSubscription(): bool
     {
         $tenant = $this->context();
-        
+
         if (!$tenant) {
             return false;
         }
@@ -132,7 +132,7 @@ class User extends Authenticatable
         if ($tenant->subscription_status === 'active') {
             return true;
         }
-        
+
         if ($tenant->subscription_ends_at) {
             try {
                 $date = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at);
@@ -155,10 +155,8 @@ class User extends Authenticatable
         }
 
         $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
-        
-        return $disk === 's3' 
-            ? \Illuminate\Support\Facades\Storage::disk($disk)->temporaryUrl($this->avatar, now()->addMinutes(60))
-            : \Illuminate\Support\Facades\Storage::disk($disk)->url($this->avatar);
+
+        return \Illuminate\Support\Facades\Storage::disk($disk)->url($this->avatar);
     }
 
     /**
@@ -172,9 +170,7 @@ class User extends Authenticatable
         }
 
         $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
-        
-        return $disk === 's3' 
-            ? \Illuminate\Support\Facades\Storage::disk($disk)->temporaryUrl($context->brand_logo, now()->addMinutes(60))
-            : \Illuminate\Support\Facades\Storage::disk($disk)->url($context->brand_logo);
+
+        return \Illuminate\Support\Facades\Storage::disk($disk)->url($context->brand_logo);
     }
 }
