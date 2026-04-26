@@ -28,7 +28,6 @@ class User extends Authenticatable
         'brand_logo',
         'brand_color',
         'unique_id',
-        'dob',
         'subscription_status',
         'subscription_plan',
         'subscription_ends_at',

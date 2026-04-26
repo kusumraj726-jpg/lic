@@ -21,7 +21,6 @@ class Staff extends Model
         'email',
         'phone',
         'designation',
-        'dob',
         'status',
         'access_clients',
         'access_queries',

@@ -107,9 +107,6 @@ class DashboardController extends Controller
         });
 
         $birthdays = $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get();
-        $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(function($s) use ($birthdays) {
-            $s->type = 'Staff'; $birthdays->push($s);
-        });
 
         $upcoming_birthdays = $context->clients()->whereBetween(\DB::raw("DATE_FORMAT(dob, '%m-%d')"), [$now->copy()->addDay()->format('m-d'), $now->copy()->addDays(7)->format('m-d')])->orderByRaw("MONTH(dob), DAY(dob)")->take(3)->get();
 

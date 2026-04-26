@@ -69,12 +69,6 @@ class AppServiceProvider extends ServiceProvider
             $context->clients()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(function($c) use ($briefs) {
                 $briefs->push(['title' => 'Birthday', 'message' => "Today is {$c->name}'s birthday! Send a gift or greeting.", 'type' => 'brand', 'url' => '#', 'action_type' => 'message', 'name' => $c->name, 'phone' => $c->phone, 'event_type' => 'birthday']);
             });
-            $context->staff()->whereMonth('dob', $now->month)->whereDay('dob', $now->day)->get()->each(function($s) use ($briefs) {
-                $briefs->push(['title' => 'Staff Birthday', 'message' => "{$s->name} celebrates their birthday today!", 'type' => 'brand', 'url' => '#', 'action_type' => 'message', 'name' => $s->name, 'phone' => $s->phone, 'event_type' => 'birthday']);
-            });
-            if ($context->dob && \Carbon\Carbon::parse($context->dob)->isBirthday()) {
-                $briefs->push(['title' => 'Team Milestone', 'message' => 'Happy Birthday! Wishing you a great day.', 'type' => 'brand', 'url' => '#']);
-            }
 
             // Anniversaries
             $context->clients()->whereMonth('marriage_anniversary', $now->month)->whereDay('marriage_anniversary', $now->day)->get()->each(function($c) use ($briefs) {
