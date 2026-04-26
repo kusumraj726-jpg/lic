@@ -51,17 +51,18 @@
 
                         <div>
                             <x-input-label for="policy_number" :value="__('Policy Number')" />
-                            <template x-if="availablePolicies.length > 0">
-                                <select name="policy_number" x-model="policyNumberInput" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                            <div x-show="availablePolicies.length > 0">
+                                <select name="policy_number_select" x-model="policyNumberInput" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                     <option value="">-- Select Policy --</option>
                                     <template x-for="policy in availablePolicies" :key="policy.number">
                                         <option :value="policy.number" x-text="policy.number"></option>
                                     </template>
                                 </select>
-                            </template>
-                            <template x-if="availablePolicies.length === 0">
-                                <x-text-input id="policy_number" name="policy_number" type="text" class="mt-1 block w-full" x-model="policyNumberInput" placeholder="Type Policy Number (Optional)" />
-                            </template>
+                            </div>
+                            <div x-show="availablePolicies.length === 0">
+                                <x-text-input id="policy_number_manual" name="policy_number_manual" type="text" class="mt-1 block w-full" x-model="policyNumberInput" placeholder="Type Policy Number (Optional)" />
+                            </div>
+                            <input type="hidden" name="policy_number" x-model="policyNumberInput">
                             <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                         </div>
 

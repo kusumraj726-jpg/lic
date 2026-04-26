@@ -53,17 +53,21 @@
                         </div>
                         <div class="form-group">
                             <label for="policy_number">Policy Number</label>
-                            <template x-if="availablePolicies.length > 0">
-                                <select name="policy_number" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                            
+                            <div x-show="availablePolicies.length > 0">
+                                <select name="policy_number_select" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
                                     <option value="">-- Select Policy --</option>
                                     <template x-for="policy in availablePolicies" :key="policy.number">
                                         <option :value="policy.number" x-text="policy.number"></option>
                                     </template>
                                 </select>
-                            </template>
-                            <template x-if="availablePolicies.length === 0">
-                                <input type="text" name="policy_number" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number (Optional)">
-                            </template>
+                            </div>
+
+                            <div x-show="availablePolicies.length === 0">
+                                <input type="text" name="policy_number_manual" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number (Optional)">
+                            </div>
+                            
+                            <input type="hidden" name="policy_number" x-model="policyNumberInput">
                             <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                         </div>
                     </div>
