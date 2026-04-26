@@ -26,6 +26,9 @@ class Staff extends Model
         'access_queries',
         'access_claims',
         'access_renewals',
+        'access_commissions',
+        'access_trash',
+        'access_dashboard',
     ];
 
     protected $casts = [
@@ -33,6 +36,9 @@ class Staff extends Model
         'access_queries' => 'boolean',
         'access_claims' => 'boolean',
         'access_renewals' => 'boolean',
+        'access_commissions' => 'boolean',
+        'access_trash' => 'boolean',
+        'access_dashboard' => 'boolean',
         'status' => 'string',
     ];
 

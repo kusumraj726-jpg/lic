@@ -86,6 +86,9 @@ class StaffController extends Controller
             'access_queries' => $request->boolean('access_queries', true),
             'access_claims' => $request->boolean('access_claims', true),
             'access_renewals' => $request->boolean('access_renewals', true),
+            'access_commissions' => $request->boolean('access_commissions', true),
+            'access_trash' => $request->boolean('access_trash', false),
+            'access_dashboard' => $request->boolean('access_dashboard', true),
         ];
 
         Staff::create($staffData);
@@ -134,6 +137,9 @@ class StaffController extends Controller
         $staffData['access_queries'] = $request->has('access_queries');
         $staffData['access_claims'] = $request->has('access_claims');
         $staffData['access_renewals'] = $request->has('access_renewals');
+        $staffData['access_commissions'] = $request->has('access_commissions');
+        $staffData['access_trash'] = $request->has('access_trash');
+        $staffData['access_dashboard'] = $request->has('access_dashboard');
 
         $staff->update($staffData);
 
