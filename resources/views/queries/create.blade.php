@@ -14,24 +14,26 @@
                 </div>
 
                 <form action="{{ route('queries.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" 
-                    x-data="{ 
-                        submitting: false,
-                        clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
-                        selectedClient: '{{ old('client_id') }}',
-                        policyNumberInput: '{{ old('policy_number') }}',
-                        get availablePolicies() {
-                            return this.clientPolicies[String(this.selectedClient)] || [];
-                        },
-                        updatePolicyInput() {
-                            let policies = this.availablePolicies;
-                            if (policies.length === 1) {
-                                this.policyNumberInput = policies[0].number;
-                            } else {
-                                this.policyNumberInput = '';
-                            }
-                        },
-                        isNew: '{{ old('client_id') }}' === 'new'
-                    }" @submit="submitting = true">
+                        x-data="{ 
+                            submitting: false,
+                            clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                            selectedClient: '{{ old('client_id') }}',
+                            policyNumberInput: '{{ old('policy_number') }}',
+                            manualInput: false,
+                            get availablePolicies() {
+                                return this.clientPolicies[String(this.selectedClient)] || [];
+                            },
+                            updatePolicyInput() {
+                                let policies = this.availablePolicies;
+                                if (policies.length === 1) {
+                                    this.policyNumberInput = policies[0].number;
+                                } else {
+                                    this.policyNumberInput = '';
+                                }
+                                this.manualInput = false;
+                            },
+                            isNew: '{{ old('client_id') }}' === 'new'
+                        }" @submit="submitting = true">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="form-group">
@@ -54,7 +56,7 @@
                         <div class="form-group">
                             <label for="policy_number">Policy Number</label>
                             
-                            <div x-data="{ manualInput: false }">
+                            <div>
                                 <!-- Block 1: Dropdown (Only if policies exist) -->
                                 <template x-if="availablePolicies.length > 0">
                                     <div class="space-y-3">

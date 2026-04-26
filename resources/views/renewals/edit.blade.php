@@ -14,6 +14,7 @@
                         clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
                         selectedClient: '{{ old('client_id', $renewal->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $renewal->policy_number) }}',
+                        manualInput: false,
                         get availablePolicies() {
                             return this.clientPolicies[String(this.selectedClient)] || [];
                         },
@@ -32,19 +33,20 @@
                             }
                         }
                     },
-                    updatePolicyInput() {
-                        let policies = this.availablePolicies;
-                        if (policies.length === 1) {
-                            this.policyNumberInput = policies[0].number;
-                            this.syncPolicyDetails();
-                        } else {
-                            // Only clear if the current number isn't in the new client's list
-                            let numbers = policies.map(p => p.number);
-                            if (!numbers.includes(this.policyNumberInput)) {
-                                this.policyNumberInput = '';
+                        updatePolicyInput() {
+                            let policies = this.availablePolicies;
+                            if (policies.length === 1) {
+                                this.policyNumberInput = policies[0].number;
+                                this.syncPolicyDetails();
+                            } else {
+                                // Only clear if the current number isn't in the new client's list
+                                let numbers = policies.map(p => p.number);
+                                if (!numbers.includes(this.policyNumberInput)) {
+                                    this.policyNumberInput = '';
+                                }
                             }
+                            this.manualInput = false;
                         }
-                    }
                     }">
                         @csrf
                         @method('PATCH')
@@ -58,7 +60,7 @@
                             <x-input-error class="mt-2" :messages="$errors->get('client_id')" />
                         </div>
 
-                        <div x-data="{ manualInput: false }">
+                        <div class="mt-4">
                             <x-input-label for="policy_number" :value="__('Policy Number')" />
                             
                             <!-- Block 1: Dropdown (Only if policies exist) -->

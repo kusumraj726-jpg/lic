@@ -18,6 +18,7 @@
                     clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
                     selectedClient: '{{ old('client_id') }}',
                     policyNumberInput: '{{ old('policy_number') }}',
+                    manualInput: false,
                     get availablePolicies() {
                         return this.clientPolicies[String(this.selectedClient)] || [];
                     },
@@ -46,6 +47,7 @@
                         } else {
                             this.policyNumberInput = '';
                         }
+                        this.manualInput = false;
                     }
                 }">
                     @csrf
@@ -63,7 +65,7 @@
                         <div class="form-group">
                             <label for="policy_number">Policy Number <span class="text-rose-500">*</span></label>
                             
-                            <div x-data="{ manualInput: false }">
+                            <div>
                                 <!-- Block 1: Dropdown (Only if policies exist) -->
                                 <template x-if="availablePolicies.length > 0">
                                     <div class="space-y-3">

@@ -14,6 +14,7 @@
                         clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
                         selectedClient: '{{ old('client_id', $claim->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $claim->policy_number) }}',
+                        manualInput: false,
                         get availablePolicies() {
                             return this.clientPolicies[String(this.selectedClient)] || [];
                         },
@@ -46,6 +47,7 @@
                                     this.policyNumberInput = '';
                                 }
                             }
+                            this.manualInput = false;
                         }
                     }">
                         @csrf
@@ -61,7 +63,7 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div x-data="{ manualInput: false }">
+                            <div class="mt-4">
                                 <x-input-label for="policy_number" :value="__('Policy Number')" />
                                 
                                 <!-- Block 1: Dropdown (Only if policies exist) -->
