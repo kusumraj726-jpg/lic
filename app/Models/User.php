@@ -111,8 +111,11 @@ class User extends Authenticatable
      */
     public function context(): self
     {
-        if ($this->role === 'staff' && $this->linkedStaffProfile) {
-            return $this->linkedStaffProfile->advisor;
+        if ($this->role === 'staff') {
+            $profile = $this->linkedStaffProfile()->first();
+            if ($profile && $profile->advisor) {
+                return $profile->advisor;
+            }
         }
         return $this;
     }
