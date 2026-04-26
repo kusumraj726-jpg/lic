@@ -26,6 +26,21 @@
             notes: '',
             received_at: '{{ date('Y-m-d') }}'
         },
+        clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+        get availablePolicies() {
+            return this.clientPolicies[String(this.commission.client_id)] || [];
+        },
+        updatePolicyInput() {
+            let policies = this.availablePolicies;
+            if (policies.length === 1) {
+                this.commission.policy_number = policies[0].number;
+            } else {
+                let numbers = policies.map(p => p.number);
+                if (!numbers.includes(this.commission.policy_number)) {
+                    this.commission.policy_number = '';
+                }
+            }
+        },
         openPayout(commObj) {
             this.commission = { ...commObj, received_at: '{{ date('Y-m-d') }}', received_amount: commObj.expected_amount };
             this.openPayoutModal = true;
@@ -250,7 +265,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Client <span class="text-rose-500">*</span></label>
-                                    <select name="client_id" x-model="commission.client_id" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    <select name="client_id" x-model="commission.client_id" @change="updatePolicyInput()" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
                                         <option value="">-- Select Client --</option>
                                         @foreach($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -259,7 +274,20 @@
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Policy Number <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                    
+                                    <!-- Dynamic Selector -->
+                                    <template x-if="availablePolicies.length > 0">
+                                        <select name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                            <option value="">-- Select Policy --</option>
+                                            <template x-for="policy in availablePolicies" :key="policy.number">
+                                                <option :value="policy.number" x-text="policy.number"></option>
+                                            </template>
+                                        </select>
+                                    </template>
+                                    
+                                    <template x-if="availablePolicies.length === 0">
+                                        <input type="text" name="policy_number" x-model="commission.policy_number" class="w-full rounded-xl border-slate-200 focus:border-violet-500 font-mono font-bold dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number" required>
+                                    </template>
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-2 block">Provider / Company <span class="text-rose-500">*</span></label>

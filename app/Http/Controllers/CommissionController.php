@@ -47,7 +47,23 @@ class CommissionController extends Controller
         $providers = $context->commissions()->distinct()->pluck('provider');
         $clients = $context->clients()->orderBy('name')->get();
 
-        return view('commissions.index', compact('commissions', 'stats', 'providers', 'clients', 'context'));
+        // Policy Portfolio Discovery
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        
+        $clientPolicies = $renewalPolicies->concat($claimPolicies)
+            ->groupBy('client_id')
+            ->mapWithKeys(function ($item, $key) { 
+                return [(string)$key => $item->map(function($p) {
+                    return [
+                        'number' => $p->policy_number,
+                        'type' => $p->policy_type,
+                        'commission' => $p->custom_commission_rate
+                    ];
+                })->unique('number')->values()->toArray()]; 
+            })->toArray();
+
+        return view('commissions.index', compact('commissions', 'stats', 'providers', 'clients', 'clientPolicies', 'context'));
     }
 
     public function store(Request $request)
