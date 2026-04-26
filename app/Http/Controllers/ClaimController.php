@@ -42,18 +42,18 @@ class ClaimController extends Controller
         $context = auth()->user()->context();
         $clients = $context->clients()->get();
         
-        // Smarter Detection: Pull policy numbers from both Renewals and Claims
-        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
-        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        // Smarter Detection: Pull policy numbers from Renewals and Claims
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type')->get();
         
         $clientPolicies = $renewalPolicies->concat($claimPolicies)
             ->groupBy('client_id')
             ->mapWithKeys(function ($item, $key) { 
-                return [(string)$key => $item->map(function($p) {
+                return [(string)$key => $item->whereNotNull('policy_number')->map(function($p) {
                     return [
-                        'number' => $p->policy_number,
-                        'type' => $p->policy_type,
-                        'commission' => $p->custom_commission_rate
+                        'number' => (string)$p->policy_number,
+                        'type' => $p->policy_type ?? 'Insurance',
+                        'commission' => $p->custom_commission_rate ?? ''
                     ];
                 })->unique('number')->values()->toArray()]; 
             })->toArray();
@@ -77,7 +77,26 @@ class ClaimController extends Controller
 
         ]);
 
-        $context->claims()->create($validated);
+        $claim = $context->claims()->create($validated);
+
+        // PERSISTENCE: If a policy number was provided, ensure it's saved to history
+        if (!empty($validated['policy_number']) && !empty($validated['client_id'])) {
+            $exists = $context->renewals()
+                ->where('client_id', $validated['client_id'])
+                ->where('policy_number', $validated['policy_number'])
+                ->exists();
+            
+            if (!$exists) {
+                $context->renewals()->create([
+                    'client_id' => $validated['client_id'],
+                    'policy_number' => $validated['policy_number'],
+                    'policy_type' => $validated['policy_type'] ?? 'Insurance',
+                    'premium_amount' => 0,
+                    'expiry_date' => now()->addYear(),
+                    'status' => 'pending',
+                ]);
+            }
+        }
         
         if ($request->ajax()) {
             return response()->json(['message' => 'Claim created successfully.']);
@@ -92,17 +111,18 @@ class ClaimController extends Controller
         if ($claim->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
         
-        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
-        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        // Smarter Detection: Pull policy numbers from Renewals and Claims
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type')->get();
         
         $clientPolicies = $renewalPolicies->concat($claimPolicies)
             ->groupBy('client_id')
             ->mapWithKeys(function ($item, $key) { 
-                return [(string)$key => $item->map(function($p) {
+                return [(string)$key => $item->whereNotNull('policy_number')->map(function($p) {
                     return [
-                        'number' => $p->policy_number,
-                        'type' => $p->policy_type,
-                        'commission' => $p->custom_commission_rate
+                        'number' => (string)$p->policy_number,
+                        'type' => $p->policy_type ?? 'Insurance',
+                        'commission' => $p->custom_commission_rate ?? ''
                     ];
                 })->unique('number')->values()->toArray()]; 
             })->toArray();
