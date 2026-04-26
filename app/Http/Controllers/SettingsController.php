@@ -47,10 +47,13 @@ class SettingsController extends Controller
 
         if ($request->hasFile('brand_logo') && $request->file('brand_logo')->isValid()) {
             // Delete old logo if it exists on the public disk
+            // Determine disk
+            $disk = config('filesystems.disks.s3.key') ? 's3' : 'public';
+
             if ($context->brand_logo) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($context->brand_logo);
+                \Illuminate\Support\Facades\Storage::disk($disk)->delete($context->brand_logo);
             }
-            $path = $request->file('brand_logo')->store('brand_logos', 'public');
+            $path = $request->file('brand_logo')->store('brand_logos', $disk);
             $context->brand_logo = $path;
         }
 
