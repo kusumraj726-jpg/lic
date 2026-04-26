@@ -57,24 +57,39 @@ class ClientController extends Controller
             $client->update(['photo' => $path]);
         }
 
+        // Process Policies
+        if ($request->has('policies')) {
+            foreach ($request->input('policies') as $policyData) {
+                if (!empty($policyData['policy_number'])) {
+                    $context->renewals()->create([
+                        'client_id' => $client->id,
+                        'policy_number' => $policyData['policy_number'],
+                        'policy_type' => $policyData['policy_type'] === 'Custom' ? ($policyData['custom_type'] ?? 'Insurance') : $policyData['policy_type'],
+                        'premium_amount' => $policyData['premium_amount'] ?? 0,
+                        'expiry_date' => $policyData['expiry_date'] ?? now()->addYear(),
+                        'status' => 'pending',
+                    ]);
+                }
+            }
+        }
 
-        return redirect()->route('clients.index')->with('success', 'Client created successfully.');
+        return redirect()->route('clients.index')->with('success', 'Client and Portfolio created successfully.');
     }
 
     public function show(Client $client)
     {
         $context = auth()->user()->context();
         if ($client->user_id !== $context->id) abort(403);
-        $latestPolicy = $client->renewals()->latest()->first();
-        return view('clients.show', compact('client', 'latestPolicy'));
+        $policies = $client->renewals()->get();
+        return view('clients.show', compact('client', 'policies'));
     }
 
     public function edit(Client $client)
     {
         $context = auth()->user()->context();
         if ($client->user_id !== $context->id) abort(403);
-        $latestPolicy = $client->renewals()->latest()->first();
-        return view('clients.edit', compact('client', 'latestPolicy'));
+        $policies = $client->renewals()->get();
+        return view('clients.edit', compact('client', 'policies'));
     }
 
     public function update(Request $request, Client $client)
@@ -109,8 +124,43 @@ class ClientController extends Controller
 
         $client->update($clientData);
 
+        // Process Policies
+        if ($request->has('policies')) {
+            $submittedPolicyIds = [];
+            foreach ($request->input('policies') as $policyData) {
+                $pType = $policyData['policy_type'] === 'Custom' ? ($policyData['custom_type'] ?? 'Insurance') : $policyData['policy_type'];
+                
+                if (!empty($policyData['id'])) {
+                    // Update existing
+                    $renewal = $client->renewals()->find($policyData['id']);
+                    if ($renewal) {
+                        $renewal->update([
+                            'policy_number' => $policyData['policy_number'],
+                            'policy_type' => $pType,
+                            'premium_amount' => $policyData['premium_amount'],
+                            'expiry_date' => $policyData['expiry_date'],
+                        ]);
+                        $submittedPolicyIds[] = $renewal->id;
+                    }
+                } else if (!empty($policyData['policy_number'])) {
+                    // Create new
+                    $newRenewal = $context->renewals()->create([
+                        'client_id' => $client->id,
+                        'policy_number' => $policyData['policy_number'],
+                        'policy_type' => $pType,
+                        'premium_amount' => $policyData['premium_amount'],
+                        'expiry_date' => $policyData['expiry_date'],
+                        'status' => 'pending',
+                    ]);
+                    $submittedPolicyIds[] = $newRenewal->id;
+                }
+            }
+            
+            // Optional: Remove policies not in the submitted list
+            $client->renewals()->whereNotIn('id', $submittedPolicyIds)->delete();
+        }
 
-        return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
+        return redirect()->route('clients.index')->with('success', 'Client and Portfolio updated successfully.');
     }
 
     public function destroy(Client $client)

@@ -20,7 +20,6 @@
             address: '',
             dob: '',
             gender: '',
-            marriage_anniversary: '',
             photo: ''
         },
         openView(c) {
@@ -109,7 +108,7 @@
                                     DOB / Gender</th>
                                 <th
                                     class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">
-                                    Anniversary</th>
+                                    Policies</th>
                                 <th
                                     class="px-8 py-5 text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em] text-right">
                                     Action Hub</th>
@@ -163,9 +162,22 @@
                                                                 @endif
                                                             </td>
                                                             <td class="px-8 py-5">
-                                                                <div class="text-xs font-bold text-slate-600 dark:text-slate-400">
-                                                                    {{ $client->marriage_anniversary ? \Carbon\Carbon::parse($client->marriage_anniversary)->format('M d, Y') : '—' }}
-                                                                </div>
+                                                                @if($client->renewals->count() > 0)
+                                                                    <div class="flex flex-wrap gap-1">
+                                                                        @foreach($client->renewals->take(3) as $renewal)
+                                                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[9px] font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                                                                {{ $renewal->policy_number }}
+                                                                            </span>
+                                                                        @endforeach
+                                                                        @if($client->renewals->count() > 3)
+                                                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-900/30 text-[9px] font-bold text-indigo-600 dark:text-indigo-400">
+                                                                                +{{ $client->renewals->count() - 3 }} More
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <span class="text-[10px] font-medium text-slate-400 italic uppercase tracking-widest">No Policies</span>
+                                                                @endif
                                                             </td>
                                                             <td class="px-8 py-5 text-right">
                                                                 <div
@@ -178,7 +190,6 @@
                                     "address" => $client->address,
                                     "dob" => $client->dob,
                                     "gender" => $client->gender,
-                                    "marriage_anniversary" => $client->marriage_anniversary,
                                     "photo" => $client->photo ? Storage::url($client->photo) : null
                                 ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
                                                                         class="p-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all"
@@ -198,7 +209,6 @@
                                     "address" => $client->address,
                                     "dob" => $client->dob,
                                     "gender" => $client->gender,
-                                    "marriage_anniversary" => $client->marriage_anniversary,
                                     "photo" => $client->photo ? Storage::url($client->photo) : null
                                 ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
                                                                         class="p-2 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 rounded-xl transition-all"
@@ -408,19 +418,6 @@
                                             <option value="Female">Female</option>
                                             <option value="Other">Other</option>
                                         </select>
-                                    </template>
-                                </div>
-                                <div>
-                                    <label
-                                        class="text-xs font-bold text-slate-400 uppercase mb-1 block">Anniversary</label>
-                                    <template x-if="mode === 'view'">
-                                        <div class="p-3 bg-slate-50 rounded-xl text-slate-600 dark:text-slate-300 dark:bg-slate-800/50"
-                                            x-text="client.marriage_anniversary || 'N/A'"></div>
-                                    </template>
-                                    <template x-if="mode === 'edit'">
-                                        <input type="date" name="marriage_anniversary"
-                                            x-model="client.marriage_anniversary"
-                                            class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
                                     </template>
                                 </div>
                             </div>

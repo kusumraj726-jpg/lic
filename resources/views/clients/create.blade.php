@@ -13,7 +13,18 @@
                     <p class="text-gray-500 mt-1 dark:text-slate-400">Register a new client in the ERP system.</p>
                 </div>
 
-                <form action="{{ route('clients.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" x-data="{ policyTypeMode: '{{ old('custom_commission_rate') ? 'custom' : '' }}' }">
+                <form action="{{ route('clients.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" 
+                    x-data="{ 
+                        policies: [{ number: '', type: 'Life Insurance', premium: '', expiry: '', custom_type: '' }],
+                        addPolicy() {
+                            this.policies.push({ number: '', type: 'Life Insurance', premium: '', expiry: '', custom_type: '' });
+                        },
+                        removePolicy(index) {
+                            if (this.policies.length > 1) {
+                                this.policies.splice(index, 1);
+                            }
+                        }
+                    }">
                     @csrf
                     
                     <!-- Profile Photo Section -->
@@ -43,12 +54,8 @@
                         <x-form-input label="Email Address" name="email" type="email" />
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <x-form-input label="Date of Birth" name="dob" type="date" />
-                        <x-form-input label="Marriage Anniversary" name="marriage_anniversary" type="date" />
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="form-group flex-1">
                             <label for="gender" class="block text-[11px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2">Gender</label>
                             <select id="gender" name="gender" class="form-control mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500">
@@ -59,14 +66,67 @@
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('gender')" />
                         </div>
-                        <x-form-input label="Phone Number" name="phone" placeholder="+1 234 567 890" minlength="10" maxlength="10" pattern="[0-9]{10}" title="10-digit Phone Number" />
+                        <x-form-input label="Phone Number" name="phone" placeholder="10-digit number" minlength="10" maxlength="10" pattern="[0-9]{10}" />
                     </div>
 
                     <div class="grid grid-cols-1 gap-8">
                         <div class="form-group flex-1">
                             <label for="address">Residential Address</label>
-                            <textarea id="address" name="address" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" rows="3">{{ old('address') }}</textarea>
+                            <textarea id="address" name="address" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" rows="2">{{ old('address') }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->get('address')" />
+                        </div>
+                    </div>
+
+                    <!-- Policy Portfolio Section -->
+                    <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight dark:text-slate-100">Insurance Portfolio</h3>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Register multiple policies for this client at once.</p>
+                            </div>
+                            <button type="button" @click="addPolicy()" class="flex items-center gap-2 px-4 py-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-colors">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                Add Another Policy
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <template x-for="(policy, index) in policies" :key="index">
+                                <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[2rem] border border-slate-100 dark:border-slate-700 relative animate-fadeIn">
+                                    <button type="button" @click="removePolicy(index)" x-show="policies.length > 1" class="absolute top-4 right-4 text-slate-300 hover:text-rose-500 transition-colors">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    </button>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                        <div class="form-group">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Policy Number</label>
+                                            <input type="text" :name="`policies[${index}][policy_number]`" x-model="policy.number" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required placeholder="e.g. 123456789">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Policy Type</label>
+                                            <select :name="`policies[${index}][policy_type]`" x-model="policy.type" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                                <option value="Life Insurance">Life Insurance</option>
+                                                <option value="Health Insurance">Health Insurance</option>
+                                                <option value="Motor Insurance">Motor Insurance</option>
+                                                <option value="General Insurance">General Insurance</option>
+                                                <option value="Custom">Custom Policy</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" x-show="policy.type === 'Custom'">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Custom Name</label>
+                                            <input type="text" :name="`policies[${index}][custom_type]`" x-model="policy.custom_type" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="e.g. Cyber Security">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Premium (₹)</label>
+                                            <input type="number" step="0.01" :name="`policies[${index}][premium_amount]`" x-model="policy.premium" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required placeholder="0.00">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Expiry Date</label>
+                                            <input type="date" :name="`policies[${index}][expiry_date]`" x-model="policy.expiry" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
                     </div>
 

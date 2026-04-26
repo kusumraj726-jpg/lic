@@ -111,47 +111,45 @@
                                 <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                             </div>
                             <div>
-                                <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Insurance Master Policy</h3>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">THE SOURCE OF TRUTH FOR ALL FUTURE ENTRIES</p>
+                                <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Insurance Portfolio</h3>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">ALL REGISTERED POLICIES FOR THIS CLIENT</p>
                             </div>
                         </div>
 
-                        @if($latestPolicy)
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl group">
-                                <p class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 group-hover:text-indigo-500">Policy Number</p>
-                                <p class="text-3xl font-black text-slate-900 dark:text-white font-mono tracking-tighter">{{ $latestPolicy->policy_number }}</p>
-                            </div>
-                            
-                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl group">
-                                <p class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 group-hover:text-indigo-500">Premium Amount</p>
-                                <p class="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">₹{{ number_format($latestPolicy->premium_amount, 2) }}</p>
-                            </div>
-
-                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl group">
-                                <p class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 group-hover:text-amber-500">Commission Rate</p>
-                                <div class="flex items-end gap-2">
-                                    <p class="text-5xl font-black text-amber-500 tracking-tighter">{{ $latestPolicy->custom_commission_rate ?: (auth()->user()->commission_rates[$latestPolicy->policy_type] ?? '0') }}</p>
-                                    <span class="text-2xl font-black text-amber-500 mb-1">%</span>
+                        @if($policies->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            @foreach($policies as $policy)
+                                <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl group border-l-4 border-l-indigo-500">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div>
+                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 group-hover:text-indigo-500">Policy Number</p>
+                                            <p class="text-xl font-black text-slate-900 dark:text-white font-mono">{{ $policy->policy_number }}</p>
+                                        </div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-widest uppercase bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                                            {{ $policy->policy_type }}
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+                                        <div>
+                                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Premium</p>
+                                            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">₹{{ number_format($policy->premium_amount, 2) }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Expiry</p>
+                                            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">
+                                                {{ $policy->expiry_date ? \Carbon\Carbon::parse($policy->expiry_date)->format('d M Y') : 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase mt-4 tracking-widest">
-                                    {{ $latestPolicy->custom_commission_rate ? 'CUSTOM OVERRIDE ACTIVE' : 'SYSTEM GLOBAL DEFAULT' }}
-                                </p>
-                            </div>
-
-                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl group border-l-4 border-l-indigo-500">
-                                <p class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 group-hover:text-indigo-500">Policy Category</p>
-                                <p class="text-2xl font-black text-slate-800 dark:text-slate-100 uppercase italic">{{ $latestPolicy->policy_type }}</p>
-                                <p class="text-[9px] font-bold text-indigo-400 uppercase mt-4 tracking-widest leading-relaxed">
-                                    Renewals and Claims created for this client will automatically inherit these settings.
-                                </p>
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="mt-12 p-8 bg-indigo-500 rounded-[2.5rem] text-white shadow-2xl shadow-indigo-300 dark:shadow-none flex flex-col md:flex-row items-center justify-between gap-6">
                             <div class="text-center md:text-left">
                                 <h4 class="text-xl font-black uppercase italic tracking-tighter line-clamp-1">Quick Shortcut</h4>
-                                <p class="text-sm font-bold text-indigo-100 mt-1">Manage this client's finances in the main tracker</p>
+                                <p class="text-sm font-bold text-indigo-100 mt-1">Manage all client finances in the main tracker</p>
                             </div>
                             <div class="flex gap-4">
                                 <a href="{{ route('commissions.index') }}" class="px-8 py-3 bg-white text-indigo-600 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform">
@@ -164,9 +162,9 @@
                             <div class="h-20 w-20 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-300 dark:text-slate-600 mb-4">
                                 <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
-                            <h4 class="text-lg font-black text-slate-800 dark:text-slate-300 uppercase italic">No Master Policy Found</h4>
-                            <p class="text-sm font-bold text-slate-400 mt-2 max-w-xs">Register a policy in the Edit profile page to enable automatic tracking features.</p>
-                            <a href="{{ route('clients.edit', $client) }}" class="mt-8 text-indigo-500 font-black uppercase text-xs tracking-widest border-b-2 border-indigo-500 pb-1 hover:text-indigo-600 transition-colors">Setup Master Record Now</a>
+                            <h4 class="text-lg font-black text-slate-800 dark:text-slate-300 uppercase italic">No Policies Found</h4>
+                            <p class="text-sm font-bold text-slate-400 mt-2 max-w-xs">Register policies in the Edit profile page to enable automatic tracking features.</p>
+                            <a href="{{ route('clients.edit', $client) }}" class="mt-8 text-indigo-500 font-black uppercase text-xs tracking-widest border-b-2 border-indigo-500 pb-1 hover:text-indigo-600 transition-colors">Setup Portfolio Now</a>
                         </div>
                         @endif
                     </div>
