@@ -39,4 +39,9 @@ return [
         'api_key' => env('GROQ_API_KEY'),
     ],
 
+    'razorpay' => [
+        'key' => env('RAZORPAY_KEY'),
+        'secret' => env('RAZORPAY_SECRET'),
+    ],
+
 ];

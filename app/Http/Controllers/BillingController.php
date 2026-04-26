@@ -45,7 +45,7 @@ class BillingController extends Controller
         }
 
         try {
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
             $razorpayOrder = $api->order->create([
                 'receipt'         => 'gs_' . substr(session()->getId(), 0, 8) . '_' . time(),
@@ -58,7 +58,7 @@ class BillingController extends Controller
                 'success'  => true,
                 'order_id' => $razorpayOrder['id'],
                 'amount'   => $amountInPaise,
-                'key'      => env('RAZORPAY_KEY'),
+                'key'      => config('services.razorpay.key'),
                 'plan'     => $request->plan,
             ]);
         } catch (\Exception $e) {
@@ -80,7 +80,7 @@ class BillingController extends Controller
         ]);
 
         try {
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
             $api->utility->verifyPaymentSignature([
                 'razorpay_order_id'   => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
@@ -129,7 +129,7 @@ class BillingController extends Controller
         $amountInPaise = $amount * 100;
 
         try {
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
             $razorpayOrder = $api->order->create([
                 'receipt'         => 'rcpt_' . auth()->id() . '_' . time(),
                 'amount'          => $amountInPaise,
