@@ -10,6 +10,9 @@ class SettingsController extends Controller
     public function index()
     {
         $user = auth()->user();
+        if ($user->role === 'staff') {
+            return redirect()->route('profile.edit');
+        }
         $context = $user->context();
 
         return view('settings.index', compact('user', 'context'));
@@ -18,6 +21,9 @@ class SettingsController extends Controller
     public function logs(Request $request)
     {
         $user = auth()->user();
+        if ($user->role === 'staff') {
+            abort(403, 'Unauthorized access to workspace logs.');
+        }
         $context = $user->context();
         $type = $request->get('type', 'staff'); // 'staff' or 'admin'
 
@@ -41,7 +47,11 @@ class SettingsController extends Controller
             'brand_logo'   => 'nullable|file|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
         ]);
 
-        $context = auth()->user()->context();
+        $user = auth()->user();
+        if ($user->role === 'staff') {
+            abort(403);
+        }
+        $context = $user->context();
         
         $context->company_name = $request->company_name;
 
