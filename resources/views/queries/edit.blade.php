@@ -11,7 +11,7 @@
                 <div class="p-6">
                     <form action="{{ route('queries.update', $query) }}" method="POST" class="space-y-6"
                         x-data="{ 
-                            clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                            clientPolicies: {!! empty($clientPolicies) ? '{}' : json_encode($clientPolicies) !!},
                             selectedClient: '{{ old('client_id', $query->client_id) }}',
                             policyNumberInput: '{{ old('policy_number', $query->policy_number) }}',
                             manualInput: '{{ old('policy_number', $query->policy_number) === 'manual' }}',

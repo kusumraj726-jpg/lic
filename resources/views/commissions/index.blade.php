@@ -26,7 +26,7 @@
             notes: '',
             received_at: '{{ date('Y-m-d') }}'
         },
-        clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+        clientPolicies: {!! empty($clientPolicies) ? '{}' : json_encode($clientPolicies) !!},
         get availablePolicies() {
             return this.clientPolicies[String(this.commission.client_id)] || [];
         },

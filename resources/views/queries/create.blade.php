@@ -16,7 +16,7 @@
                 <form action="{{ route('queries.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" 
                         x-data="{ 
                             submitting: false,
-                            clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                            clientPolicies: {!! empty($clientPolicies) ? '{}' : json_encode($clientPolicies) !!},
                             selectedClient: '{{ old('client_id') }}',
                             policyNumberInput: '{{ old('policy_number') }}',
                             manualInput: false,

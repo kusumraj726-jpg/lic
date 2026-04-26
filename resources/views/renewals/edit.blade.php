@@ -11,7 +11,7 @@
                 <div class="p-6">
                     <form action="{{ route('renewals.update', $renewal) }}" method="POST" class="space-y-6" x-data="{ 
                         policyTypeMode: '{{ old('custom_commission_rate', $renewal->custom_commission_rate) ? 'custom' : (in_array(old('policy_type', $renewal->policy_type), ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance']) ? old('policy_type', $renewal->policy_type) : (old('policy_type', $renewal->policy_type) ? 'custom' : '')) }}',
-                        clientPolicies: {{ json_encode($clientPolicies ?? [], JSON_FORCE_OBJECT) }},
+                        clientPolicies: {!! empty($clientPolicies) ? '{}' : json_encode($clientPolicies) !!},
                         selectedClient: '{{ old('client_id', $renewal->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $renewal->policy_number) }}',
                         manualInput: false,
