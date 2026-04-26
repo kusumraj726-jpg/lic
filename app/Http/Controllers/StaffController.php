@@ -130,10 +130,10 @@ class StaffController extends Controller
         $staffData['phone'] = $validated['staff_member_phone_sec'];
         $staffData['designation'] = $validated['staff_member_designation_sec'];
         $staffData['status'] = $validated['status'];
-        $staffData['access_clients'] = $request->boolean('access_clients');
-        $staffData['access_queries'] = $request->boolean('access_queries');
-        $staffData['access_claims'] = $request->boolean('access_claims');
-        $staffData['access_renewals'] = $request->boolean('access_renewals');
+        $staffData['access_clients'] = $request->has('access_clients');
+        $staffData['access_queries'] = $request->has('access_queries');
+        $staffData['access_claims'] = $request->has('access_claims');
+        $staffData['access_renewals'] = $request->has('access_renewals');
 
         $staff->update($staffData);
 

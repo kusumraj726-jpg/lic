@@ -28,6 +28,14 @@ class Staff extends Model
         'access_renewals',
     ];
 
+    protected $casts = [
+        'access_clients' => 'boolean',
+        'access_queries' => 'boolean',
+        'access_claims' => 'boolean',
+        'access_renewals' => 'boolean',
+        'status' => 'string',
+    ];
+
     public function advisor()
     {
         return $this->belongsTo(User::class, 'advisor_id');
