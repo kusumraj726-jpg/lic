@@ -41,9 +41,15 @@ class QueryController extends Controller
         $context = auth()->user()->context();
         $clients = $context->clients()->get();
 
-        // Smarter Detection: Pull policy numbers from Renewals, Claims, and Commissions
-        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->get();
-        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type')->get();
+        // Get policies by client_id (same as how clients list shows them)
+        $clientIds = $clients->pluck('id');
+        $renewalPolicies = \App\Models\Renewal::whereIn('client_id', $clientIds)
+            ->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')
+            ->get();
+        $claimPolicies = \App\Models\Claim::whereIn('client_id', $clientIds)
+            ->select('client_id', 'policy_number', 'policy_type')
+            ->whereNotNull('policy_number')
+            ->get();
         
         $clientPolicies = $renewalPolicies->concat($claimPolicies)
             ->groupBy('client_id')
@@ -127,9 +133,15 @@ class QueryController extends Controller
         if ($query->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
 
-        // Unified Policy Discovery
-        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->get();
-        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type')->get();
+        // Get policies by client_id (same as how clients list shows them)
+        $clientIds = $clients->pluck('id');
+        $renewalPolicies = \App\Models\Renewal::whereIn('client_id', $clientIds)
+            ->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')
+            ->get();
+        $claimPolicies = \App\Models\Claim::whereIn('client_id', $clientIds)
+            ->select('client_id', 'policy_number', 'policy_type')
+            ->whereNotNull('policy_number')
+            ->get();
         
         $clientPolicies = $renewalPolicies->concat($claimPolicies)
             ->groupBy('client_id')
