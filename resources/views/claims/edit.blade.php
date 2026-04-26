@@ -9,9 +9,10 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <script>window.__cePolicies = @json($clientPolicies ?? []);</script>
                     <form action="{{ route('claims.update', $claim) }}" method="POST" class="space-y-6" x-data="{ 
                         policyTypeMode: '{{ (old('policy_type', $claim->policy_type) && !in_array(old('policy_type', $claim->policy_type), ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance'])) ? 'custom' : old('policy_type', $claim->policy_type) }}',
-                        clientPolicies: @json($clientPolicies ?? []),
+                        clientPolicies: window.__cePolicies || {},
                         selectedClient: '{{ old('client_id', $claim->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $claim->policy_number) }}',
                         manualInput: false,

@@ -9,9 +9,10 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <script>window.__rePolicies = @json($clientPolicies ?? []);</script>
                     <form action="{{ route('renewals.update', $renewal) }}" method="POST" class="space-y-6" x-data="{ 
                         policyTypeMode: '{{ old('custom_commission_rate', $renewal->custom_commission_rate) ? 'custom' : (in_array(old('policy_type', $renewal->policy_type), ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance']) ? old('policy_type', $renewal->policy_type) : (old('policy_type', $renewal->policy_type) ? 'custom' : '')) }}',
-                        clientPolicies: @json($clientPolicies ?? []),
+                        clientPolicies: window.__rePolicies || {},
                         selectedClient: '{{ old('client_id', $renewal->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $renewal->policy_number) }}',
                         manualInput: false,

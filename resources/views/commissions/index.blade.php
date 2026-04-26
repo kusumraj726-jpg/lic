@@ -8,6 +8,7 @@
         </div>
     </x-slot>
 
+    <script>window.__comPolicies = @json($clientPolicies ?? []);</script>
     <div class="py-6" x-data="{ 
         openPayoutModal: false,
         openCommissionModal: false,
@@ -26,7 +27,7 @@
             notes: '',
             received_at: '{{ date('Y-m-d') }}'
         },
-        clientPolicies: @json($clientPolicies ?? []),
+        clientPolicies: window.__comPolicies || {},
         get availablePolicies() {
             return this.clientPolicies[String(this.commission.client_id)] || [];
         },

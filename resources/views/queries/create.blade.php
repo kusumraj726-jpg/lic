@@ -13,10 +13,11 @@
                     <p class="text-gray-500 mt-1 dark:text-slate-400">Submit a new inquiry or support request for a client.</p>
                 </div>
 
+                <script>window.__qPolicies = @json($clientPolicies ?? []);</script>
                 <form action="{{ route('queries.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" 
                         x-data="{ 
                             submitting: false,
-                            clientPolicies: @json($clientPolicies ?? []),
+                            clientPolicies: window.__qPolicies || {},
                             selectedClient: '{{ old('client_id') }}',
                             policyNumberInput: '{{ old('policy_number') }}',
                             manualInput: false,

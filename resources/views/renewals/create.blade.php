@@ -13,9 +13,10 @@
                     <p class="text-gray-500 mt-1 dark:text-slate-400">Schedule a policy renewal reminder for a client.</p>
                 </div>
 
+                <script>window.__rcPolicies = @json($clientPolicies ?? []);</script>
                 <form action="{{ route('renewals.store') }}" method="POST" class="space-y-8" x-data="{ 
                     policyTypeMode: '{{ old('custom_commission_rate') ? 'custom' : (old('policy_type') && !in_array(old('policy_type'), ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance']) ? 'custom' : old('policy_type', '')) }}',
-                    clientPolicies: @json($clientPolicies ?? []),
+                    clientPolicies: window.__rcPolicies || {},
                     selectedClient: '{{ old('client_id') }}',
                     policyNumberInput: '{{ old('policy_number') }}',
                     manualInput: false,

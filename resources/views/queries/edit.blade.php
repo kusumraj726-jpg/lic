@@ -9,9 +9,10 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <script>window.__qePolicies = @json($clientPolicies ?? []);</script>
                     <form action="{{ route('queries.update', $query) }}" method="POST" class="space-y-6"
                         x-data="{ 
-                            clientPolicies: @json($clientPolicies ?? []),
+                            clientPolicies: window.__qePolicies || {},
                             selectedClient: '{{ old('client_id', $query->client_id) }}',
                             policyNumberInput: '{{ old('policy_number', $query->policy_number) }}',
                             manualInput: '{{ old('policy_number', $query->policy_number) === 'manual' }}',
