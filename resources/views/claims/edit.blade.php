@@ -11,7 +11,7 @@
                 <div class="p-6">
                     <form action="{{ route('claims.update', $claim) }}" method="POST" class="space-y-6" x-data="{ 
                         policyTypeMode: '{{ (old('policy_type', $claim->policy_type) && !in_array(old('policy_type', $claim->policy_type), ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance'])) ? 'custom' : old('policy_type', $claim->policy_type) }}',
-                        clientPolicies: {!! empty($clientPolicies) ? '{}' : json_encode($clientPolicies) !!},
+                        clientPolicies: @json($clientPolicies ?? []),
                         selectedClient: '{{ old('client_id', $claim->client_id) }}',
                         policyNumberInput: '{{ old('policy_number', $claim->policy_number) }}',
                         manualInput: false,
