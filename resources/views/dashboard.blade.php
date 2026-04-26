@@ -170,6 +170,13 @@
                                         </div>
                                         <h4 class="text-sm font-black text-slate-900 uppercase tracking-tight truncate group-hover/item:text-indigo-600 transition-colors dark:text-slate-100">
                                             {{ $item->client->name ?? 'External Protocol' }}</h4>
+                                        <div class="flex items-center gap-2 mt-0.5">
+                                            <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tight">POL: {{ $item->policy_number }}</span>
+                                            @if(isset($item->policy_type))
+                                                <span class="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                                                <span class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ $item->policy_type }}</span>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="flex items-center gap-4">
                                         <div class="hidden sm:flex flex-col items-end">
