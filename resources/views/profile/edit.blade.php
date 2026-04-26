@@ -13,11 +13,13 @@
                 </div>
             </div>
 
-            <div class="premium-card !p-10 border-none bg-white dark:bg-[#1e293b] shadow-xl dark:shadow-black/30 w-full">
-                <div class="max-w-3xl">
-                    @include('profile.partials.update-password-form')
+            @if(auth()->user()->role !== 'staff')
+                <div class="premium-card !p-10 border-none bg-white dark:bg-[#1e293b] shadow-xl dark:shadow-black/30 w-full">
+                    <div class="max-w-3xl">
+                        @include('profile.partials.update-password-form')
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

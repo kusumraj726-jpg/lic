@@ -28,6 +28,11 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
+        
+        if ($user->role === 'staff') {
+            return Redirect::back()->with('error', 'Staff members are not permitted to change profile details.');
+        }
+
         $user->fill($request->validated());
 
         if ($request->hasFile('avatar')) {
