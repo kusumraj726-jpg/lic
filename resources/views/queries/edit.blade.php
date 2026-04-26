@@ -27,13 +27,14 @@
                                         this.policyNumberInput = '';
                                     }
                                 }
-                            }
+                            },
+                            isNew: false
                         }">
                         @csrf
                         @method('PATCH')
-                        <div x-data="{ isNew: false }">
+                        <div class="form-group">
                             <x-input-label for="client_id" :value="__('Select Client (Optional)')" />
-                            <select id="client_id" name="client_id" x-model="selectedClient" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" @change="isNew = $event.target.value === 'new'; updatePolicyInput()">
+                            <select id="client_id" name="client_id" x-model="selectedClient" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" @change="isNew = ($event.target.value === 'new'); updatePolicyInput()">
                                 <option value="">-- General Query --</option>
                                 <option value="new">+ Add New Client (Custom Entry)</option>
                                 @foreach($clients as $client)

@@ -29,13 +29,14 @@
                             } else {
                                 this.policyNumberInput = '';
                             }
-                        }
+                        },
+                        isNew: '{{ old('client_id') }}' === 'new'
                     }" @submit="submitting = true">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="form-group" x-data="{ isNew: `{{ old('client_id') }}` === 'new' }">
+                        <div class="form-group">
                             <label for="client_id">Associate Client</label>
-                            <select id="client_id" name="client_id" x-model="selectedClient" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" @change="isNew = $event.target.value === 'new'; updatePolicyInput()">
+                            <select id="client_id" name="client_id" x-model="selectedClient" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500" @change="isNew = ($event.target.value === 'new'); updatePolicyInput()">
                                 <option value="">-- General Query --</option>
                                 <option value="new" {{ old('client_id') == 'new' ? 'selected' : '' }}>+ Add New Client (Custom Entry)</option>
                                 @foreach($clients as $client)
