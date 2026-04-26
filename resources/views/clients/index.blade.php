@@ -20,7 +20,8 @@
             address: '',
             dob: '',
             gender: '',
-            photo: ''
+            photo: '',
+            policies: []
         },
         openView(c) {
             this.client = c;
@@ -29,8 +30,20 @@
         },
         openEdit(c) {
             this.client = {...c};
+            this.client.policies = c.policies ? JSON.parse(JSON.stringify(c.policies)) : [];
+            if (this.client.policies.length === 0) {
+                this.client.policies = [{ id: '', number: '', type: 'Life Insurance', premium: '', expiry: '', custom_type: '' }];
+            }
             this.mode = 'edit';
             this.openModal = true;
+        },
+        addPolicy() {
+            this.client.policies.push({ id: '', number: '', type: 'Life Insurance', premium: '', expiry: '', custom_type: '' });
+        },
+        removePolicy(index) {
+            if (this.client.policies.length > 1) {
+                this.client.policies.splice(index, 1);
+            }
         },
         async submitForm() {
             this.submitting = true;
@@ -209,7 +222,15 @@
                                     "address" => $client->address,
                                     "dob" => $client->dob,
                                     "gender" => $client->gender,
-                                    "photo" => $client->photo ? Storage::url($client->photo) : null
+                                    "photo" => $client->photo ? Storage::url($client->photo) : null,
+                                    "policies" => $client->renewals->map(fn($p) => [
+                                        'id' => $p->id,
+                                        'number' => $p->policy_number,
+                                        'type' => in_array($p->policy_type, ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance']) ? $p->policy_type : 'Custom',
+                                        'custom_type' => in_array($p->policy_type, ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'General Insurance']) ? '' : $p->policy_type,
+                                        'premium' => $p->premium_amount,
+                                        'expiry' => $p->expiry_date
+                                    ])
                                 ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
                                                                         class="p-2 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 rounded-xl transition-all"
                                                                         title="Edit">
@@ -434,6 +455,75 @@
                                         class="w-full rounded-xl border-slate-200 focus:border-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"></textarea>
                                 </template>
                             </div>
+
+                            <!-- Modal Portfolio Section -->
+                            <template x-if="mode === 'view'">
+                                <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+                                    <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest">Active Portfolio</h4>
+                                    <div class="grid grid-cols-1 gap-3">
+                                        <template x-for="policy in client.policies" :key="policy.id">
+                                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                                                <div>
+                                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Policy #</p>
+                                                    <p class="text-sm font-bold text-slate-700 dark:text-slate-200" x-text="policy.number"></p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-black tracking-widest uppercase bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400" x-text="policy.type === 'Custom' ? policy.custom_type : policy.type"></span>
+                                                    <p class="text-[10px] font-bold text-slate-400 mt-1" x-text="'₹' + Number(policy.premium).toLocaleString()"></p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="mode === 'edit'">
+                                <div class="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest">Insurance Portfolio</h4>
+                                        <button type="button" @click="addPolicy()" class="text-[10px] font-black text-indigo-500 uppercase tracking-widest hover:text-indigo-600 transition-colors">
+                                            + Add Policy
+                                        </button>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <template x-for="(policy, index) in client.policies" :key="index">
+                                            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700 relative">
+                                                <button type="button" @click="removePolicy(index)" x-show="client.policies.length > 1" class="absolute top-2 right-2 text-slate-300 hover:text-rose-500">
+                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                                </button>
+                                                <input type="hidden" :name="`policies[${index}][id]`" x-model="policy.id">
+                                                <div class="grid grid-cols-2 gap-4">
+                                                    <div>
+                                                        <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Policy #</label>
+                                                        <input type="text" :name="`policies[${index}][policy_number]`" x-model="policy.number" class="w-full text-xs rounded-lg border-slate-200 dark:bg-slate-900 dark:border-slate-700" required>
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Type</label>
+                                                        <select :name="`policies[${index}][policy_type]`" x-model="policy.type" class="w-full text-xs rounded-lg border-slate-200 dark:bg-slate-900 dark:border-slate-700">
+                                                            <option value="Life Insurance">Life</option>
+                                                            <option value="Health Insurance">Health</option>
+                                                            <option value="Motor Insurance">Motor</option>
+                                                            <option value="General Insurance">General</option>
+                                                            <option value="Custom">Custom</option>
+                                                        </select>
+                                                    </div>
+                                                    <div x-show="policy.type === 'Custom'" class="col-span-2">
+                                                        <input type="text" :name="`policies[${index}][custom_type]`" x-model="policy.custom_type" class="w-full text-xs rounded-lg border-slate-200 dark:bg-slate-900 dark:border-slate-700" placeholder="Custom Type Name">
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Premium</label>
+                                                        <input type="number" step="0.01" :name="`policies[${index}][premium_amount]`" x-model="policy.premium" class="w-full text-xs rounded-lg border-slate-200 dark:bg-slate-900 dark:border-slate-700" required>
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-[9px] font-black text-slate-400 uppercase mb-1 block">Expiry</label>
+                                                        <input type="date" :name="`policies[${index}][expiry_date]`" x-model="policy.expiry" class="w-full text-xs rounded-lg border-slate-200 dark:bg-slate-900 dark:border-slate-700" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
 
                         <div
