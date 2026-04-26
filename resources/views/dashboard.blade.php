@@ -120,9 +120,9 @@
                                 <div>
                                     <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight flex items-center gap-3 dark:text-slate-100">
                                         Priority Diagnostic
-                                        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100">
+                                        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100 dark:bg-rose-500/10 dark:border-rose-500/20">
                                             <div class="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse"></div>
-                                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-widest">Live Pulse</span>
+                                            <span class="text-[9px] font-black text-rose-600 uppercase tracking-widest dark:text-rose-400">Live Pulse</span>
                                         </div>
                                     </h3>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">High-Authority Operational Alerts</p>
@@ -184,9 +184,9 @@
                                     </div>
                                 </a>
                             @empty
-                                <div class="text-center py-16 px-8 rounded-3xl border-2 border-dashed border-slate-100 bg-slate-50/30">
-                                    <h3 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em] mb-1">Clinical All-Clear</h3>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Zero critical pending items detected</p>
+                                <div class="text-center py-16 px-8 rounded-3xl border-2 border-dashed border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/20">
+                                    <h3 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em] mb-1 dark:text-emerald-400">Clinical All-Clear</h3>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest dark:text-slate-500">Zero critical pending items detected</p>
                                 </div>
                             @endforelse
                         </div>
