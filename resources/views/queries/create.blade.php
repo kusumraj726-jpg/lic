@@ -54,20 +54,35 @@
                         <div class="form-group">
                             <label for="policy_number">Policy Number</label>
                             
-                            <div x-show="availablePolicies.length > 0">
-                                <select name="policy_number_select" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
-                                    <option value="">-- Select Policy --</option>
-                                    <template x-for="policy in availablePolicies" :key="policy.number">
-                                        <option :value="policy.number" x-text="policy.number"></option>
-                                    </template>
-                                </select>
-                            </div>
+                            <div x-data="{ manualInput: false }">
+                                <!-- Block 1: Dropdown (Only if policies exist) -->
+                                <template x-if="availablePolicies.length > 0">
+                                    <div class="space-y-3">
+                                        <select name="policy_number" x-model="policyNumberInput" 
+                                                @change="manualInput = (policyNumberInput === 'manual')"
+                                                class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+                                            <option value="">-- Select Existing Policy --</option>
+                                            <template x-for="policy in availablePolicies" :key="policy.number">
+                                                <option :value="policy.number" x-text="policy.number + ' (' + policy.type + ')'"></option>
+                                            </template>
+                                            <option value="manual">+ Enter Different Policy Number</option>
+                                        </select>
 
-                            <div x-show="availablePolicies.length === 0">
-                                <input type="text" name="policy_number_manual" x-model="policyNumberInput" class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" placeholder="Type Policy Number (Optional)">
+                                        <input x-show="manualInput || policyNumberInput === 'manual'" 
+                                               type="text" name="policy_number_manual" 
+                                               class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" 
+                                               placeholder="Type Policy Number Here">
+                                    </div>
+                                </template>
+
+                                <!-- Block 2: Text Input (If NO policies exist) -->
+                                <template x-if="availablePolicies.length === 0">
+                                    <input type="text" name="policy_number" x-model="policyNumberInput" 
+                                           class="form-control dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100" 
+                                           placeholder="Enter Policy Number">
+                                </template>
                             </div>
                             
-                            <input type="hidden" name="policy_number" x-model="policyNumberInput">
                             <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
                         </div>
                     </div>
