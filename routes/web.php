@@ -14,6 +14,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Cache clear utility (safe - only clears views/cache, no data loss)
+Route::get('/artisan/clear-views', function () {
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    return 'Views and cache cleared successfully at ' . now();
+})->middleware('auth');
+
+
 Route::get('/services', function () {
     return view('services');
 })->name('services');
