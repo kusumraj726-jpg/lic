@@ -103,7 +103,7 @@ class User extends Authenticatable
 
     public function linkedStaffProfile()
     {
-        return $this->hasOne(Staff::class, 'staff_user_id');
+        return $this->hasOne(Staff::class, 'staff_user_id')->withoutGlobalScopes();
     }
 
     /**
