@@ -178,7 +178,7 @@
                                                     "status" => $query->status,
                                                     "client_name" => $query->client->name ?? "Direct Inquiry",
                                                     "client_id" => $query->client_id,
-                                                    "document" => $query->document ? asset("storage/" . $query->document) : "",
+                                                    "document" => $query->document_url ?? "",
                                                     "created_at" => $query->created_at->format("M d, Y")
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'view')" 
@@ -193,7 +193,7 @@
                                                     "status" => $query->status,
                                                     "client_name" => $query->client->name ?? "Direct Inquiry",
                                                     "client_id" => $query->client_id,
-                                                    "document" => $query->document ? asset("storage/" . $query->document) : "",
+                                                    "document" => $query->document_url ?? "",
                                                     "created_at" => $query->created_at->format("M d, Y")
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'edit')" 
