@@ -28,6 +28,9 @@
     --primary: #818cf8;       /* Indigo 400 */
     --primary-dark: #6366f1;  /* Indigo 500 */
     --primary-light: #4f46e5;
+    --shadow: none;
+    --shadow-md: none;
+    --shadow-lg: none;
 }
 
 [x-cloak] {

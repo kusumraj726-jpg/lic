@@ -26,27 +26,27 @@
             <!-- Tab Navigation (Simulation Style) -->
             <div class="flex items-center flex-wrap gap-2 mb-8 bg-slate-50 dark:bg-slate-900/50 p-1 rounded-[1.25rem] w-fit border border-slate-100 dark:border-slate-800">
                 <button @click="tab = 'clients'" 
-                    :class="tab === 'clients' ? 'bg-white dark:bg-slate-800 shadow-sm text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
+                    :class="tab === 'clients' ? 'bg-white dark:bg-slate-800 shadow-sm dark:shadow-none text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
                     class="px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300">
                     Clients
                 </button>
                 <button @click="tab = 'queries'" 
-                    :class="tab === 'queries' ? 'bg-white dark:bg-slate-800 shadow-sm text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
+                    :class="tab === 'queries' ? 'bg-white dark:bg-slate-800 shadow-sm dark:shadow-none text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
                     class="px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300">
                     Queries
                 </button>
                 <button @click="tab = 'claims'" 
-                    :class="tab === 'claims' ? 'bg-white dark:bg-slate-800 shadow-sm text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
+                    :class="tab === 'claims' ? 'bg-white dark:bg-slate-800 shadow-sm dark:shadow-none text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
                     class="px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300">
                     Claims
                 </button>
                 <button @click="tab = 'renewals'" 
-                    :class="tab === 'renewals' ? 'bg-white dark:bg-slate-800 shadow-sm text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
+                    :class="tab === 'renewals' ? 'bg-white dark:bg-slate-800 shadow-sm dark:shadow-none text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
                     class="px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300">
                     Renewals
                 </button>
                 <button @click="tab = 'staff'" 
-                    :class="tab === 'staff' ? 'bg-white dark:bg-slate-800 shadow-sm text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
+                    :class="tab === 'staff' ? 'bg-white dark:bg-slate-800 shadow-sm dark:shadow-none text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'"
                     class="px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300">
                     Staff
                 </button>

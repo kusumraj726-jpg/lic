@@ -76,11 +76,11 @@
                         </div>
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ledger..." class="!pl-16 pr-4 py-2.5 text-xs rounded-xl border-slate-100 dark:border-slate-700 focus:border-violet-500 focus:ring-violet-500 bg-white dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-500 shadow-sm w-72 transition-all uppercase font-bold tracking-tight">
                     </form>
-                    <button @click="openCreate()" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-200 hover:bg-emerald-500 transition-all">
+                    <button @click="openCreate()" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-200 dark:shadow-none hover:bg-emerald-500 transition-all">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         Manual Ledger Entry
                     </button>
-                    <a href="{{ route('commissions.export') }}" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-violet-200 hover:bg-violet-500 transition-all">
+                    <a href="{{ route('commissions.export') }}" class="inline-flex items-center gap-2 bg-violet-600 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-violet-200 dark:shadow-none hover:bg-violet-500 transition-all">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         Export Ledger
                     </a>
@@ -235,7 +235,7 @@
 
                             <div class="mt-8 flex gap-3">
                                 <button type="button" @click="openPayoutModal = false" class="flex-1 px-4 py-3 rounded-xl font-bold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
-                                <button type="submit" class="flex-1 px-4 py-3 rounded-xl font-bold text-white bg-emerald-600 shadow-lg shadow-emerald-100">Confirm Payout</button>
+                                <button type="submit" class="flex-1 px-4 py-3 rounded-xl font-bold text-white bg-emerald-600 shadow-lg shadow-emerald-100 dark:shadow-none">Confirm Payout</button>
                             </div>
                         </form>
                     </div>

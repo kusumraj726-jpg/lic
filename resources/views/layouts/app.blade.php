@@ -39,6 +39,10 @@
                     font-size: 16px !important;
                 }
             }
+            .dark * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
         </style>
 
         <!-- Theme Initialization Script (Prevents FOUC) -->
@@ -72,12 +76,12 @@
             <div class="absolute inset-0 bg-[#fdfdff] dark:bg-slate-900 transition-colors duration-300"></div>
             
             <!-- Global Intelligence Aura (Animated Blurred Orbs) -->
-            <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/25 dark:bg-indigo-600/10 rounded-full blur-[140px] animate-pulse" style="animation-duration: 10s;"></div>
-            <div class="absolute top-[-5%] right-[0%] w-[55%] h-[55%] bg-amber-500/25 dark:bg-amber-600/10 rounded-full blur-[130px] animate-pulse" style="animation-duration: 15s;"></div>
-            <div class="absolute top-[40%] right-[-5%] w-[50%] h-[60%] bg-indigo-600/20 dark:bg-indigo-500/10 rounded-full blur-[110px] animate-pulse" style="animation-duration: 18s;"></div>
-            <div class="absolute bottom-[20%] right-[-10%] w-[55%] h-[55%] bg-emerald-500/15 dark:bg-emerald-600/10 rounded-full blur-[120px] animate-pulse" style="animation-duration: 14s;"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-rose-500/20 dark:bg-rose-600/10 rounded-full blur-[120px] animate-pulse" style="animation-duration: 12s;"></div>
-            <div class="absolute bottom-[-5%] right-[5%] w-[65%] h-[65%] bg-brand/30 dark:bg-brand/10 rounded-full blur-[150px] animate-pulse" style="animation-duration: 8s;"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-500/25 dark:hidden rounded-full blur-[140px] animate-pulse" style="animation-duration: 10s;"></div>
+            <div class="absolute top-[-5%] right-[0%] w-[55%] h-[55%] bg-amber-500/25 dark:hidden rounded-full blur-[130px] animate-pulse" style="animation-duration: 15s;"></div>
+            <div class="absolute top-[40%] right-[-5%] w-[50%] h-[60%] bg-indigo-600/20 dark:hidden rounded-full blur-[110px] animate-pulse" style="animation-duration: 18s;"></div>
+            <div class="absolute bottom-[20%] right-[-10%] w-[55%] h-[55%] bg-emerald-500/15 dark:hidden rounded-full blur-[120px] animate-pulse" style="animation-duration: 14s;"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-rose-500/20 dark:hidden rounded-full blur-[120px] animate-pulse" style="animation-duration: 12s;"></div>
+            <div class="absolute bottom-[-5%] right-[5%] w-[65%] h-[65%] bg-brand/30 dark:hidden rounded-full blur-[150px] animate-pulse" style="animation-duration: 8s;"></div>
 
             <!-- Professional Grid Overlay -->
             <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.4] dark:opacity-[0.2]"></div>
@@ -117,7 +121,7 @@
                             <div class="flex items-center gap-4" x-data="{ open: false, intelOpen: false }" @click.away="open = false; intelOpen = false">
                                 
                                 <!-- Theme Toggle Button -->
-                                <button @click="toggleTheme()" class="h-11 w-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:scale-[1.02] flex items-center justify-center text-slate-400 hover:text-indigo-600 dark:hover:text-amber-400 transition-all group">
+                                <button @click="toggleTheme()" class="h-11 w-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-md hover:scale-[1.02] flex items-center justify-center text-slate-400 hover:text-indigo-600 dark:hover:text-amber-400 transition-all group">
                                     <svg x-show="!darkMode" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                                     <svg x-show="darkMode" style="display: none;" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                 </button>
@@ -126,7 +130,7 @@
                                 @if(isset($global_intel) && $global_intel->count() > 0)
                                 <div class="relative">
                                     <button @click="intelOpen = !intelOpen" 
-                                            class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all group relative overflow-hidden">
+                                            class="flex items-center gap-2.5 px-4 h-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-md hover:scale-[1.02] transition-all group relative overflow-hidden">
                                         <div class="absolute inset-0 bg-brand/5 dark:bg-brand/10 group-hover:bg-brand/10 dark:group-hover:bg-brand/20 transition-colors"></div>
                                         <span class="relative flex h-2 w-2">
                                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
@@ -233,7 +237,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-md">
+                                        <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-md dark:shadow-none">
                                             <div class="h-full w-full rounded-[6px] bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
                                                 @if(Auth::user()->avatar_url)
                                                     <img src="{{ Auth::user()->avatar_url }}" class="h-full w-full object-cover">
