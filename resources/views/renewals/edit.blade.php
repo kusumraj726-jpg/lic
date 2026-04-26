@@ -58,27 +58,37 @@
                             <x-input-error class="mt-2" :messages="$errors->get('client_id')" />
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="form-group">
+                        <div x-data="{ manualInput: false }">
                             <x-input-label for="policy_number" :value="__('Policy Number')" />
                             
-                            <!-- Dynamic Selector -->
-                            <div x-show="availablePolicies.length > 0">
-                                <select name="policy_number_select" x-model="policyNumberInput" @change="syncPolicyDetails()" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                    <option value="">-- Select Policy --</option>
-                                    <template x-for="policy in availablePolicies" :key="policy.number">
-                                        <option :value="policy.number" x-text="policy.number"></option>
-                                    </template>
-                                </select>
-                            </div>
-                            
-                            <div x-show="availablePolicies.length === 0">
-                                <x-text-input id="policy_number_manual" name="policy_number_manual" type="text" class="mt-1 block w-full" x-model="policyNumberInput" placeholder="Type Policy Number" />
-                            </div>
-                            <input type="hidden" name="policy_number" x-model="policyNumberInput">
-                            
+                            <!-- Block 1: Dropdown (Only if policies exist) -->
+                            <template x-if="availablePolicies.length > 0">
+                                <div class="space-y-3 mt-1">
+                                    <select name="policy_number" x-model="policyNumberInput" 
+                                            @change="syncPolicyDetails(); manualInput = (policyNumberInput === 'manual')"
+                                            class="block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                        <option value="">-- Select Existing Policy --</option>
+                                        <template x-for="policy in availablePolicies" :key="policy.number">
+                                            <option :value="policy.number" x-text="policy.number + ' (' + policy.type + ')'"></option>
+                                        </template>
+                                        <option value="manual">+ Enter Different Policy Number</option>
+                                    </select>
+
+                                    <x-text-input x-show="manualInput || policyNumberInput === 'manual'" 
+                                           id="policy_number_manual" name="policy_number_manual" type="text" 
+                                           class="mt-1 block w-full" 
+                                           placeholder="Type Policy Number Here" />
+                                </div>
+                            </template>
+
+                            <!-- Block 2: Text Input (If NO policies exist) -->
+                            <template x-if="availablePolicies.length === 0">
+                                <x-text-input id="policy_number" name="policy_number" type="text" 
+                                       class="mt-1 block w-full" x-model="policyNumberInput" 
+                                       placeholder="Enter Policy Number" />
+                            </template>
+
                             <x-input-error class="mt-2" :messages="$errors->get('policy_number')" />
-                        </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
