@@ -57,18 +57,22 @@ class ClientController extends Controller
             $client->update(['photo' => $path]);
         }
 
-        // Process Policies
+        // Process Policies and ensure they are registered in renewals
         if ($request->has('policies')) {
             foreach ($request->input('policies') as $policyData) {
                 if (!empty($policyData['policy_number'])) {
-                    $context->renewals()->create([
-                        'client_id' => $client->id,
-                        'policy_number' => $policyData['policy_number'],
-                        'policy_type' => $policyData['policy_type'] === 'Custom' ? ($policyData['custom_type'] ?? 'Insurance') : $policyData['policy_type'],
-                        'premium_amount' => $policyData['premium_amount'] ?? 0,
-                        'expiry_date' => $policyData['expiry_date'] ?? now()->addYear(),
-                        'status' => 'pending',
-                    ]);
+                    $context->renewals()->updateOrCreate(
+                        [
+                            'client_id' => $client->id,
+                            'policy_number' => $policyData['policy_number']
+                        ],
+                        [
+                            'policy_type' => $policyData['policy_type'] === 'Custom' ? ($policyData['custom_type'] ?? 'Insurance') : $policyData['policy_type'],
+                            'premium_amount' => $policyData['premium_amount'] ?? 0,
+                            'expiry_date' => $policyData['expiry_date'] ?? now()->addYear(),
+                            'status' => 'pending',
+                        ]
+                    );
                 }
             }
         }
@@ -143,13 +147,13 @@ class ClientController extends Controller
                         $submittedPolicyIds[] = $renewal->id;
                     }
                 } else if (!empty($policyData['policy_number'])) {
-                    // Create new
+                    // Create new and ensure user_id is set
                     $newRenewal = $context->renewals()->create([
                         'client_id' => $client->id,
                         'policy_number' => $policyData['policy_number'],
                         'policy_type' => $pType,
-                        'premium_amount' => $policyData['premium_amount'],
-                        'expiry_date' => $policyData['expiry_date'],
+                        'premium_amount' => $policyData['premium_amount'] ?? 0,
+                        'expiry_date' => $policyData['expiry_date'] ?? now()->addYear(),
                         'status' => 'pending',
                     ]);
                     $submittedPolicyIds[] = $newRenewal->id;

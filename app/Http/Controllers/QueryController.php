@@ -127,17 +127,18 @@ class QueryController extends Controller
         if ($query->user_id !== $context->id) abort(403);
         $clients = $context->clients()->get();
 
-        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
-        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->distinct()->get();
+        // Unified Policy Discovery
+        $renewalPolicies = $context->renewals()->select('client_id', 'policy_number', 'policy_type', 'custom_commission_rate')->get();
+        $claimPolicies = $context->claims()->select('client_id', 'policy_number', 'policy_type')->get();
         
         $clientPolicies = $renewalPolicies->concat($claimPolicies)
             ->groupBy('client_id')
             ->mapWithKeys(function ($item, $key) { 
-                return [(string)$key => $item->map(function($p) {
+                return [(string)$key => $item->whereNotNull('policy_number')->map(function($p) {
                     return [
-                        'number' => $p->policy_number,
-                        'type' => $p->policy_type,
-                        'commission' => $p->custom_commission_rate
+                        'number' => (string)$p->policy_number,
+                        'type' => $p->policy_type ?? 'Insurance',
+                        'commission' => $p->custom_commission_rate ?? ''
                     ];
                 })->unique('number')->values()->toArray()]; 
             })->toArray();
