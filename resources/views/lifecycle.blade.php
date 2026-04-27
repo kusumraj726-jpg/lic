@@ -120,8 +120,9 @@
     <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
         <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
             <div class="flex items-center gap-8">
-                <a href="/" class="flex items-center">
+                <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <span class="text-lg font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
                 </a>
                 <a href="/" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-rose-500 transition-colors">
                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>

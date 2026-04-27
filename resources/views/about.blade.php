@@ -142,10 +142,16 @@
     <!-- Navigation -->
     <nav style="position:fixed;width:100%;top:0;left:0;z-index:50;height:4rem;display:flex;align-items:center;background:rgba(255,255,255,0.85);backdrop-filter:blur(40px);border-bottom:1px solid rgba(255,255,255,0.3);box-shadow:0 10px 30px -10px rgba(0,0,0,0.05);">
         <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;height:4rem;">
-            <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
-                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
-            </a>
+            <div style="display:flex; align-items:center; gap:1.5rem;">
+                <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
+                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
+                </a>
+                <a href="/" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-rose-500 transition-colors" style="text-decoration:none;">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
+                    BACK TO HOME
+                </a>
+            </div>
             <div class="m-nav-links" style="display:flex;align-items:center;gap:1.5rem;">
                 <a href="{{ route('services') }}" style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#374151;text-decoration:none;">Services</a>
                 <a href="{{ route('force-login') }}" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Sign In</a>

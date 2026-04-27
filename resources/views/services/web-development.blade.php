@@ -107,10 +107,16 @@
     <!-- Navigation -->
     <nav style="position:fixed;width:100%;top:0;left:0;z-index:50;height:4rem;display:flex;align-items:center;background:rgba(255,255,255,0.85);backdrop-filter:blur(40px);border-bottom:1px solid rgba(255,255,255,0.3);box-shadow:0 10px 30px -10px rgba(0,0,0,0.05);">
         <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;height:4rem;">
-            <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
-                <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
-                <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
-            </a>
+            <div style="display:flex; align-items:center; gap:1.5rem;">
+                <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
+                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
+                </a>
+                <a href="{{ route('services') }}" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-rose-500 transition-colors" style="text-decoration:none;">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
+                    BACK TO SERVICES
+                </a>
+            </div>
             <!-- Desktop links -->
             <div class="m-nav-links hidden xl:flex">
                 <a href="#consultation-section" style="background:#e11d48;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:1rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Consult Now</a>

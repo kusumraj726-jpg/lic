@@ -290,9 +290,10 @@
     <nav class="fixed w-full z-50 glass-nav h-16 flex items-center">
         <div class="max-w-7xl mx-auto w-full px-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <a href="/" class="flex items-center">
+                <a href="/" class="flex items-center gap-3">
                     <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-9 w-auto object-contain"
                         style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <span class="text-lg font-black text-slate-900 tracking-[0.2em]">nexorabyte</span>
                 </a>
                 <a href="/"
                     class="hidden xl:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-rose-600 transition-colors group">
