@@ -1,5 +1,5 @@
 <x-auth-split-layout>
-    <div class="min-h-screen flex" x-data="{ role: 'Staff' }">
+    <div class="min-h-screen flex" x-data="{ role: 'Admin' }">
         
         <!-- Left Side: Splash Hero -->
         <div class="relative hidden lg:flex w-[55%] h-screen overflow-hidden">
@@ -38,13 +38,13 @@
 
                 <div class="space-y-6 max-w-lg">
                     <div class="space-y-2">
-                        <h2 class="text-5xl font-black text-white leading-tight" x-text="role === 'Admin' ? 'Master Control & Oversight' : 'Personalized Financial Intelligence'"></h2>
-                        <p class="text-lg text-white/70 font-medium" x-text="role === 'Admin' ? 'The ultimate command center for managing the entire NexoraByte ecosystem.' : 'Empowering advisors with the data they need to protect what matters most.'"></p>
+                        <h2 class="text-5xl font-black text-white leading-tight" x-text="role === 'Admin' ? 'Nexus Command & Workspace Control' : 'Empowering Professional Workflow'"></h2>
+                        <p class="text-lg text-white/70 font-medium" x-text="role === 'Admin' ? 'The ultimate dashboard for managing your business ecosystem and tenant operations.' : 'Access your personalized workspace and manage your daily operations with precision.'"></p>
                     </div>
                     
                     <div class="flex gap-2">
-                        <div class="h-1 w-12 rounded-full transition-all duration-500" :class="role === 'Staff' ? 'bg-white' : 'bg-white/30'"></div>
                         <div class="h-1 w-12 rounded-full transition-all duration-500" :class="role === 'Admin' ? 'bg-white' : 'bg-white/30'"></div>
+                        <div class="h-1 w-12 rounded-full transition-all duration-500" :class="role === 'Staff' ? 'bg-white' : 'bg-white/30'"></div>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest uppercase">NexoraByte</span>
                     </div>
                     <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Welcome Back, <span x-text="role" class="text-indigo-600"></span>!</h1>
-                    <p class="text-sm text-slate-400 font-bold uppercase tracking-[0.2em]">Enter credentials to access your portal</p>
+                    <p class="text-sm text-slate-400 font-bold uppercase tracking-[0.2em]">Secure Authentication Access</p>
                 </div>
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -91,7 +91,7 @@
                             <div class="flex justify-between items-center ml-1">
                                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Secure Password</label>
                                 @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-[10px] font-black text-slate-300 hover:text-indigo-600 uppercase tracking-widest transition-colors">Forgot?</a>
+                                    <a href="{{ route('password.request') }}" class="text-[10px] font-black text-slate-300 hover:text-indigo-600 uppercase tracking-widest transition-colors">Recovery?</a>
                                 @endif
                             </div>
                             <div class="relative group">
@@ -119,25 +119,25 @@
 
                 <!-- Role Selector -->
                 <div class="space-y-4 pt-4 border-t border-slate-50 dark:border-slate-800">
-                    <p class="text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">Select Access Level</p>
+                    <p class="text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">Select Access Portal</p>
                     <div class="grid grid-cols-2 gap-3">
                         <button @click="role = 'Admin'" type="button" 
                             class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border"
                             :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-white dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-50'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                            Master Admin
+                            Admin Portal
                         </button>
                         <button @click="role = 'Staff'" type="button" 
                             class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border"
                             :class="role === 'Staff' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-white dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-50'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                            Advisor / Staff
+                            Staff Portal
                         </button>
                     </div>
                 </div>
 
                 <div class="text-center">
-                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">NexoraByte Enterprise Intelligence &bull; 2026</p>
+                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">NexoraByte Intelligence Suite &bull; 2026</p>
                 </div>
 
             </div>
