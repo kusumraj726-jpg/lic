@@ -1,4 +1,6 @@
+<!-- Final Build Trigger: 2026-04-27 22:38 -->
 <!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ 
     darkMode: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) 
 }" :class="{ 'dark': darkMode }">
