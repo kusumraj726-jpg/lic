@@ -168,7 +168,7 @@
                                         <div class="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-0.5 uppercase">{{ $query->created_at->diffForHumans() }}</div>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
+                                        <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                             <button 
                                                 data-query='{{ json_encode([
                                                     "id" => $query->id,
@@ -198,6 +198,11 @@
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'edit')" 
                                                 class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1.5 transition-transform hover:scale-105">Edit</button>
+                                            <span class="text-slate-200 dark:text-slate-700">|</span>
+                                            <form action="{{ route('queries.destroy', $query) }}" method="POST" class="inline">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 flex items-center gap-1.5 transition-transform hover:scale-105" onclick="return confirm('Delete this query?')">Delete</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

@@ -45,12 +45,12 @@
                             <div class="text-[11px] font-black text-rose-600 dark:text-rose-400 tracking-tight">{{ $item->deleted_at->format('Y-m-d H:i A') }}</div>
                         </td>
                         <td class="px-8 py-6 text-right">
-                            <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
+                            <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                 <form action="{{ route('trash.restore', [$type, $item->id]) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Restore</button>
                                 </form>
-                                <span class="text-slate-200 dark:text-slate-800 text-xs">|</span>
+                                <span class="text-slate-200 dark:text-slate-800">|</span>
                                 <form action="{{ route('trash.force-delete', [$type, $item->id]) }}" method="POST" onsubmit="return confirm('WARNING: This will permanently erase this record. Continue?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 transition-colors">Purge</button>

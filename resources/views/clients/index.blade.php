@@ -207,7 +207,7 @@
                                 ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
                                                                         class="p-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all"
                                                                         title="View">
-                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -234,7 +234,7 @@
                                 ], JSON_HEX_APOS | JSON_HEX_QUOT) }})'
                                                                         class="p-2 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 rounded-xl transition-all"
                                                                         title="Edit">
-                                                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                                         </svg>
@@ -245,7 +245,7 @@
                                                                         <button type="submit"
                                                                             class="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400 rounded-xl transition-all"
                                                                             title="Delete" onclick="return confirm('Archive this client?')">
-                                                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                                                 stroke="currentColor">
                                                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                                                     stroke-width="2"

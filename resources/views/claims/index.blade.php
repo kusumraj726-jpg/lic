@@ -150,7 +150,7 @@
                                         </span>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-[9px] font-black uppercase tracking-widest">
+                                        <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                             <button 
                                                 data-claim='{{ json_encode([
                                                     "id" => $claim->id,

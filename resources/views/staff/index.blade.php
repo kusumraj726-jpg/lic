@@ -76,9 +76,9 @@
                                         </div>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
+                                        <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                             <a href="{{ route('staff.edit', $member) }}" class="text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Edit</a>
-                                            <span class="text-slate-200 dark:text-slate-800 text-xs">|</span>
+                                            <span class="text-slate-200 dark:text-slate-800">|</span>
                                             <form action="{{ route('staff.destroy', $member) }}" method="POST" class="inline">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 transition-colors" onclick="return confirm('Remove team member?')">Remove</button>

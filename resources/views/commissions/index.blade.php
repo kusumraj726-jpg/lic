@@ -159,7 +159,7 @@
                                                         "expected_amount" => $comm->expected_amount
                                                     ]) }}'
                                                     @click="openPayout(JSON.parse($el.dataset.comm))"
-                                                    class="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-900 transition-all">
+                                                    class="text-xs font-black uppercase tracking-widest text-emerald-600 hover:text-emerald-900 transition-all">
                                                     Mark Paid
                                                 </button>
                                             @endif
@@ -176,13 +176,13 @@
                                                     "notes" => $comm->notes
                                                 ]) }}'
                                                 @click="openEdit(JSON.parse($el.dataset.comm))"
-                                                class="text-[10px] font-black uppercase tracking-widest text-violet-600 hover:text-violet-900 transition-all">
+                                                class="text-xs font-black uppercase tracking-widest text-violet-600 hover:text-violet-900 transition-all">
                                                 Edit
                                             </button>
                                             <form action="{{ route('commissions.destroy', $comm) }}" method="POST" class="inline" onsubmit="return confirm('Archive this financial record?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-900 transition-all">
+                                                <button type="submit" class="text-xs font-black uppercase tracking-widest text-rose-600 hover:text-rose-900 transition-all">
                                                     Delete
                                                 </button>
                                             </form>

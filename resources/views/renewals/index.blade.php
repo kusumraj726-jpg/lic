@@ -170,7 +170,7 @@
                                         </div>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        <div class="flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-widest">
+                                        <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                             <button 
                                                 data-renewal='{{ json_encode([
                                                     "id" => $renewal->id,
@@ -184,7 +184,7 @@
                                                 ]) }}'
                                                 @click="openRenewal(JSON.parse($el.dataset.renewal), 'view')" 
                                                 class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors">View</button>
-                                            <span class="text-slate-200 dark:text-slate-800 text-xs">|</span>
+                                            <span class="text-slate-200 dark:text-slate-800">|</span>
                                             <button 
                                                 data-renewal='{{ json_encode([
                                                     "id" => $renewal->id,
@@ -198,6 +198,11 @@
                                                 ]) }}'
                                                 @click="openRenewal(JSON.parse($el.dataset.renewal), 'edit')" 
                                                 class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 transition-colors">Edit</button>
+                                            <span class="text-slate-200 dark:text-slate-800">|</span>
+                                            <form action="{{ route('renewals.destroy', $renewal) }}" method="POST" class="inline">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-rose-300 transition-colors" onclick="return confirm('Delete this renewal?')">Delete</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
