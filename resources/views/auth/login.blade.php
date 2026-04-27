@@ -1,5 +1,5 @@
 <x-auth-split-layout>
-    <div class="w-full max-w-6xl lg:min-h-[700px] bg-white dark:bg-slate-900 rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 transition-all duration-500 my-8" x-data="{ role: 'Admin' }">
+    <div class="w-full max-w-6xl lg:min-h-[700px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[3rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500 my-8" x-data="{ role: 'Admin' }">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[55%] min-h-[400px] lg:min-h-full overflow-hidden">
@@ -51,7 +51,7 @@
         </div>
 
         <!-- Right Side: Login Form -->
-        <div class="flex-1 bg-white dark:bg-slate-900 flex items-center justify-center p-8 lg:p-12 transition-colors duration-500">
+        <div class="flex-1 flex items-center justify-center p-8 lg:p-12 transition-colors duration-500">
             <div class="w-full max-w-md space-y-8 lg:space-y-10">
                 
                 <!-- Header -->
@@ -80,7 +80,7 @@
                                     </svg>
                                 </div>
                                 <input type="email" name="email" :value="old('email')" required autofocus
-                                    class="w-full pl-12 pr-4 py-3 lg:py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm"
+                                    class="w-full pl-12 pr-4 py-3 lg:py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                     placeholder="name@nexorabyte.in">
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -101,7 +101,7 @@
                                     </svg>
                                 </div>
                                 <input :type="show ? 'text' : 'password'" name="password" required
-                                    class="w-full pl-12 pr-12 py-3 lg:py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm"
+                                    class="w-full pl-12 pr-12 py-3 lg:py-4 bg-slate-50 dark:bg-slate-800 border-none rounded-2xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                     placeholder="••••••••">
                                 <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-300 hover:text-slate-500 transition-colors">
                                     <svg x-show="!show" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
@@ -123,13 +123,13 @@
                     <div class="grid grid-cols-2 gap-3">
                         <button @click="role = 'Admin'" type="button" 
                             class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border"
-                            :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-white dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-50'">
+                            :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-100'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                             Admin
                         </button>
                         <button @click="role = 'Staff'" type="button" 
                             class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border"
-                            :class="role === 'Staff' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-white dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-50'">
+                            :class="role === 'Staff' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-100'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                             Staff
                         </button>
