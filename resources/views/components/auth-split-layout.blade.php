@@ -14,8 +14,19 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .login-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+        }
+        .dark .login-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+        }
+    </style>
 </head>
-<body class="antialiased font-['Inter'] overflow-hidden">
-    {{ $slot }}
+<body class="antialiased font-['Inter'] overflow-hidden login-bg">
+    <div class="min-h-screen flex items-center justify-center p-4 lg:p-12">
+        {{ $slot }}
+    </div>
 </body>
 </html>

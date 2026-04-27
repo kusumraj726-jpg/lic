@@ -1,8 +1,8 @@
 <x-auth-split-layout>
-    <div class="min-h-screen flex" x-data="{ role: 'Admin' }">
+    <div class="w-full max-w-6xl h-[800px] bg-white dark:bg-slate-900 rounded-[2.5rem] flex overflow-hidden shadow-2xl shadow-black/30 transition-all duration-500" x-data="{ role: 'Admin' }">
         
         <!-- Left Side: Splash Hero -->
-        <div class="relative hidden lg:flex w-[55%] h-screen overflow-hidden">
+        <div class="relative hidden lg:flex w-[55%] h-full overflow-hidden">
             <!-- Background Images (Admin) -->
             <div x-show="role === 'Admin'" 
                  x-transition:enter="transition ease-out duration-700" 
@@ -51,7 +51,7 @@
         </div>
 
         <!-- Right Side: Login Form -->
-        <div class="flex-1 bg-white dark:bg-slate-900 flex items-center justify-center p-8 transition-colors duration-500">
+        <div class="flex-1 bg-white dark:bg-slate-900 flex items-center justify-center p-8 lg:p-12 transition-colors duration-500">
             <div class="w-full max-w-md space-y-10">
                 
                 <!-- Header -->
@@ -60,7 +60,7 @@
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest uppercase">NexoraByte</span>
                     </div>
                     <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Welcome Back, <span x-text="role" class="text-indigo-600"></span>!</h1>
-                    <p class="text-sm text-slate-400 font-bold uppercase tracking-[0.2em]">Secure Authentication Access</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Secure Authentication Access</p>
                 </div>
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
