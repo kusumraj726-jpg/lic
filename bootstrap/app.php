@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             //
         ]);
+        $middleware->validateCsrfTokens(except: [
+            '/get-started/checkout',
+            '/get-started/verify',
+        ]);
         $middleware->alias([
             'checkModule'  => \App\Http\Middleware\CheckModuleAccess::class,
             'ensureActive' => \App\Http\Middleware\EnsureUserIsActive::class,

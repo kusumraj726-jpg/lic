@@ -3038,7 +3038,10 @@
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
-                            body: JSON.stringify({ plan: plan })
+                            body: JSON.stringify({ 
+                                plan: plan,
+                                _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            })
                         });
 
                         const data = await response.json();
