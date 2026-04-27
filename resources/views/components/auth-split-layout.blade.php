@@ -18,6 +18,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
         .login-bg {
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
             background-size: 400% 400%;
@@ -38,7 +49,7 @@
         }
     </style>
 </head>
-<body class="antialiased font-['Inter'] overflow-x-hidden overflow-y-auto login-bg min-h-screen transition-colors duration-500">
+<body class="antialiased font-['Inter'] overflow-hidden no-scrollbar login-bg min-h-screen transition-colors duration-500">
     <!-- Theme Toggle -->
     <div class="fixed top-8 right-8 z-[100]">
         <button @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')" 
@@ -57,7 +68,7 @@
     </div>
 
     <div class="fixed inset-0 mesh-pattern pointer-events-none opacity-30"></div>
-    <div class="min-h-screen flex items-center justify-center p-4 lg:p-12 relative z-10">
+    <div class="min-h-screen flex items-center justify-center p-4 lg:p-8 relative z-10">
         {{ $slot }}
     </div>
 </body>
