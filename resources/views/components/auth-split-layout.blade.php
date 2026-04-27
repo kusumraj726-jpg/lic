@@ -17,15 +17,21 @@
 
     <style>
         .login-bg {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(219, 39, 119, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(192, 38, 211, 0.1) 0px, transparent 50%);
         }
-        .dark .login-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+        .mesh-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
     </style>
 </head>
-<body class="antialiased font-['Inter'] overflow-hidden login-bg">
-    <div class="min-h-screen flex items-center justify-center p-4 lg:p-12">
+<body class="antialiased font-['Inter'] overflow-x-hidden overflow-y-auto login-bg min-h-screen">
+    <div class="fixed inset-0 mesh-pattern pointer-events-none opacity-50"></div>
+    <div class="min-h-screen flex items-center justify-center p-4 lg:p-12 relative z-10">
         {{ $slot }}
     </div>
 </body>
