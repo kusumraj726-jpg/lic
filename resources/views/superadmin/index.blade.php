@@ -72,7 +72,7 @@
         <div class="bg-white dark:bg-slate-900/50 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
             <div class="px-8 py-6 border-b border-slate-50 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
                 <h3 class="font-black text-slate-900 uppercase tracking-widest text-xs dark:text-slate-100">Platform Tenants</h3>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $tenants->where('role', 'admin')->count() }} Registered Accounts</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $tenants->count() }} Registered Accounts</span>
             </div>
 
             <div class="overflow-x-auto">
@@ -81,22 +81,45 @@
                         <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] bg-white dark:bg-slate-900/50 border-b border-slate-50 dark:border-slate-800">
                             <th class="px-8 py-5">Company / Tenant</th>
                             <th class="px-8 py-5">Plan</th>
+                            <th class="px-8 py-5">Usage</th>
                             <th class="px-8 py-5">Status</th>
-                            <th class="px-8 py-5">Expiry Date</th>
                             <th class="px-8 py-5">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                        @forelse($tenants->where('role', 'admin') as $tenant)
+                        @forelse($tenants as $tenant)
                             <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors group">
                                 <td class="px-8 py-6">
-                                    <p class="text-sm font-black text-slate-900 uppercase truncate max-w-[200px] dark:text-slate-100">{{ $tenant->company_name ?? '—' }}</p>
-                                    <p class="text-[10px] font-medium text-slate-400 truncate max-w-[200px]">{{ $tenant->email }}</p>
+                                    <div class="flex items-center gap-4">
+                                        <div class="h-10 w-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 font-black text-sm uppercase">
+                                            {{ substr($tenant->company_name ?? $tenant->name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-black text-slate-900 uppercase truncate max-w-[200px] dark:text-slate-100">{{ $tenant->company_name ?? '—' }}</p>
+                                            <p class="text-[10px] font-medium text-slate-400 truncate max-w-[200px]">{{ $tenant->email }}</p>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-8 py-6">
                                     <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 dark:text-slate-300 dark:bg-slate-800">
                                         {{ $tenant->subscription_plan ?? 'none' }}
                                     </span>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="text-center">
+                                            <p class="text-[10px] font-black text-slate-900 dark:text-slate-100">{{ $tenant->stats['clients'] }}</p>
+                                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Clients</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-[10px] font-black text-slate-900 dark:text-slate-100">{{ $tenant->stats['staff'] }}</p>
+                                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Staff</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-[10px] font-black text-slate-900 dark:text-slate-100">{{ $tenant->stats['queries'] }}</p>
+                                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Queries</p>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($tenant->hasActiveSubscription())
@@ -111,32 +134,21 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-8 py-6 whitespace-nowrap">
-                                    @if($tenant->subscription_ends_at)
-                                        @php
-                                            try { $endsAt = \Illuminate\Support\Carbon::parse($tenant->subscription_ends_at); } catch(\Exception $e) { $endsAt = null; }
-                                        @endphp
-                                        @if($endsAt)
-                                            <p class="text-[11px] font-bold text-slate-900 dark:text-slate-100">{{ $endsAt->format('d M, Y') }}</p>
-                                            <p class="text-[9px] font-medium {{ $endsAt->isPast() ? 'text-rose-500' : 'text-slate-400' }}">
-                                                {{ $endsAt->diffForHumans() }}
-                                            </p>
-                                        @else
-                                            <p class="text-[11px] font-bold text-slate-400">{{ $tenant->subscription_ends_at }}</p>
-                                        @endif
-                                    @else
-                                        <p class="text-[11px] font-bold text-slate-300">No Expiry Set</p>
-                                    @endif
-                                </td>
                                 <td class="px-8 py-6">
-                                    <form method="POST" action="{{ route('superadmin.toggle', $tenant) }}">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" 
-                                            class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all {{ $tenant->hasActiveSubscription() ? 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40' : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/40' }}">
-                                            {{ $tenant->hasActiveSubscription() ? 'Suspend' : 'Activate' }}
-                                        </button>
-                                    </form>
+                                    <div class="flex items-center gap-2">
+                                        <form method="POST" action="{{ route('superadmin.toggle', $tenant) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" 
+                                                class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all {{ $tenant->hasActiveSubscription() ? 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400' : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' }}">
+                                                {{ $tenant->hasActiveSubscription() ? 'Suspend' : 'Activate' }}
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('superadmin.impersonate', $tenant) }}" 
+                                           class="px-4 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-[9px] font-black uppercase tracking-widest hover:bg-indigo-100 transition-all">
+                                            Access
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

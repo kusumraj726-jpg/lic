@@ -9,6 +9,7 @@ use App\Http\Controllers\QueryController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\RenewalController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SuperAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -93,9 +94,21 @@ Route::get('/run-migrations-nexorabyte-99', function () {
 });
 
 Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-control')->group(function () {
-    Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
-    Route::get('/inquiries', [\App\Http\Controllers\SuperAdminController::class, 'inquiries'])->name('superadmin.inquiries');
-    Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
+    Route::get('/', [SuperAdminController::class, 'index'])->name('superadmin.index');
+    Route::get('/inquiries', [SuperAdminController::class, 'inquiries'])->name('superadmin.inquiries');
+    Route::patch('/inquiries/{inquiry}', [SuperAdminController::class, 'inquiryUpdate'])->name('superadmin.inquiries.update');
+    Route::delete('/inquiries/{inquiry}', [SuperAdminController::class, 'inquiryDestroy'])->name('superadmin.inquiries.destroy');
+    
+    // Trash
+    Route::get('/trash', [SuperAdminController::class, 'trash'])->name('superadmin.trash');
+    Route::post('/trash/inquiry/{id}/restore', [SuperAdminController::class, 'inquiryRestore'])->name('superadmin.trash.restore');
+    Route::delete('/trash/inquiry/{id}/force', [SuperAdminController::class, 'inquiryForceDelete'])->name('superadmin.trash.force');
+
+    // Impersonation
+    Route::get('/impersonate/{user}', [SuperAdminController::class, 'impersonate'])->name('superadmin.impersonate');
+    Route::get('/stop-impersonating', [SuperAdminController::class, 'stopImpersonating'])->name('superadmin.stop-impersonation');
+
+    Route::patch('/tenant/{user}/toggle', [SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
 
 
