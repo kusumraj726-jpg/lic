@@ -139,8 +139,6 @@
         @endif
 
         @php
-            // We check for actual superadmin role here to show Master sections
-            // Even if impersonating, if the real user in session is superadmin, show it
             $actualUser = $isImpersonating ? User::find(session('impersonated_by')) : $user;
         @endphp
 
@@ -148,23 +146,23 @@
             <div class="mt-6 pt-6 border-t border-gray-100/50 space-y-1">
                 <p class="px-6 mb-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Master Operations</p>
                 <a href="{{ route('superadmin.index') }}"
-                    class="nav-item {{ request()->routeIs('superadmin.index') ? 'active' : '' }} bg-indigo-50/50 text-indigo-700 font-bold border border-indigo-100/50 hover:bg-indigo-100 shadow-sm transition-all">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-indigo-600">
+                    class="nav-item {{ request()->routeIs('superadmin.index') ? 'active' : '' }} bg-indigo-50/50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 font-bold border border-indigo-100/50 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 shadow-sm transition-all">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-indigo-600 dark:text-indigo-400">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     Master Control
                 </a>
                 <a href="{{ route('superadmin.inquiries') }}"
-                    class="nav-item {{ request()->routeIs('superadmin.inquiries') ? 'active' : '' }} bg-rose-50/50 text-rose-700 font-bold border border-rose-100/50 hover:bg-rose-100 shadow-sm transition-all mt-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-rose-600">
+                    class="nav-item {{ request()->routeIs('superadmin.inquiries') ? 'active' : '' }} bg-rose-50/50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 font-bold border border-rose-100/50 dark:border-rose-500/20 hover:bg-rose-100 dark:hover:bg-rose-500/20 shadow-sm transition-all mt-1">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-rose-600 dark:text-rose-400">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                     </svg>
                     Studio Inquiries
                 </a>
                 <a href="{{ route('superadmin.trash') }}"
-                    class="nav-item {{ request()->routeIs('superadmin.trash') ? 'active' : '' }} bg-slate-100/50 text-slate-700 font-bold border border-slate-200/50 hover:bg-slate-200 shadow-sm transition-all mt-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-slate-600">
+                    class="nav-item {{ request()->routeIs('superadmin.trash') ? 'active' : '' }} bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 font-bold border border-slate-200/50 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-sm transition-all mt-1">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-slate-600 dark:text-slate-400">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                     Super Trash
