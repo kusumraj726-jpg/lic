@@ -94,6 +94,7 @@ Route::get('/run-migrations-nexorabyte-99', function () {
 
 Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-control')->group(function () {
     Route::get('/', [\App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin.index');
+    Route::get('/inquiries', [\App\Http\Controllers\SuperAdminController::class, 'inquiries'])->name('superadmin.inquiries');
     Route::patch('/tenant/{user}/toggle', [\App\Http\Controllers\SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
 
