@@ -1,5 +1,5 @@
 <!-- Build Trigger: 2026-04-27 22:30 -->
-<x-auth-split-layout>
+<x-auth-split-layout title="Register">
     <div class="w-full max-w-5xl lg:min-h-[620px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500 my-8">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
