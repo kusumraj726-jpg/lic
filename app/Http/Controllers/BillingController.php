@@ -63,7 +63,7 @@ class BillingController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('GuestCheckout Razorpay Error: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error generating payment.'], 500);
+            return response()->json(['success' => false, 'message' => 'Error generating payment: ' . $e->getMessage()], 500);
         }
     }
 
@@ -141,12 +141,12 @@ class BillingController extends Controller
                 'success'  => true,
                 'order_id' => $razorpayOrder['id'],
                 'amount'   => $amountInPaise,
-                'key'      => env('RAZORPAY_KEY'),
+                'key'      => config('services.razorpay.key'),
                 'plan'     => $request->plan,
             ]);
         } catch (\Exception $e) {
             Log::error('Razorpay Order Error: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error generating payment.'], 500);
+            return response()->json(['success' => false, 'message' => 'Error generating payment: ' . $e->getMessage()], 500);
         }
     }
 
@@ -163,7 +163,7 @@ class BillingController extends Controller
         ]);
 
         try {
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
             $api->utility->verifyPaymentSignature([
                 'razorpay_order_id'   => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
