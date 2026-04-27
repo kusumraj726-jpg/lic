@@ -14,10 +14,10 @@ class SuperAdminController extends Controller
     {
         // Fetch tenants with their usage stats (simplified)
         $tenants = User::where('role', 'admin')->get()->map(function($tenant) {
-            // In a real app, you'd use a more efficient query with counts
+            // Correct table names and foreign keys
             $tenant->stats = [
                 'clients' => \DB::table('clients')->where('user_id', $tenant->id)->count(),
-                'staff'   => \DB::table('users')->where('advisor_id', $tenant->id)->count(),
+                'staff'   => \DB::table('staff')->where('advisor_id', $tenant->id)->count(),
                 'queries' => \DB::table('queries')->where('user_id', $tenant->id)->count(),
             ];
             return $tenant;
