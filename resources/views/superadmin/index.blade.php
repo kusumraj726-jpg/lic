@@ -28,18 +28,18 @@
                 <div class="absolute top-0 right-0 p-4 opacity-20">
                     <svg class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 </div>
-                <p class="text-[10px] font-black text-indigo-200 uppercase tracking-widest mb-1">Active</p>
+                <p class="text-[10px] font-black text-indigo-200 uppercase tracking-widest mb-1">Active Users</p>
                 <p class="text-3xl font-black text-white">{{ $stats['active'] ?? 0 }}</p>
             </div>
 
             <div class="bg-white dark:bg-slate-900/50 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden group">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Expired / Inactive</p>
-                <p class="text-3xl font-black text-rose-600">{{ $stats['expired'] ?? 0 }}</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Actual Revenue</p>
+                <p class="text-3xl font-black text-emerald-600">₹{{ number_format($stats['total_revenue'] ?? 0) }}</p>
             </div>
 
             <div class="bg-white dark:bg-slate-900/50 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden group">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Est. Total Revenue</p>
-                <p class="text-3xl font-black text-slate-900 dark:text-slate-100">₹{{ number_format($stats['total_revenue'] ?? 0) }}</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Actual Expenses</p>
+                <p class="text-3xl font-black text-rose-600">₹{{ number_format($stats['total_expenses'] ?? 0) }}</p>
             </div>
         </div>
 
@@ -47,24 +47,24 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Monthly MRR</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Est. Monthly MRR</p>
                     <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['monthly_mrr'] ?? 0) }}</p>
                 </div>
                 <span class="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-[9px] font-black px-3 py-1 rounded-full uppercase">1,999/mo</span>
             </div>
             <div class="bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Yearly ARR</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Est. Yearly ARR</p>
                     <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['yearly_arr'] ?? 0) }}</p>
                 </div>
                 <span class="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-[9px] font-black px-3 py-1 rounded-full uppercase">14,999/yr</span>
             </div>
             <div class="bg-white dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Trial Revenue</p>
-                    <p class="text-xl font-black text-slate-900 mt-1 dark:text-slate-100">₹{{ number_format($stats['trial_revenue'] ?? 0) }}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Net Profit/Loss</p>
+                    <p class="text-xl font-black {{ ($stats['total_revenue'] - $stats['total_expenses']) >= 0 ? 'text-emerald-600' : 'text-rose-600' }} mt-1">₹{{ number_format($stats['total_revenue'] - $stats['total_expenses']) }}</p>
                 </div>
-                <span class="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[9px] font-black px-3 py-1 rounded-full uppercase">FREE TRIAL</span>
+                <span class="text-[9px] font-black uppercase tracking-widest text-slate-400">Total Profit</span>
             </div>
         </div>
 

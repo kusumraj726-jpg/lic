@@ -139,7 +139,7 @@
         @endif
 
         @php
-            $actualUser = $isImpersonating ? User::find(session('impersonated_by')) : $user;
+            $actualUser = $isImpersonating ? \App\Models\User::find(session('impersonated_by')) : $user;
         @endphp
 
         @if($actualUser && $actualUser->role === 'superadmin')
@@ -152,6 +152,20 @@
                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     Master Control
+                </a>
+                <a href="{{ route('superadmin.transactions') }}"
+                    class="nav-item {{ request()->routeIs('superadmin.transactions') ? 'active' : '' }} bg-emerald-50/50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-100/50 dark:border-emerald-500/20 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 shadow-sm transition-all mt-1">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-emerald-600 dark:text-emerald-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Transaction Hub
+                </a>
+                <a href="{{ route('superadmin.expenses') }}"
+                    class="nav-item {{ request()->routeIs('superadmin.expenses') ? 'active' : '' }} bg-amber-50/50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 font-bold border border-amber-100/50 dark:border-amber-500/20 hover:bg-amber-100 dark:hover:bg-amber-500/20 shadow-sm transition-all mt-1">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-amber-600 dark:text-amber-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Platform Expenses
                 </a>
                 <a href="{{ route('superadmin.inquiries') }}"
                     class="nav-item {{ request()->routeIs('superadmin.inquiries') ? 'active' : '' }} bg-rose-50/50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 font-bold border border-rose-100/50 dark:border-rose-500/20 hover:bg-rose-100 dark:hover:bg-rose-500/20 shadow-sm transition-all mt-1">

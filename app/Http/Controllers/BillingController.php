@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Log;
+use App\Models\Payment;
 
 class BillingController extends Controller
 {
@@ -17,7 +18,6 @@ class BillingController extends Controller
      */
     public function guestIndex()
     {
-        // If payment already done in this session, redirect to register
         if (session('nexorabyte_payment_done')) {
             return redirect()->route('register')->with('status', 'Payment verified! Please create your account below.');
         }
@@ -25,9 +25,6 @@ class BillingController extends Controller
         return view('billing.get_started');
     }
 
-    /**
-     * Create a Razorpay order for a guest user
-     */
     public function guestCheckout(Request $request)
     {
         $request->validate(['plan' => 'required|in:monthly,yearly,trial']);
@@ -67,9 +64,6 @@ class BillingController extends Controller
         }
     }
 
-    /**
-     * Verify guest payment + store token in session, redirect to register
-     */
     public function guestVerify(Request $request)
     {
         $request->validate([
@@ -87,7 +81,18 @@ class BillingController extends Controller
                 'razorpay_signature'  => $request->razorpay_signature,
             ]);
 
-            // Store payment info in session — one-time use for registration
+            $amounts = ['monthly' => 1999, 'yearly' => 14999];
+            $amount = $amounts[$request->plan] ?? 0;
+
+            // Log the payment
+            Payment::create([
+                'razorpay_order_id'   => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'amount'              => $amount,
+                'plan'                => $request->plan,
+                'status'              => 'success',
+            ]);
+
             session([
                 'nexorabyte_payment_done'       => true,
                 'nexorabyte_payment_plan'       => $request->plan,
@@ -107,9 +112,6 @@ class BillingController extends Controller
     // AUTH FLOW: Renewal for existing logged-in users
     // -------------------------------------------------------
 
-    /**
-     * Show renewal billing page for logged-in users
-     */
     public function index()
     {
         if (auth()->user()->hasActiveSubscription()) {
@@ -118,9 +120,6 @@ class BillingController extends Controller
         return view('billing.paywall');
     }
 
-    /**
-     * Create Razorpay order for logged-in user renewal
-     */
     public function checkout(Request $request)
     {
         $request->validate(['plan' => 'required|in:monthly,yearly']);
@@ -150,9 +149,6 @@ class BillingController extends Controller
         }
     }
 
-    /**
-     * Verify renewal payment and activate subscription
-     */
     public function verify(Request $request)
     {
         $request->validate([
@@ -171,6 +167,19 @@ class BillingController extends Controller
             ]);
 
             $user = auth()->user();
+            $amounts = ['monthly' => 1999, 'yearly' => 14999];
+            $amount = $amounts[$request->plan] ?? 0;
+
+            // Log the payment
+            Payment::create([
+                'user_id'             => $user->id,
+                'razorpay_order_id'   => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'amount'              => $amount,
+                'plan'                => $request->plan,
+                'status'              => 'success',
+            ]);
+
             $daysToAdd = match($request->plan) {
                 'trial'   => 30,
                 'yearly'  => 365,

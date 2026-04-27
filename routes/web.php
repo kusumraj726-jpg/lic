@@ -15,13 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Cache clear utility (safe - only clears views/cache, no data loss)
 Route::get('/artisan/clear-views', function () {
     \Illuminate\Support\Facades\Artisan::call('view:clear');
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
     return 'Views and cache cleared successfully at ' . now();
 })->middleware('auth');
-
 
 Route::get('/services', function () {
     return view('services');
@@ -35,7 +33,6 @@ Route::get('/get-started', function () {
     return view('auth.service-selection');
 })->name('get-started');
 
-// Payment-First flow for Guests (Insurance ERP)
 Route::post('/get-started/checkout', [\App\Http\Controllers\BillingController::class, 'guestCheckout'])->middleware('noCache')->name('get.started.checkout');
 Route::post('/get-started/verify', [\App\Http\Controllers\BillingController::class, 'guestVerify'])->middleware('noCache')->name('get.started.verify');
 
@@ -55,7 +52,6 @@ Route::post('/consultation', [\App\Http\Controllers\StudioInquiryController::cla
 
 Route::get('/demo-erp', [\App\Http\Controllers\DummyController::class, 'index'])->name('demo.erp');
 
-// Force Login flow: Ensures users are always asked for credentials from the landing page
 Route::get('/force-login', function () {
     \Illuminate\Support\Facades\Auth::logout();
     request()->session()->invalidate();
@@ -63,16 +59,9 @@ Route::get('/force-login', function () {
     return redirect()->route('login');
 })->name('force-login');
 
-// -----------------------------------------------
-// SUPER ADMIN CONTROL PANEL (Hidden — Only you)
-// URL: /nexorabyte-control
-// -----------------------------------------------
 Route::get('/run-migrations-nexorabyte-99', function () {
     try {
-        // 1. Run migrations
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-
-        // 2. Ensure SuperAdmin account exists
         $user = \App\Models\User::updateOrCreate(
             ['email' => 'mcauxstain@gmail.com'],
             [
@@ -86,7 +75,6 @@ Route::get('/run-migrations-nexorabyte-99', function () {
                 'subscription_ends_at' => now()->addYears(10),
             ]
         );
-
         return "Migration & Account Setup Success! You can now login as: " . $user->email;
     } catch (\Exception $e) {
         return "Setup Error: " . $e->getMessage();
@@ -95,10 +83,18 @@ Route::get('/run-migrations-nexorabyte-99', function () {
 
 Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-control')->group(function () {
     Route::get('/', [SuperAdminController::class, 'index'])->name('superadmin.index');
+    
+    // Inquiries
     Route::get('/inquiries', [SuperAdminController::class, 'inquiries'])->name('superadmin.inquiries');
     Route::patch('/inquiries/{inquiry}', [SuperAdminController::class, 'inquiryUpdate'])->name('superadmin.inquiries.update');
     Route::delete('/inquiries/{inquiry}', [SuperAdminController::class, 'inquiryDestroy'])->name('superadmin.inquiries.destroy');
     
+    // Financial Hub
+    Route::get('/transactions', [SuperAdminController::class, 'transactions'])->name('superadmin.transactions');
+    Route::get('/expenses', [SuperAdminController::class, 'expenses'])->name('superadmin.expenses');
+    Route::post('/expenses', [SuperAdminController::class, 'storeExpense'])->name('superadmin.expenses.store');
+    Route::delete('/expenses/{expense}', [SuperAdminController::class, 'deleteExpense'])->name('superadmin.expenses.delete');
+
     // Trash
     Route::get('/trash', [SuperAdminController::class, 'trash'])->name('superadmin.trash');
     Route::post('/trash/inquiry/{id}/restore', [SuperAdminController::class, 'inquiryRestore'])->name('superadmin.trash.restore');
@@ -111,8 +107,6 @@ Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-contro
     Route::patch('/tenant/{user}/toggle', [SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
 
-
-// Billing renewal for existing logged-in users
 Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(function () {
     Route::get('/billing', [\App\Http\Controllers\BillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/checkout', [\App\Http\Controllers\BillingController::class, 'checkout'])->name('billing.checkout');
@@ -130,25 +124,22 @@ Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(funct
     Route::resource('queries', QueryController::class)->middleware('checkModule:access_queries');
     Route::resource('claims', ClaimController::class)->middleware('checkModule:access_claims');
     Route::resource('renewals', \App\Http\Controllers\RenewalController::class)->middleware('checkModule:access_renewals');
-    Route::resource('commissions', \App\Http\Controllers\CommissionController::class)->middleware('checkModule:access_renewals'); // Linked to renewal access
+    Route::resource('commissions', \App\Http\Controllers\CommissionController::class)->middleware('checkModule:access_renewals');
     Route::get('/commissions-export', [\App\Http\Controllers\CommissionController::class, 'export'])->name('commissions.export');
     Route::post('/commissions/{commission}/received', [\App\Http\Controllers\CommissionController::class, 'markAsReceived'])->name('commissions.received');
     Route::resource('staff', \App\Http\Controllers\StaffController::class);
 
-    // Trash Bin Routes
     Route::get('/trash', [\App\Http\Controllers\TrashController::class, 'index'])->name('trash.index');
     Route::post('/trash/{type}/{id}/restore', [\App\Http\Controllers\TrashController::class, 'restore'])->name('trash.restore');
     Route::delete('/trash/{type}/{id}/force', [\App\Http\Controllers\TrashController::class, 'forceDelete'])->name('trash.force-delete');
     Route::get('/api/search', [SearchController::class, 'search'])->name('api.search');
     Route::post('/dashboard/update-template', [DashboardController::class, 'updateTemplate'])->name('dashboard.update-template');
 
-    // Settings & Intelligence Hub
     Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/branding', [\App\Http\Controllers\SettingsController::class, 'updateBranding'])->name('settings.branding.update');
     Route::post('/settings/commissions', [\App\Http\Controllers\SettingsController::class, 'updateCommissions'])->name('settings.commissions.update');
     Route::get('/settings/logs', [\App\Http\Controllers\SettingsController::class, 'logs'])->name('settings.logs');
 
-    // AI Chat System
     Route::get('/api/ai/brief', [\App\Http\Controllers\AiChatController::class, 'getBrief'])->name('api.ai.brief');
     Route::get('/api/chat/history', [\App\Http\Controllers\AiChatController::class, 'getHistory'])->name('api.chat.history');
     Route::post('/api/chat/send', [\App\Http\Controllers\AiChatController::class, 'sendMessage'])->name('api.chat.send');
