@@ -4,7 +4,7 @@
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[50%] min-h-[400px] lg:min-h-full overflow-hidden">
             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[2s]"
-                 style="background-image: url('{{ asset('images/login-recovery.png') }}')">
+                 style="background-image: url('{{ asset('images/login-recovery.webp') }}')">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/60 via-transparent to-slate-900/80"></div>
             </div>
 
