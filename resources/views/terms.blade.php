@@ -164,14 +164,14 @@
     <main class="pt-44 pb-24 px-8">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
-            <div class="mb-20 animate-fade-in-up">
+            <div class="mb-20 animate-fade-in-up text-center">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
                     Legal Framework • Architectural Integrity
                 </div>
                 <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 tracking-tighter leading-tight">
-                    Terms & <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Conditions.</span>
+                    Terms & <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Conditions.</span>
                 </h1>
-                <p class="text-lg text-slate-700 font-medium leading-relaxed max-w-2xl">
+                <p class="text-lg text-slate-700 font-medium leading-relaxed max-w-2xl mx-auto">
                     By accessing nexorabyte’s digital infrastructure, you agree to operate within the parameters of this architectural agreement.
                 </p>
             </div>
