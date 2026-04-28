@@ -108,12 +108,12 @@ Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-contro
     Route::post('/trash/inquiry/{id}/restore', [SuperAdminController::class, 'inquiryRestore'])->name('superadmin.trash.restore');
     Route::delete('/trash/inquiry/{id}/force', [SuperAdminController::class, 'inquiryForceDelete'])->name('superadmin.trash.force');
 
-    // Impersonation
     Route::get('/impersonate/{user}', [SuperAdminController::class, 'impersonate'])->name('superadmin.impersonate');
-    Route::get('/stop-impersonating', [SuperAdminController::class, 'stopImpersonating'])->name('superadmin.stop-impersonation');
 
     Route::patch('/tenant/{user}/toggle', [SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
 });
+
+Route::middleware(['auth'])->get('/nexorabyte-control/stop-impersonating', [SuperAdminController::class, 'stopImpersonating'])->name('superadmin.stop-impersonation');
 
 Route::middleware(['auth', 'verified', 'ensureActive', 'noDirect'])->group(function () {
     Route::get('/billing', [\App\Http\Controllers\BillingController::class, 'index'])->name('billing.index');
