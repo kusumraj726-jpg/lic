@@ -320,8 +320,7 @@
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                 <p class="text-[9px] font-black tracking-[0.3em] text-slate-600 uppercase">&copy; {{ date('Y') }} nexorabyte. ARCHITECTING EXCELLENCE.</p>
                 <div class="flex gap-8">
-                    <a href="#" class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Terms</a>
+                    <a href="{{ route('terms') }}" class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Terms & conditions</a>
                 </div>
             </div>
         </div>

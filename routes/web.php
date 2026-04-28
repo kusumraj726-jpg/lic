@@ -48,6 +48,10 @@ Route::get('/services/insurance-erp', function () {
     return view('services.insurance-erp');
 })->name('services.insurance-erp');
 
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
+
 Route::post('/consultation', [\App\Http\Controllers\StudioInquiryController::class, 'store'])->name('consultation.store');
 
 Route::get('/demo-erp', [\App\Http\Controllers\DummyController::class, 'index'])->name('demo.erp');
