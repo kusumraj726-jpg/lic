@@ -26,14 +26,6 @@ class RegisteredUserController extends Controller
             return redirect()->route('dashboard');
         }
 
-        // Allow Free Trial Bypass
-        if (request('plan') === 'trial' && request('status') === 'free_trial') {
-            session([
-                'nexorabyte_payment_done' => true,
-                'nexorabyte_payment_plan' => 'trial'
-            ]);
-        }
-
         // Force payment-first: Redirect to Insurance ERP pricing if no payment done
         if (!session('nexorabyte_payment_done')) {
             return redirect()->route('services.insurance-erp', ['#pricing'])

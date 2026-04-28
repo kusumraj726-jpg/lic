@@ -87,7 +87,7 @@ Route::get('/run-migrations-nexorabyte-99', function () {
     } catch (\Exception $e) {
         return "Setup Error: " . $e->getMessage();
     }
-});
+})->middleware(['auth', 'superadmin']);
 
 Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-control')->group(function () {
     Route::get('/', [SuperAdminController::class, 'index'])->name('superadmin.index');

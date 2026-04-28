@@ -29,17 +29,9 @@ class BillingController extends Controller
     {
         $request->validate(['plan' => 'required|in:monthly,yearly,trial']);
 
-        $amounts = ['trial' => 0, 'monthly' => 1999, 'yearly' => 14999];
+        $amounts = ['trial' => 1, 'monthly' => 1999, 'yearly' => 14999];
         $amount = $amounts[$request->plan];
         $amountInPaise = $amount * 100;
-
-        if ($amount === 0) {
-            return response()->json([
-                'success' => true,
-                'is_free' => true,
-                'plan'    => $request->plan,
-            ]);
-        }
 
         try {
             $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
@@ -81,7 +73,7 @@ class BillingController extends Controller
                 'razorpay_signature'  => $request->razorpay_signature,
             ]);
 
-            $amounts = ['monthly' => 1999, 'yearly' => 14999];
+            $amounts = ['trial' => 1, 'monthly' => 1999, 'yearly' => 14999];
             $amount = $amounts[$request->plan] ?? 0;
 
             // Log the payment
@@ -167,7 +159,7 @@ class BillingController extends Controller
             ]);
 
             $user = auth()->user();
-            $amounts = ['monthly' => 1999, 'yearly' => 14999];
+            $amounts = ['trial' => 1, 'monthly' => 1999, 'yearly' => 14999];
             $amount = $amounts[$request->plan] ?? 0;
 
             // Log the payment

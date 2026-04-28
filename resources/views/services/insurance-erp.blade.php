@@ -2663,8 +2663,8 @@
                     <div>
                         <h3
                             class="text-xl font-black text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-4">
-                            30-Day Free Trial</h3>
-                        <div class="text-4xl font-black text-indigo-600 mb-8">₹0 <span
+                            30-Day Trial</h3>
+                        <div class="text-4xl font-black text-indigo-600 mb-8">₹1 <span
                                 class="text-xs text-slate-500 font-medium text-slate-400">one-time</span></div>
                         <ul class="text-left space-y-4 mb-8 text-sm font-medium text-slate-700">
                             <li class="flex items-center gap-3">✓ Full Module Access</li>
@@ -2674,7 +2674,7 @@
                     </div>
                     <button @click="pay('trial')" :disabled="loadingPlan !== null"
                         class="elite-btn bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-200">
-                        <span x-show="loadingPlan !== 'trial'">Try For Free</span>
+                        <span x-show="loadingPlan !== 'trial'">Try For ₹1</span>
                         <span x-show="loadingPlan === 'trial'" class="animate-pulse">Activating...</span>
                     </button>
                 </div>
