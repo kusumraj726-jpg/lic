@@ -9,7 +9,7 @@
                  x-transition:enter-start="opacity-0 scale-110" 
                  x-transition:enter-end="opacity-100 scale-100"
                  class="absolute inset-0 bg-cover bg-center transition-transform duration-[2s]"
-                 style="background-image: url('{{ asset('images/login-admin.png') }}')">
+                 style="background-image: url('{{ asset('images/login-admin.webp') }}')">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/60 via-transparent to-slate-900/80"></div>
             </div>
 
@@ -19,7 +19,7 @@
                  x-transition:enter-start="opacity-0 scale-110" 
                  x-transition:enter-end="opacity-100 scale-100"
                  class="absolute inset-0 bg-cover bg-center transition-transform duration-[2s]"
-                 style="background-image: url('{{ asset('images/login-advisor.png') }}')">
+                 style="background-image: url('{{ asset('images/login-advisor.webp') }}')">
                 <div class="absolute inset-0 bg-gradient-to-br from-rose-900/60 via-transparent to-slate-900/80"></div>
             </div>
 
