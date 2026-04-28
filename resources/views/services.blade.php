@@ -523,9 +523,7 @@
                     <li><a href="{{ route('lifecycle') }}"
                             class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">Our
                             Lifecycle</a></li>
-                    <li><a href="javascript:void(0)" @click="$dispatch('open-contact')"
-                            class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">Contact Us</a>
-                    </li>
+                    <li><a href="{{ route('contact') }}" class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">Contact Us</a></li>
                 </ul>
             </div>
         </div>
@@ -540,7 +538,6 @@
         </div>
     </div>
 </footer>
-    <x-contact-modal />
 </body>
 
 </html>

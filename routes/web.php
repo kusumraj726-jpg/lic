@@ -52,6 +52,10 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 Route::post('/consultation', [\App\Http\Controllers\StudioInquiryController::class, 'store'])->name('consultation.store');
 
 Route::get('/demo-erp', [\App\Http\Controllers\DummyController::class, 'index'])->name('demo.erp');

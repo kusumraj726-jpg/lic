@@ -310,7 +310,7 @@
                     <ul class="space-y-4">
                         <li><a href="{{ route('about') }}" class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">About Us</a></li>
                         <li><a href="{{ route('lifecycle') }}" class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2 underline decoration-rose-500/30 underline-offset-4">Our Lifecycle</a></li>
-                        <li><a href="javascript:void(0)" @click="$dispatch('open-contact')" class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">Contact Us</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-slate-500 text-sm hover:text-rose-500 transition-all hover:pl-2">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -323,6 +323,5 @@
             </div>
         </div>
     </footer>
-    <x-contact-modal />
 </body>
 </html>
