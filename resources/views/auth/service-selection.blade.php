@@ -133,7 +133,7 @@
                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-rose-500/5 rounded-full blur-[100px] group-hover:bg-rose-500/10 transition-all duration-700"></div>
                     
                     <div class="w-20 h-20 rounded-3xl bg-rose-50 flex items-center justify-center text-rose-600 mb-10 border border-rose-100 group-hover:scale-110 transition-transform">
-                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9-9c1.657 0 3 2.239 3 5s-1.343 5-3 5m0-10c-1.657 0-3 2.239-3 5s1.343 5 3 5m-5 10a9 9 0 01-9-9m9-9a9 9 0 01-9-9" /></svg>
+                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
                     </div>
 
                     <h2 class="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Customized Website</h2>

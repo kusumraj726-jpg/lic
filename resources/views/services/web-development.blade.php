@@ -144,7 +144,7 @@
                 Architecture & Performance Velocity
             </div>
             <h1 class="text-6xl md:text-8xl font-extrabold text-slate-900 mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
-                Custom Web <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400 italic">Engineering.</span>
+                Custom Web <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400 italic pr-4">Engineering.</span>
             </h1>
             <p class="text-lg md:text-2xl text-slate-700 font-medium max-w-3xl mx-auto mb-12 animate-fade-in-up delay-200">
                 We don't just build websites; we engineer high-performance digital ecosystems designed to eliminate administrative friction and scale your business pulse.
@@ -211,7 +211,7 @@
 
                     <h2 class="text-5xl md:text-7xl font-black text-slate-950 mb-10 tracking-tighter uppercase leading-[0.95]">
                         Ready to Engineer Your <br/> 
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400 italic">Digital Future?</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-400 italic pr-4">Digital Future?</span>
                     </h2>
                     
                     <p class="text-slate-900 text-lg md:text-2xl font-bold mb-16 max-w-3xl mx-auto leading-relaxed opacity-80">
