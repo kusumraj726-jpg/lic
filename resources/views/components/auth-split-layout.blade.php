@@ -70,6 +70,16 @@
         </button>
     </div>
 
+    <!-- SVG Filter for Logo Transparency -->
+    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+        <filter id="chroma-key-black">
+            <feColorMatrix type="matrix" values="1 0 0 0 0 
+                                                 0 1 0 0 0 
+                                                 0 0 1 0 0 
+                                                 1 1 1 0 -0.1" />
+        </filter>
+    </svg>
+
     <div class="fixed inset-0 mesh-pattern pointer-events-none opacity-30"></div>
     <div class="min-h-screen flex items-center justify-center p-4 lg:p-8 relative z-10">
         {{ $slot }}
