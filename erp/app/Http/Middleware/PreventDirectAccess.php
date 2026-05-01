@@ -22,7 +22,7 @@ class PreventDirectAccess
         // 2. If there is NO referer (Direct Paste / Bookmark)
         // OR the referer is from a DIFFERENT domain (External Link)
         // AND we are not already on the homepage
-        if (!$request->is('/') && (!$referer || !str_contains($referer, $host))) {
+        if (!$request->is('/') && (!$referer || (!str_contains($referer, $host) && !str_contains($referer, 'nexorabyte.in')))) {
             
             // Allow login and get-started to be direct-accessed so users can actually enter
             if ($request->is('login') || $request->is('get-started') || $request->is('register')) {
