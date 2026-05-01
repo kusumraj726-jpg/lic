@@ -1,9 +1,9 @@
 # Stage 1: Build Assets
 FROM node:20-alpine AS assets-builder
 WORKDIR /app
-COPY erp/package*.json ./
+COPY package*.json ./
 RUN npm install
-COPY erp/ .
+COPY . .
 RUN npm run build
 
 # Stage 2: PHP Application
@@ -31,7 +31,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy application code
-COPY erp/ .
+COPY . .
 
 # Copy built assets from assets-builder
 COPY --from=assets-builder /app/public/build ./public/build
@@ -43,10 +43,10 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Nginx configuration
-COPY erp/docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 
 # Start script
-COPY erp/docker/start.sh /usr/local/bin/start.sh
+COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 80
