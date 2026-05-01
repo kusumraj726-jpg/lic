@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (config('app.env') === 'production') {
-            URL::forceScheme('https');
-        }
-
         // Global NexoraByte Intelligence View Composer
         view()->composer('layouts.app', function ($view) {
             $user = auth()->user();
