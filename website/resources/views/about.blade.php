@@ -154,7 +154,11 @@
             </div>
             <div class="m-nav-links" style="display:flex;align-items:center;gap:1.5rem;">
                 <a href="{{ route('services') }}" style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#374151;text-decoration:none;">Services</a>
-                <a href="{{ route('force-login') }}" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Sign In</a>
+                @auth
+                    <a href="https://erp.nexorabyte.in/dashboard" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Dashboard</a>
+                @else
+                    <a href="{{ route('force-login') }}" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Sign In</a>
+                @endauth
             </div>
             <button id="ab-hamburger" class="m-hamburger" aria-label="Menu">
                 <svg id="ab-ham" style="width:1.25rem;height:1.25rem;color:#374151;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -163,7 +167,11 @@
         </div>
         <div id="ab-menu" class="m-mobile-menu">
             <a href="{{ route('services') }}">Services</a>
-            <a href="{{ route('force-login') }}">Sign In</a>
+            @auth
+                <a href="https://erp.nexorabyte.in/dashboard">Dashboard</a>
+            @else
+                <a href="{{ route('force-login') }}">Sign In</a>
+            @endauth
         </div>
     </nav>
     <script>(function(){var b=document.getElementById('ab-hamburger'),m=document.getElementById('ab-menu'),h=document.getElementById('ab-ham'),c=document.getElementById('ab-cls');if(!b)return;b.addEventListener('click',function(){var o=m.classList.toggle('open');h.style.display=o?'none':'block';c.style.display=o?'block':'none';});document.addEventListener('click',function(e){if(!b.contains(e.target)&&!m.contains(e.target)){m.classList.remove('open');h.style.display='block';c.style.display='none';}});})();</script>

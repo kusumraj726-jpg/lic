@@ -334,8 +334,13 @@
 
             <!-- Desktop nav links -->
             <div class="nav-desktop-links">
-                <a href="{{ route('force-login') }}"
-                    style="font-size:0.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#374151; text-decoration:none;">Sign In</a>
+                @auth
+                    <a href="https://erp.nexorabyte.in/dashboard"
+                        style="font-size:0.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#374151; text-decoration:none;">Dashboard</a>
+                @else
+                    <a href="{{ route('force-login') }}"
+                        style="font-size:0.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#374151; text-decoration:none;">Sign In</a>
+                @endauth
                 <a href="#pricing"
                     style="background:#e11d48; color:white; font-size:0.6875rem; font-weight:700; padding:0.625rem 1.5rem; border-radius:9999px; text-transform:uppercase; letter-spacing:0.1em; text-decoration:none;">Subscription Models</a>
             </div>
@@ -354,7 +359,11 @@
         <!-- Mobile dropdown menu -->
         <div id="erp-mobile-menu" class="nav-mobile-menu">
             <a href="{{ route('services') }}">← Back to Services</a>
-            <a href="{{ route('force-login') }}">Sign In</a>
+            @auth
+                <a href="https://erp.nexorabyte.in/dashboard">Dashboard</a>
+            @else
+                <a href="{{ route('force-login') }}">Sign In</a>
+            @endauth
             <a href="#pricing">Subscription Models</a>
         </div>
     </nav>

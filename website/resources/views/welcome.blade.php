@@ -339,9 +339,8 @@
                     <a href="{{ route('force-login') }}"
                         class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign
                         In</a>
-                    <a href="{{ route('billing.index') }}"
-                        class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign
-                        Up</a>
+                    <a href="https://erp.nexorabyte.in/dashboard"
+                        class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Dashboard</a>
                 @else
                     <a href="{{ route('force-login') }}"
                         class="text-[11px] font-semibold uppercase tracking-widest hover:text-rose-600 transition-colors text-slate-700">Sign
@@ -377,9 +376,8 @@
             @auth
                 <a href="{{ route('force-login') }}"
                     class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>
-                <a href="{{ route('billing.index') }}"
-                    class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Sign
-                    Up</a>
+                <a href="https://erp.nexorabyte.in/dashboard"
+                    class="bg-rose-600 text-white text-sm font-bold px-6 py-3 rounded-xl uppercase tracking-widest text-center hover:bg-rose-500">Dashboard</a>
             @else
                 <a href="{{ route('force-login') }}"
                     class="text-sm font-bold uppercase tracking-widest text-slate-700 hover:text-rose-600">Sign In</a>

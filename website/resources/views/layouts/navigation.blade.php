@@ -15,16 +15,16 @@
                     <x-nav-link href="https://erp.nexorabyte.in/dashboard">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">
+                    <x-nav-link href="https://erp.nexorabyte.in/clients">
                         {{ __('Clients') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('queries.index')" :active="request()->routeIs('queries.*')">
+                    <x-nav-link href="https://erp.nexorabyte.in/queries">
                         {{ __('Queries') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('claims.index')" :active="request()->routeIs('claims.*')">
+                    <x-nav-link href="https://erp.nexorabyte.in/claims">
                         {{ __('Claims') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('renewals.index')" :active="request()->routeIs('renewals.*')">
+                    <x-nav-link href="https://erp.nexorabyte.in/renewals">
                         {{ __('Renewals') }}
                     </x-nav-link>
                 </div>
@@ -46,7 +46,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link href="https://erp.nexorabyte.in/profile">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -92,7 +92,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link href="https://erp.nexorabyte.in/profile">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
