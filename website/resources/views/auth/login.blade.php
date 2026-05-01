@@ -1,5 +1,5 @@
 <x-auth-split-layout title="Login">
-    <div class="w-full max-w-5xl lg:min-h-[620px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500 my-8" x-data="{ role: 'Admin' }">
+    <div class="w-full max-w-5xl lg:min-h-[620px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500" x-data="{ role: 'Admin' }">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[50%] min-h-[400px] lg:min-h-full overflow-hidden">
