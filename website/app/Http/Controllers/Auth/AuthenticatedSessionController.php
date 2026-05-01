@@ -29,10 +29,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if (auth()->user()->role === 'superadmin') {
-            return redirect()->route('superadmin.index');
+            return redirect()->intended('https://erp.nexorabyte.in/superadmin');
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended('https://erp.nexorabyte.in/dashboard');
     }
 
     /**

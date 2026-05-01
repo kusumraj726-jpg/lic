@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
         // If someone is already logged in (e.g. superadmin testing), send them to dashboard
         // The only logged-in users allowed to /register are admins creating staff — but that uses a different internal form
         if (Auth::check()) {
-            return redirect()->route('dashboard');
+            return redirect()->intended('https://erp.nexorabyte.in/dashboard');
         }
 
         // Force payment-first: Redirect to Insurance ERP pricing if no payment done
