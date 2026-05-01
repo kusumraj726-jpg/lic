@@ -11,14 +11,7 @@
             <!-- Content Overlay -->
             <div class="relative z-10 w-full h-full p-10 flex flex-col justify-between text-white">
                 <div>
-                    <div class="flex items-center gap-3">
-                        <div class="h-8 w-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-lg">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <span class="text-xl font-black tracking-widest uppercase">NexoraByte</span>
-                    </div>
+                    <!-- Logo moved to right side -->
                 </div>
 
                 <div class="space-y-4 max-w-sm">
@@ -39,9 +32,11 @@
         <div class="flex-1 flex flex-col items-center justify-center p-8 lg:p-10 transition-colors duration-500">
             <div class="w-full max-w-sm space-y-8">
                 
-                <div class="text-center space-y-2">
-                    <div class="lg:hidden flex justify-center mb-4">
-                        <span class="text-xl font-black text-slate-900 dark:text-white tracking-widest uppercase">NexoraByte</span>
+                <!-- Header -->
+                <div class="text-center space-y-1">
+                    <div class="flex justify-center mb-4 items-center gap-3">
+                        <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                        <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
                     <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Recover Access</h1>
                     <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">Secure Intelligence Restoration</p>
@@ -66,7 +61,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                                 </svg>
                             </div>
-                            <input type="email" name="email" :value="old('email')" required autofocus
+                            <input type="email" name="email" value="{{ old('email') }}" required autofocus
                                 class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="name@company.com">
                         </div>

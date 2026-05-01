@@ -12,14 +12,7 @@
             <!-- Content Overlay -->
             <div class="relative z-10 w-full h-full p-10 flex flex-col justify-between text-white">
                 <div>
-                    <div class="flex items-center gap-3">
-                        <div class="h-8 w-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-lg">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <span class="text-xl font-black tracking-widest uppercase">NexoraByte</span>
-                    </div>
+                    <!-- Logo moved to right side -->
                 </div>
 
                 <div class="space-y-4 max-w-sm">
@@ -65,9 +58,11 @@
                     </div>
                 @endif
 
-                <div class="text-center space-y-2">
-                    <div class="lg:hidden flex justify-center mb-4">
-                        <span class="text-xl font-black text-slate-900 dark:text-white tracking-widest uppercase">NexoraByte</span>
+                <!-- Header -->
+                <div class="text-center space-y-1">
+                    <div class="flex justify-center mb-4 items-center gap-3">
+                        <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                        <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
                     <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Create Workspace</h1>
                     <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">Provision your primary admin console</p>
