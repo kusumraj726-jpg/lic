@@ -52,7 +52,7 @@
         }
     </style>
 </head>
-<body class="antialiased font-['Inter'] overflow-x-hidden overflow-y-auto no-scrollbar login-bg min-h-screen transition-colors duration-500">
+<body class="antialiased font-['Inter'] overflow-hidden no-scrollbar login-bg min-h-screen transition-colors duration-500">
     <!-- Theme Toggle -->
     <div class="fixed top-8 right-8 z-[100]">
         <button @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')" 

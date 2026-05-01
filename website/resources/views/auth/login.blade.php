@@ -1,5 +1,5 @@
 <x-auth-split-layout title="Login">
-    <div class="w-full max-w-5xl lg:min-h-[620px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500" x-data="{ role: 'Admin' }">
+    <div class="w-full max-w-5xl lg:min-h-[580px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500" x-data="{ role: 'Admin' }">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[50%] min-h-[400px] lg:min-h-full overflow-hidden">
@@ -44,12 +44,12 @@
         </div>
 
         <!-- Right Side: Login Form -->
-        <div class="flex-1 flex items-center justify-center p-8 lg:p-10 transition-colors duration-500">
-            <div class="w-full max-w-sm space-y-6 lg:space-y-8">
+        <div class="flex-1 flex items-center justify-center p-6 lg:p-8 transition-colors duration-500">
+            <div class="w-full max-w-sm space-y-4 lg:space-y-6">
                 
                 <!-- Header -->
-                <div class="text-center space-y-2">
-                    <div class="flex justify-center mb-6 items-center gap-3">
+                <div class="text-center space-y-1">
+                    <div class="flex justify-center mb-4 items-center gap-3">
                         <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
@@ -60,10 +60,10 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                <form method="POST" action="{{ route('login') }}" class="space-y-4">
                     @csrf
                     
-                    <div class="space-y-4">
+                    <div class="space-y-3">
                         <!-- Email -->
                         <div class="space-y-1.5">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Corporate Email</label>
@@ -119,9 +119,9 @@
                 </form>
 
                 <!-- Role Selector -->
-                <div class="space-y-3 pt-3 border-t border-slate-50 dark:border-slate-800">
+                <div class="space-y-3 pt-2 border-t border-slate-50 dark:border-slate-800">
                     <p class="text-center text-[8px] font-black text-slate-400 uppercase tracking-widest">Select Access Portal</p>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-2">
                         <button @click="role = 'Admin'" type="button" 
                             class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all duration-300 border"
                             :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-100 dark:border-slate-700 hover:bg-slate-100'">
