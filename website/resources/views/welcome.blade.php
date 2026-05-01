@@ -862,7 +862,7 @@
                         // 1. Determine Endpoint Based on Auth Status
                         const endpoint = isAuthenticated ? '/billing/checkout' : '/get-started/checkout';
                         const verifyEndpoint = isAuthenticated ? '/billing/verify' : '/get-started/verify';
-                        const redirectUrl = isAuthenticated ? "{{ route('dashboard') }}" : "{{ route('register') }}?flow=onboarding&step=2";
+                        const redirectUrl = isAuthenticated ? 'https://erp.nexorabyte.in/dashboard' : "{{ route('register') }}?flow=onboarding&step=2";
 
                         const response = await fetch(endpoint, {
                             method: 'POST',
