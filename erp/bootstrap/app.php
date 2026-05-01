@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
-        $middleware->redirectTo('/');
+        $middleware->redirectTo(fn () => 'https://nexorabyte.in/login');
 
         $middleware->web(append: [
             //

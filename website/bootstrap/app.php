@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
         $middleware->redirectTo('/');
+        $middleware->redirectUsersTo('https://erp.nexorabyte.in/dashboard');
 
         $middleware->web(append: [
             //
