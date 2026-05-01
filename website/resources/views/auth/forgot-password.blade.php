@@ -29,7 +29,7 @@
         </div>
 
         <!-- Right Side: Recovery Form -->
-        <div class="flex-1 flex flex-col items-center justify-center p-8 lg:p-10 transition-colors duration-500">
+        <div class="flex-1 flex flex-col items-center justify-start p-8 lg:p-10 lg:pt-16 transition-colors duration-500">
             <div class="w-full max-w-sm space-y-8">
                 
                 <!-- Header -->
