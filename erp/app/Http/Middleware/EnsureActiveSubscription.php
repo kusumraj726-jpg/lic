@@ -32,7 +32,7 @@ class EnsureActiveSubscription
         // For staff, they can't pay, so show a suspended message
         if ($user->isStaff()) {
             Auth::logout();
-            return redirect()->route('login')->withErrors([
+            return redirect()->away('https://nexorabyte.in/login')->withErrors([
                 'email' => 'Your organization\'s workspace is currently suspended. Please contact your administrator.'
             ]);
         }

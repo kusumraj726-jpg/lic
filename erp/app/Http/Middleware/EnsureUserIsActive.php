@@ -25,7 +25,7 @@ class EnsureUserIsActive
                     \Illuminate\Support\Facades\Auth::logout();
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();
-                    return redirect()->route('login')->with('error', 'Your account is currently locked or inactive.');
+                    return redirect()->away('https://nexorabyte.in/login')->with('error', 'Your account is currently locked or inactive.');
                 }
             }
         }
