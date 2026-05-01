@@ -3,7 +3,7 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "erp/Dockerfile",
-    "context": "erp"
+    "context": "."
   },
   "deploy": {
     "startCommand": "/usr/local/bin/start.sh",
