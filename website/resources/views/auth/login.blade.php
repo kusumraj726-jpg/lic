@@ -62,6 +62,7 @@
                 <!-- Form -->
                 <form method="POST" action="{{ route('login') }}" class="space-y-4">
                     @csrf
+                    <input type="hidden" name="login_role" :value="role.toLowerCase()">
                     
                     <div class="space-y-3">
                         <!-- Email -->

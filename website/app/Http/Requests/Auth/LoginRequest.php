@@ -42,11 +42,28 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), false)) {
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+            ]);
+        }
+
+        $user = Auth::user();
+        $requestedRole = $this->input('login_role'); // 'admin' or 'staff'
+
+        if ($requestedRole === 'admin' && $user->role === 'staff') {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'This account is registered as Staff. Please use the Staff login portal.',
+            ]);
+        }
+
+        if ($requestedRole === 'staff' && $user->role !== 'staff') {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'This account is registered as Admin. Please use the Admin login portal.',
             ]);
         }
 
