@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Global light mode autofill fixing */
+    input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        -webkit-text-fill-color: #0f172a !important;
+        caret-color: #0f172a !important;
+    }
+
+    /* Global dark mode autofill: Default to gray-900 (#111827) for generic inputs like x-text-input */
+    .dark input:-webkit-autofill,
+    .dark textarea:-webkit-autofill,
+    .dark select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important;
+        -webkit-text-fill-color: #d1d5db !important;
+        caret-color: #d1d5db !important;
+    }
+
+    /* Dark mode autofill: Specific handling for .form-control which uses slate-800 (#1e293b) */
+    .dark .form-control:-webkit-autofill,
+    .dark input.form-control:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+        -webkit-text-fill-color: #f1f5f9 !important;
+        caret-color: #f1f5f9 !important;
+    }
+}
