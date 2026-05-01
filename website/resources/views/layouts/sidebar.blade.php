@@ -3,7 +3,7 @@
         @php
             $sidebarContext = auth()->user()->context();
         @endphp
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-4 group">
+        <a href="https://erp.nexorabyte.in/dashboard" class="flex items-center gap-4 group">
             @if(Auth::user()->logo_url)
                 <img src="{{ Auth::user()->logo_url }}" alt="Logo" class="h-10 w-10 object-cover rounded-xl shadow-lg bg-white">
             @else
@@ -59,7 +59,7 @@
         @endif
 
         @if($isAdvisor || ($staffProfile && $staffProfile->access_dashboard))
-            <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="https://erp.nexorabyte.in/dashboard" class="nav-item">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />

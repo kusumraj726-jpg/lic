@@ -3028,7 +3028,7 @@
                     try {
                         const endpoint = isAuthenticated ? '/billing/checkout' : '/get-started/checkout';
                         const verifyEndpoint = isAuthenticated ? '/billing/verify' : '/get-started/verify';
-                        const redirectUrl = isAuthenticated ? "{{ route('dashboard') }}" : "{{ route('register') }}";
+                        const redirectUrl = isAuthenticated ? 'https://erp.nexorabyte.in/dashboard' : "{{ route('register') }}";
 
                         const response = await fetch(endpoint, {
                             method: 'POST',
