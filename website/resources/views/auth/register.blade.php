@@ -30,7 +30,7 @@
         </div>
 
         <!-- Right Side: Register Form -->
-        <div class="flex-1 flex flex-col p-8 lg:p-10 transition-colors duration-500 overflow-y-auto max-h-[85vh] lg:max-h-full">
+        <div class="flex-1 flex flex-col p-8 lg:p-10 transition-colors duration-500 overflow-y-auto lg:max-h-full">
             <div class="w-full max-w-md mx-auto space-y-6">
                 
                 <!-- Onboarding Progress Bar -->
@@ -141,7 +141,7 @@
 
                 </form>
 
-                <div class="text-center pt-2">
+                <div class="text-center pt-6 pb-4">
                     <p class="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">IMPORTANT: Registration is a one-time architectural protocol. <br> Please verify all details carefully before provisioning your workspace.</p>
                 </div>
             </div>
