@@ -198,6 +198,22 @@
                                                 ]) }}'
                                                 @click="openRenewal(JSON.parse($el.dataset.renewal), 'edit')" 
                                                 class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 transition-colors">Edit</button>
+                                            @if($renewal->client && $renewal->client->phone)
+                                                <span class="text-slate-200 dark:text-slate-800">|</span>
+                                                @php
+                                                    $waPhone = preg_replace('/[^0-9]/', '', $renewal->client->phone);
+                                                    if (strlen($waPhone) === 10) { $waPhone = "91" . $waPhone; }
+                                                    $waMessage = "Hello " . $renewal->client->name . ",\n\n" .
+                                                                "Your policy #" . $renewal->policy_number . " (" . $renewal->policy_type . ") renewal is due.\n" .
+                                                                "Premium Amount: ₹" . number_format($renewal->premium_amount, 2) . "\n" .
+                                                                "Expiry Date: " . $renewal->expiry_date . "\n" .
+                                                                "Status: " . strtoupper($renewal->status) . "\n\n" .
+                                                                "Please renew your policy soon to ensure continued coverage.\n\n" .
+                                                                "Thank you!";
+                                                    $waUrl = "https://wa.me/" . $waPhone . "?text=" . urlencode($waMessage);
+                                                @endphp
+                                                <a href="{{ $waUrl }}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors">WhatsApp</a>
+                                            @endif
                                             <span class="text-slate-200 dark:text-slate-800">|</span>
                                             <form action="{{ route('renewals.destroy', $renewal) }}" method="POST" class="inline">
                                                 @csrf @method('DELETE')

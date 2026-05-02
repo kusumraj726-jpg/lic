@@ -78,6 +78,21 @@
                                     <td class="px-8 py-6 text-right">
                                         <div class="flex items-center justify-end gap-3 text-xs font-black uppercase tracking-widest">
                                             <a href="{{ route('staff.edit', $member) }}" class="text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Edit</a>
+                                            @if($member->phone)
+                                                <span class="text-slate-200 dark:text-slate-800">|</span>
+                                                @php
+                                                    $waPhone = preg_replace('/[^0-9]/', '', $member->phone);
+                                                    if (strlen($waPhone) === 10) { $waPhone = "91" . $waPhone; }
+                                                    $waMessage = "Hello " . $member->name . ",\n\n" .
+                                                                "Your staff profile details:\n" .
+                                                                "ID: MB-10" . $member->id . "\n" .
+                                                                "Designation: " . ($member->designation ?: 'Staff Member') . "\n" .
+                                                                "Status: " . strtoupper($member->status) . "\n\n" .
+                                                                "Thank you!";
+                                                    $waUrl = "https://wa.me/" . $waPhone . "?text=" . urlencode($waMessage);
+                                                @endphp
+                                                <a href="{{ $waUrl }}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 transition-colors">WhatsApp</a>
+                                            @endif
                                             <span class="text-slate-200 dark:text-slate-800">|</span>
                                             <form action="{{ route('staff.destroy', $member) }}" method="POST" class="inline">
                                                 @csrf @method('DELETE')

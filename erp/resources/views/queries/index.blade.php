@@ -198,6 +198,20 @@
                                                 ]) }}'
                                                 @click="openInquiry(JSON.parse($el.dataset.query), 'edit')" 
                                                 class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 flex items-center gap-1.5 transition-transform hover:scale-105">Edit</button>
+                                            @if($query->client && $query->client->phone)
+                                                <span class="text-slate-200 dark:text-slate-700">|</span>
+                                                @php
+                                                    $waPhone = preg_replace('/[^0-9]/', '', $query->client->phone);
+                                                    if (strlen($waPhone) === 10) { $waPhone = "91" . $waPhone; }
+                                                    $waMessage = "Hello " . $query->client->name . ",\n\n" .
+                                                                "Regarding your query: " . $query->subject . "\n" .
+                                                                "Status: " . strtoupper($query->status) . "\n" .
+                                                                "Description: " . $query->description . "\n\n" .
+                                                                "Thank you!";
+                                                    $waUrl = "https://wa.me/" . $waPhone . "?text=" . urlencode($waMessage);
+                                                @endphp
+                                                <a href="{{ $waUrl }}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 flex items-center gap-1.5 transition-transform hover:scale-105">WhatsApp</a>
+                                            @endif
                                             <span class="text-slate-200 dark:text-slate-700">|</span>
                                             <form action="{{ route('queries.destroy', $query) }}" method="POST" class="inline">
                                                 @csrf @method('DELETE')
