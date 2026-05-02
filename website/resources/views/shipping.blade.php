@@ -35,6 +35,13 @@
 </head>
 
 <body class="antialiased selection:bg-rose-500 selection:text-white">
+    <!-- SVG Filter for Logo Transparency -->
+    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+        <filter id="chroma-key-black">
+            <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 1 1 0 -0.1" />
+        </filter>
+    </svg>
+
     <div class="premium-bg"><div class="aura aura-1"></div><div class="aura aura-2"></div><div class="grid-overlay"></div></div>
 
     <!-- Navigation -->
