@@ -311,13 +311,13 @@
                         class="text-[11px] font-semibold uppercase tracking-widest text-slate-600 border-r border-slate-200 pr-6">Services</a>
                     @auth
                         <a href="https://erp.nexorabyte.in/dashboard"
-                            class="text-[11px] font-semibold uppercase tracking-widest text-slate-600 hover:text-indigo-600 transition-colors">Dashboard</a>
+                            class="text-[11px] font-semibold uppercase tracking-widest text-slate-600 hover:text-rose-600 transition-colors">Dashboard</a>
                     @else
                         <a href="{{ route('force-login') }}"
-                            class="text-[11px] font-semibold uppercase tracking-widest text-slate-600 hover:text-indigo-600 transition-colors">Sign
+                            class="text-[11px] font-semibold uppercase tracking-widest text-slate-600 hover:text-rose-600 transition-colors">Sign
                             In</a>
                         <a href="{{ route('get-started') }}"
-                            class="elite-btn bg-indigo-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-indigo-500">Sign
+                            class="elite-btn bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500">Sign
                             Up</a>
                     @endauth
                 </div>
