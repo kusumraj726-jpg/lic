@@ -14,6 +14,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
+use App\Jobs\SendWelcomeEmail;
 use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller
@@ -82,12 +83,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // Trigger Elite Welcome Email (sync-safe, non-blocking via try/catch)
-        try {
-            Mail::to($user->email)->send(new WelcomeMail($user));
-        } catch (\Exception $e) {
-            Log::error("Failed to send welcome email to {$user->email}: " . $e->getMessage());
-        }
+        // Dispatch welcome email AFTER response — prevents 504 timeout on Railway
+        dispatch(new SendWelcomeEmail($user))->afterResponse();
 
         // Clear the one-time payment session
         session()->forget([
