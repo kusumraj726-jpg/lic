@@ -550,6 +550,10 @@
     <script>
         function closePremiumModal() {
             document.getElementById('premiumSaleModal').style.display = 'none';
+            // Trigger cookie banner immediately after closing sale popup
+            if (window.showCookieBanner) {
+                window.showCookieBanner();
+            }
         }
 
         function animatePrice(target) {

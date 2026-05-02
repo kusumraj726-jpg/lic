@@ -26,8 +26,7 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+    window.showCookieBanner = function() {
         const consent = localStorage.getItem('cookie-consent');
         const banner = document.getElementById('cookie-banner');
         
@@ -35,7 +34,20 @@
             banner.style.display = 'block';
             setTimeout(() => {
                 banner.classList.remove('translate-y-full');
-            }, 1000);
+            }, 100);
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const consent = localStorage.getItem('cookie-consent');
+        const saleShown = sessionStorage.getItem('founderSaleShown');
+        const hasSaleModal = document.getElementById('premiumSaleModal');
+
+        // Show automatically if: 
+        // 1. No consent given AND 
+        // 2. Either no sale modal on this page OR sale already shown/dismissed
+        if (!consent && (!hasSaleModal || saleShown)) {
+            setTimeout(window.showCookieBanner, 2000);
         }
     });
 
