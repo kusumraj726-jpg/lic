@@ -355,15 +355,61 @@
                             </div>
 
                             <!-- Field: Document -->
-                            <template x-if="query.document">
-                                <div class="p-3 bg-indigo-50/50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-xl flex items-center justify-between">
-                                    <div class="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
-                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
-                                        <span class="text-sm font-bold">Supporting Document Attached</span>
+                            <div class="pt-2">
+                                <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-3 block">Supporting Document</label>
+                                
+                                <!-- When a document exists -->
+                                <template x-if="query.document">
+                                    <div class="space-y-4">
+                                        <div class="p-4 bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-100/50 dark:border-indigo-500/20 rounded-2xl flex items-center justify-between group transition-all hover:bg-indigo-50 dark:hover:bg-indigo-500/10">
+                                            <div class="flex items-center gap-3 text-indigo-700 dark:text-indigo-400">
+                                                <div class="h-10 w-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm border border-indigo-100 dark:border-indigo-500/20">
+                                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[11px] font-black uppercase tracking-wider block">Document Attached</span>
+                                                    <span class="text-[9px] font-bold text-indigo-500/60 dark:text-indigo-400/50 uppercase">Ready for review</span>
+                                                </div>
+                                            </div>
+                                            <button type="button" @click.prevent="docUrl = query.document; openDocModal = true" class="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 px-4 py-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-indigo-100 dark:border-indigo-500/20 transition-all hover:scale-105">
+                                                View File
+                                            </button>
+                                        </div>
+
+                                        <!-- Allow changing in edit mode -->
+                                        <template x-if="mode === 'edit'">
+                                            <div class="relative group">
+                                                <input type="file" name="document" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                                <div class="p-4 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl flex items-center gap-4 bg-slate-50/50 dark:bg-slate-800/30 group-hover:border-indigo-300 dark:group-hover:border-indigo-500/50 transition-all">
+                                                    <div class="h-10 w-10 rounded-xl bg-white dark:bg-slate-700 flex items-center justify-center text-slate-400 group-hover:text-indigo-500 transition-colors">
+                                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                                    </div>
+                                                    <div>
+                                                        <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Replace Document</span>
+                                                        <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase">Click or drag to upload new file</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </div>
-                                    <a :href="query.document" target="_blank" class="text-xs font-black uppercase text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 underline decoration-2 underline-offset-4">View File</a>
-                                </div>
-                            </template>
+                                </template>
+
+                                <!-- When no document exists (only show in edit mode) -->
+                                <template x-if="!query.document && mode === 'edit'">
+                                    <div class="relative group">
+                                        <input type="file" name="document" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                        <div class="p-4 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl flex items-center gap-4 bg-slate-50/50 dark:bg-slate-800/30 group-hover:border-indigo-300 dark:group-hover:border-indigo-500/50 transition-all">
+                                            <div class="h-10 w-10 rounded-xl bg-white dark:bg-slate-700 flex items-center justify-center text-slate-400 group-hover:text-indigo-500 transition-colors">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                            </div>
+                                            <div>
+                                                <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider block">No Document Attached</span>
+                                                <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase">Click to upload supporting doc</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
 
                         <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-700/20 border-t border-slate-100 dark:border-slate-700/50 flex justify-end gap-3">
