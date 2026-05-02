@@ -461,15 +461,26 @@
                  openMessageModal(event) {
                      const b_template = '{{ addslashes($birthday_template ?? '') }}';
                      const a_template = '{{ addslashes($anniversary_template ?? '') }}';
-                     let activeTemplate = event.type === 'anniversary' ? a_template : b_template;
-                     let personalizedMessage = activeTemplate.replace(/\[NAME\]/g, event.name);
+                     
+                     let title = event.title;
+                     let message = event.message;
+                     
+                     if (!message) {
+                         let activeTemplate = event.type === 'anniversary' ? a_template : b_template;
+                         message = (activeTemplate || '').replace(/\[NAME\]/g, event.name || '');
+                     }
+                     
+                     if (!title) {
+                         title = event.type === 'anniversary' ? 'Send Anniversary Greeting' : 'Send Birthday Greeting';
+                     }
+
                      this.modalData = {
-                         title: event.type === 'anniversary' ? 'Send Anniversary Greeting' : 'Send Birthday Greeting',
-                         message: personalizedMessage,
+                         title: title,
+                         message: message,
                          phone: event.phone || '',
-                         name: event.name,
-                         type: event.type,
-                         template: personalizedMessage
+                         name: event.name || '',
+                         type: event.type || 'custom',
+                         template: message
                      };
                      this.showModal = true;
                  },
@@ -497,8 +508,12 @@
                          alert('No phone number is linked to this record.');
                          return;
                      }
+                     let phone = this.modalData.phone.replace(/\D/g, '');
+                     if (phone.length === 10) {
+                         phone = '91' + phone;
+                     }
                      const encodedMsg = encodeURIComponent(this.modalData.message);
-                     const url = `https://wa.me/91${this.modalData.phone.replace(/\D/g, '')}?text=${encodedMsg}`;
+                     const url = `https://wa.me/${phone}?text=${encodedMsg}`;
                      window.open(url, '_blank');
                      this.showModal = false;
                  }
@@ -538,7 +553,7 @@
                         <textarea x-model="modalData.message" 
                                   class="w-full h-40 rounded-3xl bg-slate-50 border border-slate-100 p-6 text-sm text-slate-700 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/20 transition-all outline-none resize-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500"
                                   placeholder="Type your message here..."></textarea>
-                        <div class="absolute bottom-4 right-4 text-[9px] font-black text-slate-300 uppercase tracking-widest">
+                        <div class="absolute bottom-4 right-4 text-[9px] font-black text-slate-300 uppercase tracking-widest" x-show="modalData.name">
                             Auto-Personalized for <span class="text-indigo-500" x-text="modalData.name"></span>
                         </div>
                     </div>
@@ -546,6 +561,7 @@
                     <div class="flex items-center gap-3 pt-4">
                         <button @click="saveAsTemplate()" 
                                 :disabled="isSaving"
+                                x-show="['birthday', 'anniversary'].includes(modalData.type)"
                                 class="flex-1 px-6 py-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 disabled:opacity-50 dark:text-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700">
                             <span x-show="!isSaving">Save as Template</span>
                             <span x-show="isSaving">Saving...</span>
