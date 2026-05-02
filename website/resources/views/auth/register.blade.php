@@ -138,17 +138,11 @@
                         </button>
                     </div>
 
-                    @if(!Auth::check() && !request()->has('flow'))
-                        <div class="text-center">
-                            <a href="{{ route('login') }}" class="text-[9px] font-black text-slate-400 hover:text-indigo-600 uppercase tracking-widest transition-colors">
-                                Already have an account? Login
-                            </a>
-                        </div>
-                    @endif
+
                 </form>
 
                 <div class="text-center pt-2">
-                    <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest">NexoraByte Intelligence &bull; Verified Provisioning</p>
+                    <p class="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">NexoraByte Intelligence &bull; Verified Provisioning</p>
                 </div>
             </div>
         </div>
