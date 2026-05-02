@@ -10,6 +10,8 @@
 
     <div class="py-6" x-data="{ 
         openModal: false, 
+        openDocModal: false,
+        docUrl: '',
         mode: 'view', 
         submitting: false,
         query: {
@@ -144,10 +146,10 @@
                                         <div class="font-black text-slate-900 dark:text-slate-100 uppercase text-[13px]">{{ $query->subject }}</div>
                                         <div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mt-0.5">{{ $query->client->name ?? 'Direct Inquiry' }}</div>
                                         @if($query->document)
-                                            <a href="{{ $query->document_url }}" target="_blank" class="inline-flex items-center gap-1.5 text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-md mt-2 font-bold uppercase transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
+                                            <button @click.prevent="docUrl = '{{ $query->document_url }}'; openDocModal = true" class="inline-flex items-center gap-1.5 text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-md mt-2 font-bold uppercase transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                                                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                                                 Supporting Doc
-                                            </a>
+                                            </button>
                                         @endif
                                     </td>
                                     <td class="px-8 py-6">
@@ -385,6 +387,52 @@
                             </template>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supporting Document Modal -->
+        <div x-show="openDocModal" 
+             class="fixed inset-0 z-[160] overflow-y-auto" 
+             x-cloak
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            <div class="flex items-center justify-center min-h-screen px-4 py-12">
+                <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-md" @click="openDocModal = false"></div>
+                
+                <div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl relative max-w-5xl w-full transform transition-all border border-slate-100 dark:border-slate-700">
+                    <div class="px-8 py-5 border-b border-slate-50 dark:border-slate-700/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-700/20">
+                        <div class="flex items-center gap-3">
+                            <div class="h-8 w-8 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                            </div>
+                            <h3 class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">Supporting Document</h3>
+                        </div>
+                        <button @click="openDocModal = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <div class="p-8 flex justify-center bg-slate-50/30 dark:bg-slate-900/50 min-h-[400px]">
+                        <template x-if="docUrl && docUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i)">
+                            <img :src="docUrl" class="max-w-full h-auto rounded-2xl shadow-2xl border border-white dark:border-slate-700">
+                        </template>
+                        <template x-if="docUrl && docUrl.match(/\.pdf$/i)">
+                            <iframe :src="docUrl" class="w-full h-[75vh] rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700"></iframe>
+                        </template>
+                        <template x-if="docUrl && !docUrl.match(/\.(jpeg|jpg|gif|png|webp|pdf)$/i)">
+                             <div class="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl w-full border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
+                                 <div class="h-16 w-16 rounded-2xl bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 mb-6">
+                                     <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                                 </div>
+                                 <p class="text-slate-500 dark:text-slate-400 font-bold mb-8 text-sm">Preview not available for this file type.</p>
+                                 <a :href="docUrl" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-200 dark:shadow-none">Download File</a>
+                             </div>
+                        </template>
+                    </div>
                 </div>
             </div>
         </div>
