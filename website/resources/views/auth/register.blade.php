@@ -1,6 +1,6 @@
 <!-- Build Trigger: 2026-04-27 22:30 -->
 <x-auth-split-layout title="Register">
-    <div class="w-full max-w-5xl lg:min-h-[620px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500 my-8">
+    <div class="w-full max-w-5xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500 my-auto">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[45%] min-h-[400px] lg:min-h-full overflow-hidden">
@@ -31,7 +31,7 @@
 
         <!-- Right Side: Register Form -->
         <div class="flex-1 flex flex-col p-8 lg:p-10 transition-colors duration-500 overflow-y-auto lg:max-h-full">
-            <div class="w-full max-w-md mx-auto space-y-6">
+            <div class="w-full max-w-md mx-auto space-y-4">
                 
                 <!-- Onboarding Progress Bar -->
                 @if(request()->has('flow'))
@@ -142,7 +142,7 @@
                 </form>
 
                 <div class="text-center pt-6 pb-4">
-                    <p class="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">IMPORTANT: Registration is a one-time architectural protocol. <br> Please verify all details carefully before provisioning your workspace.</p>
+                    <p class="text-[7px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">IMPORTANT: Registration is a one-time architectural protocol. <br> Please verify all details carefully before provisioning your workspace.</p>
                 </div>
             </div>
         </div>
