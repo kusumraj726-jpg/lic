@@ -836,7 +836,7 @@
                             "currency": "INR",
                             "name": "nexorabyte",
                             "description": "Subscription Plan: " + plan.charAt(0).toUpperCase() + plan.slice(1),
-                            "image": "{{ asset('images/logo.png') }}",
+                            "image": "{{ asset('images/favicon-nb.png') }}",
                             "order_id": data.order_id,
                             "handler": async (res) => {
                                 const verifyRes = await fetch(verifyEndpoint, {

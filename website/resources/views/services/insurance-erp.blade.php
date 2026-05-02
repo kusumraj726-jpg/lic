@@ -3012,7 +3012,7 @@
                             "currency": "INR",
                             "name": "nexorabyte",
                             "description": "Insurance ERP: " + plan,
-                            "image": "{{ asset('images/company_logo.jpg') }}",
+                            "image": "{{ asset('images/favicon-nb.png') }}",
                             "order_id": data.order_id,
                             "handler": async (res) => {
                                 try {
