@@ -82,11 +82,11 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // Trigger Elite Welcome Email in the background
+        // Trigger Elite Welcome Email (sync-safe, non-blocking via try/catch)
         try {
-            Mail::to($user->email)->queue(new WelcomeMail($user));
+            Mail::to($user->email)->send(new WelcomeMail($user));
         } catch (\Exception $e) {
-            Log::error("Failed to queue welcome email to {$user->email}: " . $e->getMessage());
+            Log::error("Failed to send welcome email to {$user->email}: " . $e->getMessage());
         }
 
         // Clear the one-time payment session
@@ -98,14 +98,6 @@ class RegisteredUserController extends Controller
         ]);
 
         return redirect()->route('login', ['flow' => 'onboarding', 'step' => 3])
-            ->with('status', 'Registration complete! Please login to access your workspace.');
-
-        // ── INTERNAL FLOW (admin creating staff from inside portal) ───────
-        if (Auth::check()) {
-            return back()->with('success', "Account created successfully with ID: {$uniqueId}");
-        }
-
-        return redirect()->route('login')
             ->with('status', 'Registration complete! Please login to access your workspace.');
     }
 }
