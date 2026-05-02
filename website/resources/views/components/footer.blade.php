@@ -62,3 +62,5 @@
         </div>
     </div>
 </footer>
+
+<x-cookie-banner />
