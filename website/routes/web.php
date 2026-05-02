@@ -39,6 +39,18 @@ Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
 
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
+Route::get('/refunds', function () {
+    return view('refunds');
+})->name('refunds');
+
+Route::get('/shipping', function () {
+    return view('shipping');
+})->name('shipping');
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');

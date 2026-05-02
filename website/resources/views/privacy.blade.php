@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Terms & Conditions | nexorabyte Digital Engineering</title>
+    <title>Privacy Policy | nexorabyte Digital Engineering</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-nb.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -166,47 +166,47 @@
             <!-- Header -->
             <div class="mb-20 animate-fade-in-up text-center">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-                    Legal Framework • Architectural Integrity
+                    Data Protection • User Sovereignty
                 </div>
                 <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 tracking-tighter leading-tight">
-                    Terms & <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Conditions.</span>
+                    Privacy <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">Policy.</span>
                 </h1>
                 <p class="text-lg text-slate-700 font-medium leading-relaxed max-w-2xl mx-auto">
-                    By accessing nexorabyte’s digital infrastructure, you agree to operate within the parameters of this architectural agreement.
+                    Your data is your digital identity. At nexorabyte, we engineer systems that protect your privacy through immutable security standards.
                 </p>
             </div>
 
             <!-- Content -->
             <div class="crystal-card p-12 md:p-16 rounded-[3.5rem] animate-fade-in-up delay-100">
                 <div class="terms-section">
-                    <h2><span></span> 01. Acceptance of Terms</h2>
+                    <h2><span></span> 01. Information Collection</h2>
                     <p>
-                        By engaging with nexorabyte's services, including our bespoke ERP ecosystems and web development frameworks, you acknowledge and agree to be bound by the terms specified herein. These terms govern all digital interactions and deployments managed by our studio.
+                        We collect minimal data necessary for operational excellence. This includes your name, email, and business details provided during the "Get Started" or "Consultation" protocols. We do not engage in unauthorized data harvesting.
                     </p>
 
-                    <h2><span></span> 02. Service Architecture</h2>
+                    <h2><span></span> 02. Data Usage</h2>
                     <p>
-                        nexorabyte provides high-performance digital engineering services. All deliverables, including customized ERP modules and web architectures, are engineered to specific operational requirements. We reserve the right to modify the technical stack or delivery methodology to ensure optimal system performance and security.
+                        Your data is used exclusively to provision your ERP environment, manage subscriptions, and provide technical support. We use AES-256 encryption for data at rest and TLS 1.3 for data in transit.
                     </p>
 
-                    <h2><span></span> 03. Intellectual Property</h2>
+                    <h2><span></span> 03. Third-Party Protocols</h2>
                     <p>
-                        The "nexorabyte" identity, logo, and proprietary architectural patterns remain the exclusive property of nexorabyte. Clients are granted a non-exclusive license to use the deployed solutions within their operational framework, subject to the terms of their specific service agreement.
+                        We integrate with elite third-party services like Razorpay for payment processing. These partners have their own immutable privacy standards. nexorabyte does not store your full credit card or bank credentials on our local servers.
                     </p>
 
-                    <h2><span></span> 04. Immutable Security & Data</h2>
+                    <h2><span></span> 04. Cookies & Analytics</h2>
                     <p>
-                        Security is our baseline. While we implement enterprise-grade protection, including AES-256 encryption and multi-tenant isolation, users are responsible for maintaining the confidentiality of their access credentials. nexorabyte is not liable for data breaches resulting from user-side security failures.
+                        We use session cookies to maintain your authentication state and basic analytics to monitor system performance. These tools do not track you outside the nexorabyte ecosystem.
                     </p>
 
-                    <h2><span></span> 05. Liability Limitations</h2>
+                    <h2><span></span> 05. User Rights</h2>
                     <p>
-                        nexorabyte engineers systems for high availability (99.9% SLA). However, we are not liable for indirect, incidental, or consequential damages resulting from system downtime or operational fragmentation outside our direct architectural control.
+                        You have the right to request a full export of your data or its permanent deletion from our active systems, subject to legal and billing retention requirements.
                     </p>
 
-                    <h2><span></span> 06. Governing Law</h2>
+                    <h2><span></span> 06. Policy Updates</h2>
                     <p>
-                        These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which nexorabyte operates. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the local courts.
+                        We reserve the right to update this policy to reflect changes in digital engineering standards. Continued use of our infrastructure constitutes acceptance of the updated terms.
                     </p>
                 </div>
 
@@ -214,10 +214,6 @@
                     <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">
                         Last Updated: {{ date('F d, Y') }}
                     </div>
-                    <a href="javascript:void(0)" onclick="window.print()" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-500 transition-colors flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                        Print Terms
-                    </a>
                 </div>
             </div>
         </div>
@@ -225,4 +221,5 @@
 
     <x-footer />
 </body>
+
 </html>
