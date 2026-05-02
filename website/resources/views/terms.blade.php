@@ -146,7 +146,7 @@
         <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;justify-content:space-between;align-items:center;height:4rem;">
             <div style="display:flex; align-items:center; gap:1.5rem;">
                 <a href="/" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;">
-                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
+                    <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-11 w-auto object-contain mix-blend-screen" style="filter: contrast(1.1) brightness(1.2);">
                     <span style="font-size:1rem;font-weight:900;color:#0f172a;letter-spacing:0.15em;">nexorabyte</span>
                 </a>
                 <a href="/" class="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-rose-500 transition-colors" style="text-decoration:none;">
@@ -211,9 +211,7 @@
                 </div>
 
                 <div class="mt-12 pt-12 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        Last Updated: {{ date('F d, Y') }}
-                    </div>
+
                     <a href="javascript:void(0)" onclick="window.print()" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-500 transition-colors flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                         Print Terms
