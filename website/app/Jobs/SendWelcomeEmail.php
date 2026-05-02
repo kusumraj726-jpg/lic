@@ -2,44 +2,48 @@
 
 namespace App\Jobs;
 
-use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
-class SendWelcomeEmail implements ShouldQueue
+class SendWelcomeEmail
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $user;
 
-    /**
-     * The number of seconds to wait before retrying the job.
-     */
-    public int $tries = 3;
-
-    /**
-     * Create a new job instance.
-     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         try {
-            Mail::to($this->user->email)->send(new WelcomeMail($this->user));
+            $response = Http::withHeaders([
+                'api-key' => env('BREVO_API_KEY'),
+                'Content-Type' => 'application/json',
+            ])->post('https://api.brevo.com/v3/smtp/email', [
+                'sender' => [
+                    'name'  => 'nexorabyte',
+                    'email' => 'info@nexorabyte.in',
+                ],
+                'to' => [
+                    ['email' => $this->user->email, 'name' => $this->user->name],
+                ],
+                'subject' => 'Welcome to NexoraByte — Your Elite Workspace is Ready',
+                'htmlContent' => view('emails.welcome', ['user' => $this->user])->render(),
+            ]);
+
+            if (!$response->successful()) {
+                Log::error("Brevo API failed for {$this->user->email}: " . $response->body());
+            }
         } catch (\Exception $e) {
-            Log::error("WelcomeEmail failed for {$this->user->email}: " . $e->getMessage());
+            Log::error("WelcomeEmail exception for {$this->user->email}: " . $e->getMessage());
         }
     }
 }

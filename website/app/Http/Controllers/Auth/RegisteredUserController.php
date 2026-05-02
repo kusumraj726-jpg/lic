@@ -83,7 +83,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // Dispatch welcome email AFTER response — prevents 504 timeout on Railway
+        // Send welcome email via Brevo REST API (fast, reliable, no SMTP timeout)
         dispatch(new SendWelcomeEmail($user))->afterResponse();
 
         // Clear the one-time payment session
