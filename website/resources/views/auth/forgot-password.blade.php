@@ -39,10 +39,10 @@
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
                     <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="font-family: 'Cambria', Georgia, serif;">Recover Access</h1>
-                    <p class="text-[9px] text-slate-600 font-black uppercase tracking-[0.2em]">Secure Intelligence Restoration</p>
+                    <p class="text-[9px] text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em]">Secure Intelligence Restoration</p>
                 </div>
 
-                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed text-center">
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-300 leading-relaxed text-center">
                     {{ __('Input your credentials. Our core engine will dispatch a secure restoration link to your official email ID instantly.') }}
                 </div>
 
@@ -54,7 +54,7 @@
                     
                     <!-- Email -->
                     <div class="space-y-1.5">
-                        <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Official Email ID</label>
+                        <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Official Email ID</label>
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="h-4 w-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,7 @@
                         </button>
                         
                         <div class="text-center">
-                            <a href="{{ route('login') }}" class="text-[9px] font-black text-slate-600 hover:text-indigo-600 uppercase tracking-widest transition-colors">
+                            <a href="{{ route('login') }}" class="text-[9px] font-black text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 uppercase tracking-widest transition-colors">
                                 Remembered your access? Back to Login
                             </a>
                         </div>
@@ -82,7 +82,7 @@
                 </form>
 
                 <div class="text-center pt-4">
-                    <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest">NexoraByte Suite &bull; Verified Access Only</p>
+                    <p class="text-[8px] font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest">NexoraByte Suite &bull; Verified Access Only</p>
                 </div>
             </div>
         </div>

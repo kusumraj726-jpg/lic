@@ -54,7 +54,7 @@
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
                     <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="font-family: 'Cambria', Georgia, serif;">Welcome Back, <span x-text="role" class="text-indigo-600"></span>!</h1>
-                    <p class="text-[9px] text-slate-600 font-black uppercase tracking-[0.2em]">Secure Authentication Access</p>
+                    <p class="text-[9px] text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em]">Secure Authentication Access</p>
                 </div>
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -67,7 +67,7 @@
                     <div class="space-y-3">
                         <!-- Email -->
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Corporate Email</label>
+                            <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Corporate Email</label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg class="h-4 w-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,9 +84,9 @@
                         <!-- Password -->
                         <div class="space-y-1.5" x-data="{ show: false }">
                             <div class="flex justify-between items-center ml-1">
-                                <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest">Secure Password</label>
+                                <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Secure Password</label>
                                 @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="text-[9px] font-black text-slate-600 hover:text-indigo-600 uppercase tracking-widest transition-colors">Recovery?</a>
+                                    <a href="{{ route('password.request') }}" class="text-[9px] font-black text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 uppercase tracking-widest transition-colors">Recovery?</a>
                                 @endif
                             </div>
                             <div class="relative group">
@@ -121,17 +121,17 @@
 
                 <!-- Role Selector -->
                 <div class="space-y-3 pt-2 border-t border-slate-50 dark:border-slate-800">
-                    <p class="text-center text-[8px] font-black text-slate-600 uppercase tracking-widest">Select Access Portal</p>
+                    <p class="text-center text-[8px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Select Access Portal</p>
                     <div class="grid grid-cols-2 gap-2">
                         <button @click="role = 'Admin'" type="button" 
                             class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all duration-300 border"
-                            :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 border-slate-100 dark:border-slate-700 hover:bg-slate-100'">
+                            :class="role === 'Admin' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-100 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                             Admin
                         </button>
                         <button @click="role = 'Staff'" type="button" 
                             class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all duration-300 border"
-                            :class="role === 'Staff' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 border-slate-100 dark:border-slate-700 hover:bg-slate-100'">
+                            :class="role === 'Staff' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-100 dark:shadow-none' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-100 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                             Staff
                         </button>
@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="text-center">
-                    <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest">NexoraByte Suite &bull; 2026</p>
+                    <p class="text-[8px] font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest">NexoraByte Suite &bull; 2026</p>
                 </div>
 
             </div>
