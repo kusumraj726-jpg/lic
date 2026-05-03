@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use App\Models\SystemUpdate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -77,7 +78,8 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('global_intel', $briefs)
                  ->with('birthday_template', $birthday_template)
-                 ->with('anniversary_template', $anniversary_template);
+                 ->with('anniversary_template', $anniversary_template)
+                 ->with('latest_system_update', SystemUpdate::where('is_active', true)->latest()->first());
         });
     }
 }

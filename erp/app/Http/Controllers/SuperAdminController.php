@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\StudioInquiry;
 use App\Models\Payment;
 use App\Models\PlatformExpense;
+use App\Models\SystemUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -155,5 +156,30 @@ class SuperAdminController extends Controller
         $admin = User::find($adminId);
         Auth::login($admin);
         return redirect()->route('superadmin.index')->with('success', "Returned to Master Control.");
+    }
+
+    public function systemUpdates()
+    {
+        $updates = SystemUpdate::latest()->get();
+        return view('superadmin.system-updates', compact('updates'));
+    }
+
+    public function systemUpdateStore(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'version' => 'nullable|string',
+            'type' => 'required|in:security,performance,feature',
+        ]);
+
+        SystemUpdate::create($validated);
+        return back()->with('success', "System update published successfully.");
+    }
+
+    public function systemUpdateDestroy(SystemUpdate $update)
+    {
+        $update->delete();
+        return back()->with('success', "System update removed.");
     }
 }

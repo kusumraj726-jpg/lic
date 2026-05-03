@@ -65,6 +65,11 @@ Route::middleware(['auth', 'superadmin', 'noDirect'])->prefix('nexorabyte-contro
     Route::get('/impersonate/{user}', [SuperAdminController::class, 'impersonate'])->name('superadmin.impersonate');
 
     Route::patch('/tenant/{user}/toggle', [SuperAdminController::class, 'toggleStatus'])->name('superadmin.toggle');
+
+    // System Updates Management
+    Route::get('/system-updates', [SuperAdminController::class, 'systemUpdates'])->name('superadmin.system-updates');
+    Route::post('/system-updates', [SuperAdminController::class, 'systemUpdateStore'])->name('superadmin.system-updates.store');
+    Route::delete('/system-updates/{update}', [SuperAdminController::class, 'systemUpdateDestroy'])->name('superadmin.system-updates.destroy');
 });
 
 Route::middleware(['auth'])->get('/nexorabyte-control/stop-impersonating', [SuperAdminController::class, 'stopImpersonating'])->name('superadmin.stop-impersonation');

@@ -126,6 +126,56 @@
                                     <svg x-show="darkMode" style="display: none;" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                 </button>
 
+                                <!-- System Alerts Dropdown -->
+                                <div class="relative" x-data="{ updatesOpen: false }" @click.away="updatesOpen = false">
+                                    <button @click="updatesOpen = !updatesOpen" 
+                                            class="h-11 w-11 rounded-[1.25rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-md hover:scale-[1.02] flex items-center justify-center text-slate-400 hover:text-indigo-600 transition-all group relative">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                        </svg>
+                                        @if($latest_system_update)
+                                            <span class="absolute top-3 right-3 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-slate-800"></span>
+                                        @endif
+                                    </button>
+
+                                    <div x-show="updatesOpen" 
+                                         x-transition:enter="transition ease-out duration-200"
+                                         x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                                         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                         class="absolute right-0 mt-3 w-80 origin-top-right rounded-[2rem] bg-white dark:bg-slate-800 shadow-2xl border border-slate-100 dark:border-slate-700 p-8 z-50" 
+                                         style="display: none;">
+                                        
+                                        <div class="flex items-center justify-between mb-6">
+                                            <h4 class="text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-[0.2em]">System Updates</h4>
+                                            <span class="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[7px] font-black uppercase tracking-widest">Live Pulse</span>
+                                        </div>
+
+                                        <div class="space-y-4">
+                                            @if($latest_system_update)
+                                                <div class="p-5 rounded-[2rem] bg-slate-50 dark:bg-slate-800/50 border border-slate-50 dark:border-slate-700/50">
+                                                    <div class="flex items-center gap-2 mb-3">
+                                                        <div class="h-1.5 w-1.5 rounded-full bg-{{ $latest_system_update->type === 'security' ? 'emerald' : 'indigo' }}-500"></div>
+                                                        <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest">{{ $latest_system_update->title }}</span>
+                                                    </div>
+                                                    <p class="text-[11px] font-bold text-slate-700 dark:text-slate-200 leading-relaxed">
+                                                        {{ $latest_system_update->content }}
+                                                    </p>
+                                                    <div class="flex items-center justify-between mt-4">
+                                                        <p class="text-[8px] font-medium text-slate-400">{{ $latest_system_update->created_at->diffForHumans() }}</p>
+                                                        @if($latest_system_update->version)
+                                                            <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-[7px] font-black text-slate-500 uppercase">{{ $latest_system_update->version }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="py-10 text-center">
+                                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">No new updates available</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- NexoraByte Intelligence Hub Pill (Shared Across Pages) -->
                                 @if(isset($global_intel) && $global_intel->count() > 0)
                                 <div class="relative">
