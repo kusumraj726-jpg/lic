@@ -64,8 +64,8 @@
                         <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
-                    <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Create Workspace</h1>
-                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">Provision your primary admin console</p>
+                    <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="font-family: 'Cambria', Georgia, serif;">Create Workspace</h1>
+                    <p class="text-[9px] text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em]">Provision your primary admin console</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -74,7 +74,7 @@
                     <div class="grid grid-cols-1 gap-3">
                         <!-- Company Name -->
                         <div class="space-y-1">
-                            <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Company / Organization</label>
+                            <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Company / Organization</label>
                             <input type="text" name="company_name" value="{{ old('company_name') }}" required autofocus
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="e.g. Nexus Insurance Group">
@@ -83,7 +83,7 @@
 
                         <!-- Name -->
                         <div class="space-y-1">
-                            <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Admin Full Name</label>
+                            <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Admin Full Name</label>
                             <input type="text" name="name" value="{{ old('name') }}" required
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="John Doe">
@@ -92,7 +92,7 @@
 
                         <!-- Email -->
                         <div class="space-y-1">
-                            <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Official Email ID</label>
+                            <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Official Email ID</label>
                             <input type="email" name="email" value="{{ old('email') }}" required
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="name@company.com">
@@ -102,7 +102,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                             <!-- Password -->
                             <div class="space-y-1" x-data="{ show: false }">
-                                <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Password</label>
+                                <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Password</label>
                                 <div class="relative group">
                                     <input :type="show ? 'text' : 'password'" name="password" required
                                         class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
@@ -117,7 +117,7 @@
 
                             <!-- Confirm Password -->
                             <div class="space-y-1" x-data="{ show: false }">
-                                <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Confirm</label>
+                                <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Confirm</label>
                                 <div class="relative group">
                                     <input :type="show ? 'text' : 'password'" name="password_confirmation" required
                                         class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
@@ -142,7 +142,7 @@
                 </form>
 
                 <div class="text-center pt-6 pb-4">
-                    <p class="text-[7px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">IMPORTANT: Registration is a one-time architectural protocol. <br> Please verify all details carefully before provisioning your workspace.</p>
+                    <p class="text-[7px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">IMPORTANT: Registration is a one-time architectural protocol. <br> Please verify all details carefully before provisioning your workspace.</p>
                 </div>
             </div>
         </div>
