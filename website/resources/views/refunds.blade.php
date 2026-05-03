@@ -89,7 +89,7 @@
 
                     <h2><span></span> 03. Exception Logic</h2>
                     <p>
-                        In cases where the digital service is technically defective and cannot be resolved by our engineering team within 7 business days, a partial or full refund may be processed at our studio's discretion.
+                        In cases where the digital service is technically defective and cannot be resolved by our engineering team after thoroughly examining the issue over a reasonable number of business days, a partial or full refund may be processed at our studio's discretion.
                     </p>
 
                     <h2><span></span> 04. Trial Periods</h2>
