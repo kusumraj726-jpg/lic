@@ -155,9 +155,9 @@
             <div class="m-nav-links" style="display:flex;align-items:center;gap:1.5rem;">
                 <a href="{{ route('services') }}" style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#374151;text-decoration:none;">Services</a>
                 @auth
-                    <a href="https://erp.nexorabyte.in/dashboard" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Dashboard</a>
+                    <a href="https://erp.nexorabyte.in/dashboard" class="bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500 transition-all">Dashboard</a>
                 @else
-                    <a href="{{ route('force-login') }}" style="background:#0f172a;color:white;font-size:0.6875rem;font-weight:700;padding:0.625rem 1.5rem;border-radius:9999px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">Sign In</a>
+                    <a href="{{ route('force-login') }}" class="bg-rose-600 shadow-lg text-white text-[11px] font-bold px-6 py-2.5 rounded-full uppercase tracking-widest hover:bg-rose-500 transition-all">Sign In</a>
                 @endauth
             </div>
             <button id="ab-hamburger" class="m-hamburger" aria-label="Menu">
