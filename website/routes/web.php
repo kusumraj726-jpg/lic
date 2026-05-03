@@ -57,6 +57,8 @@ Route::get('/contact', function () {
 
 Route::post('/consultation', [\App\Http\Controllers\StudioInquiryController::class, 'store'])->name('consultation.store');
 
+Route::post('/cookie-consent', [\App\Http\Controllers\CookieConsentController::class, 'store'])->name('cookie-consent.store');
+
 Route::get('/force-login', function () {
     \Illuminate\Support\Facades\Auth::logout();
     request()->session()->invalidate();

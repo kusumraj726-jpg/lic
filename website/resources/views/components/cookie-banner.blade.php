@@ -59,12 +59,34 @@
 
         window.handleCookieConsent = function(choice) {
             const banner = document.getElementById('cookie-banner');
-            localStorage.setItem('cookie-consent', choice);
             
-            if (banner) {
-                banner.classList.add('translate-y-full', 'opacity-0');
-                banner.style.pointerEvents = 'none';
-            }
+            // Save to database via AJAX
+            fetch('{{ route('cookie-consent.store') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status: choice })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (banner) {
+                        banner.classList.add('translate-y-full', 'opacity-0');
+                        banner.style.pointerEvents = 'none';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error saving consent:', error);
+                // Fallback to client-side only if server fails
+                localStorage.setItem('cookie-consent', choice);
+                if (banner) {
+                    banner.classList.add('translate-y-full', 'opacity-0');
+                    banner.style.pointerEvents = 'none';
+                }
+            });
         };
     })();
 </script>
