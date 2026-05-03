@@ -43,11 +43,9 @@
 
         const initBanner = () => {
             const consent = localStorage.getItem('cookie-consent');
-            const saleShown = sessionStorage.getItem('founderSaleShown');
-            const hasSaleModal = document.getElementById('premiumSaleModal');
-
-            if (!consent && (!hasSaleModal || saleShown)) {
-                setTimeout(window.showCookieBanner, 2000);
+            // Show immediately regardless of sale modal
+            if (!consent) {
+                setTimeout(window.showCookieBanner, 1000);
             }
         };
 
