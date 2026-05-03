@@ -60,7 +60,7 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                <form method="POST" action="{{ route('login') }}" class="space-y-4" autocomplete="off">
                     @csrf
                     <input type="hidden" name="login_role" :value="role.toLowerCase()">
                     
@@ -74,7 +74,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                                     </svg>
                                 </div>
-                                <input type="email" name="email" value="{{ old('email') }}" required autofocus
+                                <input type="email" name="email" required autofocus autocomplete="off"
                                     class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                     placeholder="name@nexorabyte.in">
                             </div>
@@ -95,7 +95,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                 </div>
-                                <input :type="show ? 'text' : 'password'" name="password" required
+                                <input :type="show ? 'text' : 'password'" name="password" required autocomplete="new-password"
                                     class="w-full pl-10 pr-10 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                     placeholder="••••••••">
                                 <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-300 hover:text-indigo-500 transition-colors focus:outline-none flex-shrink-0">
