@@ -152,38 +152,40 @@
         </div>
     </section>
 
-    <!-- Capabilities -->
+
+    <!-- Engineering Philosophy -->
     <section class="py-24 px-8 bg-white/30 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fade-in-up">
-                <span class="text-[10px] font-black text-rose-600 uppercase tracking-[0.4em] mb-4 block">Core Competencies</span>
-                <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Strategic Engineering.</h2>
+                <span class="text-[10px] font-black text-rose-600 uppercase tracking-[0.4em] mb-4 block">Our Approach</span>
+                <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Engineering Philosophy.</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div class="crystal-card p-12 rounded-[3.5rem] relative overflow-hidden group animate-fade-in-up">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-rose-500/5 rounded-full blur-[60px]"></div>
-                    <div class="w-16 h-16 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-600 mb-10 border border-rose-100 group-hover:scale-110 transition-transform">
-                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-indigo-500/5 rounded-full blur-[60px]"></div>
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-10 border border-indigo-100 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                     </div>
-                    <h3 class="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Custom Tech Stacks</h3>
-                    <p class="text-slate-600 leading-relaxed font-medium mb-10">Utilizing high-velocity frameworks like Laravel and React to build immutable backends and seamless frontends.</p>
+                    <h3 class="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Scalable Architecture</h3>
+                    <p class="text-slate-600 leading-relaxed font-medium mb-10">We design distributed systems capable of processing immense data loads while maintaining zero-latency interactions.</p>
                     <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Laravel</span>
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">React</span>
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Edge Cloud</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Microservices</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Auto-Scaling</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Load Balancing</span>
                     </div>
                 </div>
 
                 <div class="crystal-card p-12 rounded-[3.5rem] relative overflow-hidden group animate-fade-in-up delay-100">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-500/5 rounded-full blur-[60px]"></div>
-                    <div class="w-16 h-16 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-10 border border-emerald-100 group-hover:scale-110 transition-transform">
-                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-blue-500/5 rounded-full blur-[60px]"></div>
+                    <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-10 border border-blue-100 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                     </div>
-                    <h3 class="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Performance First</h3>
-                    <p class="text-slate-600 leading-relaxed font-medium mb-10">Every millisecond is an operational asset. We optimize for lightning-fast delivery and absolute security.</p>
+                    <h3 class="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Impenetrable Security</h3>
+                    <p class="text-slate-600 leading-relaxed font-medium mb-10">Military-grade encryption and rigorous compliance protocols baked directly into the application layer.</p>
                     <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">99+ Core Web Vitals</span>
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">SEO Engineering</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">Zero Trust</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">End-To-End</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest shadow-sm">OWASP</span>
                     </div>
                 </div>
             </div>
