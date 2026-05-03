@@ -56,8 +56,7 @@
                     class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Privacy</a>
                 <a href="{{ route('refunds') }}"
                     class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Refunds</a>
-                <a href="{{ route('shipping') }}"
-                    class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Shipping</a>
+
             </div>
         </div>
     </div>
