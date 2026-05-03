@@ -68,14 +68,14 @@
                     <p class="text-[9px] text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em]">Provision your primary admin console</p>
                 </div>
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                <form method="POST" action="{{ route('register') }}" class="space-y-4" autocomplete="off">
                     @csrf
                     
                     <div class="grid grid-cols-1 gap-3">
                         <!-- Company Name -->
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Company / Organization</label>
-                            <input type="text" name="company_name" value="{{ old('company_name') }}" required autofocus
+                            <input type="text" name="company_name" required autofocus autocomplete="off"
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="e.g. Nexus Insurance Group">
                             <x-input-error :messages="$errors->get('company_name')" class="mt-1" />
@@ -84,7 +84,7 @@
                         <!-- Name -->
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Admin Full Name</label>
-                            <input type="text" name="name" value="{{ old('name') }}" required
+                            <input type="text" name="name" required autocomplete="off"
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="John Doe">
                             <x-input-error :messages="$errors->get('name')" class="mt-1" />
@@ -93,7 +93,7 @@
                         <!-- Email -->
                         <div class="space-y-1">
                             <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Official Email ID</label>
-                            <input type="email" name="email" value="{{ old('email') }}" required
+                            <input type="email" name="email" required autocomplete="off"
                                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                 placeholder="name@company.com">
                             <x-input-error :messages="$errors->get('email')" class="mt-1" />
@@ -104,7 +104,7 @@
                             <div class="space-y-1" x-data="{ show: false }">
                                 <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Password</label>
                                 <div class="relative group">
-                                    <input :type="show ? 'text' : 'password'" name="password" required
+                                    <input :type="show ? 'text' : 'password'" name="password" required autocomplete="new-password"
                                         class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                         placeholder="••••••••">
                                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-300 hover:text-slate-500 transition-colors">
@@ -119,7 +119,7 @@
                             <div class="space-y-1" x-data="{ show: false }">
                                 <label class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest ml-1">Confirm</label>
                                 <div class="relative group">
-                                    <input :type="show ? 'text' : 'password'" name="password_confirmation" required
+                                    <input :type="show ? 'text' : 'password'" name="password_confirmation" required autocomplete="new-password"
                                         class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white text-sm font-bold placeholder-slate-300 focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm border border-transparent dark:border-slate-700"
                                         placeholder="••••••••">
                                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-300 hover:text-slate-500 transition-colors">
