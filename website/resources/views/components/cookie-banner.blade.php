@@ -1,25 +1,25 @@
-<div id="protocol-consent-matrix" class="fixed bottom-0 left-0 w-full z-[99999] transform translate-y-full opacity-0 transition-all duration-1000 ease-out pointer-events-none">
-    <div class="max-w-7xl mx-auto px-4 pb-6">
-        <div class="bg-slate-900/95 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="flex items-center gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-rose-500/20">
-                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+<div id="protocol-consent-matrix" class="fixed bottom-0 left-0 w-full z-[99999] transform translate-y-full opacity-0 transition-all duration-700 ease-out pointer-events-none">
+    <div class="bg-white/85 backdrop-blur-2xl border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] w-full px-4 py-4 md:py-5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-5 w-full md:w-auto">
+                <div class="hidden md:flex w-10 h-10 rounded-full bg-slate-50 border border-slate-100 items-center justify-center flex-shrink-0 text-rose-500">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                 </div>
                 <div>
-                    <h4 class="text-white font-black text-lg tracking-tight mb-1 uppercase">System Protocol</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-xl font-medium">
-                        We use specialized technical protocols to optimize your digital architecture and ensure the highest performance. By accepting, you consent to our security protocols.
+                    <h4 class="text-slate-900 font-bold text-sm tracking-tight mb-1 uppercase">Operational Protocols</h4>
+                    <p class="text-slate-600 text-xs leading-relaxed max-w-2xl" style="font-family: Cambria, Georgia, serif;">
+                        We deploy technical mechanisms to optimize architecture and ensure secure interactions. By proceeding, you align with our standard performance protocols.
                     </p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 w-full md:w-auto">
-                <button onclick="handleProtocolConsent('rejected')" class="flex-1 md:flex-none px-8 py-3 rounded-2xl text-slate-400 hover:text-white text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white/5">
-                    Reject All
+            <div class="flex items-center gap-3 w-full md:w-auto flex-shrink-0">
+                <button onclick="handleProtocolConsent('rejected')" class="flex-1 md:flex-none px-6 py-2.5 rounded-full text-slate-500 hover:text-slate-900 text-[10px] font-black uppercase tracking-[0.2em] transition-colors hover:bg-slate-100 border border-transparent">
+                    Decline
                 </button>
-                <button onclick="handleProtocolConsent('accepted')" class="flex-1 md:flex-none px-10 py-4 bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-rose-900/40 active:scale-95">
-                    Accept All
+                <button onclick="handleProtocolConsent('accepted')" class="flex-1 md:flex-none px-8 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-md active:scale-95">
+                    Acknowledge
                 </button>
             </div>
         </div>
@@ -49,7 +49,14 @@
             const localConsent = localStorage.getItem('protocol-consent');
             
             if (!localConsent && !serverConsent) {
-                setTimeout(window.showProtocolMatrix, 1000);
+                const saleShown = sessionStorage.getItem('founderSaleShown');
+                const hasSaleModal = document.getElementById('premiumSaleModal');
+                
+                // Show if no sale modal exists, OR if the sale modal has already been shown this session.
+                // Otherwise, wait for the sale modal to be closed (which triggers showProtocolMatrix).
+                if (!hasSaleModal || saleShown) {
+                    setTimeout(window.showProtocolMatrix, 1000);
+                }
             }
         };
 
