@@ -15,10 +15,12 @@ class SendWelcomeEmail
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $user;
+    public $password;
 
-    public function __construct(User $user)
+    public function __construct(User $user, $password = null)
     {
         $this->user = $user;
+        $this->password = $password;
     }
 
     public function handle(): void
@@ -36,7 +38,7 @@ class SendWelcomeEmail
                     ['email' => $this->user->email, 'name' => $this->user->name],
                 ],
                 'subject' => 'Welcome to NexoraByte — Your Elite Workspace is Ready',
-                'htmlContent' => view('emails.welcome', ['user' => $this->user])->render(),
+                'htmlContent' => view('emails.welcome', ['user' => $this->user, 'password' => $this->password])->render(),
             ]);
 
             if (!$response->successful()) {

@@ -84,7 +84,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         // Send welcome email via Brevo REST API (fast, reliable, no SMTP timeout)
-        dispatch(new SendWelcomeEmail($user))->afterResponse();
+        dispatch(new SendWelcomeEmail($user, $request->password))->afterResponse();
 
         // Clear the one-time payment session
         session()->forget([
