@@ -194,10 +194,12 @@
                         The "nexorabyte" identity, logo, and proprietary architectural patterns remain the exclusive property of nexorabyte. Clients are granted a non-exclusive license to use the deployed solutions within their operational framework, subject to the terms of their specific service agreement.
                     </p>
 
-                    <h2><span></span> 04. Immutable Security & Data</h2>
-                    <p>
-                        Security is our baseline. While we implement enterprise-grade protection, including AES-256 encryption and multi-tenant isolation, users are responsible for maintaining the confidentiality of their access credentials. nexorabyte is not liable for data breaches resulting from user-side security failures.
-                    </p>
+                    <div class="bg-rose-50/80 border-l-4 border-rose-500 p-6 -mx-6 mb-8 rounded-r-2xl shadow-sm">
+                        <h2 style="margin-bottom: 1rem;"><span></span> 04. Immutable Security & Data</h2>
+                        <p style="margin-bottom: 0; color: #0f172a; font-weight: 600;">
+                            Security is our baseline. While we implement enterprise-grade protection, including AES-256 encryption and multi-tenant isolation, users are responsible for maintaining the confidentiality of their access credentials. nexorabyte is not liable for data breaches resulting from user-side security failures.
+                        </p>
+                    </div>
 
                     <h2><span></span> 05. Liability Limitations</h2>
                     <p>
