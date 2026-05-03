@@ -26,6 +26,7 @@
     </div>
 </div>
 
+<script>
     window.showCookieBanner = function() {
         const consent = localStorage.getItem('cookie-consent');
         const banner = document.getElementById('cookie-banner');
