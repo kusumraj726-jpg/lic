@@ -63,6 +63,4 @@
     </div>
 </footer>
 
-@if(!request()->cookie('cookie-consent'))
-    <x-cookie-banner />
-@endif
+<x-cookie-banner />
