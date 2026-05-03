@@ -38,8 +38,8 @@
                         <img src="{{ asset('images/company_logo.jpg') }}" alt="nexorabyte" class="h-10 w-auto object-contain" style="filter: url(#chroma-key-black) contrast(1.1);">
                         <span class="text-2xl font-black text-slate-900 dark:text-white tracking-widest">nexorabyte</span>
                     </div>
-                    <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Recover Access</h1>
-                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">Secure Intelligence Restoration</p>
+                    <h1 class="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="font-family: 'Cambria', Georgia, serif;">Recover Access</h1>
+                    <p class="text-[9px] text-slate-600 font-black uppercase tracking-[0.2em]">Secure Intelligence Restoration</p>
                 </div>
 
                 <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed text-center">
@@ -54,7 +54,7 @@
                     
                     <!-- Email -->
                     <div class="space-y-1.5">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Official Email ID</label>
+                        <label class="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Official Email ID</label>
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="h-4 w-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,7 @@
                         </button>
                         
                         <div class="text-center">
-                            <a href="{{ route('login') }}" class="text-[9px] font-black text-slate-400 hover:text-indigo-600 uppercase tracking-widest transition-colors">
+                            <a href="{{ route('login') }}" class="text-[9px] font-black text-slate-600 hover:text-indigo-600 uppercase tracking-widest transition-colors">
                                 Remembered your access? Back to Login
                             </a>
                         </div>
