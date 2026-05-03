@@ -550,9 +550,9 @@
     <script>
         function closePremiumModal() {
             document.getElementById('premiumSaleModal').style.display = 'none';
-            // Trigger cookie banner immediately after closing sale popup
-            if (window.showCookieBanner) {
-                window.showCookieBanner();
+            // Trigger protocol matrix immediately after closing sale popup
+            if (window.showProtocolMatrix) {
+                window.showProtocolMatrix();
             }
         }
 
