@@ -1,178 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workspace Ready</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #f8fafc;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        color: #1e293b;
-    }
-    .wrapper {
-        width: 100%;
-        padding: 40px 0;
-        background-color: #f8fafc;
-    }
-    .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        border-radius: 24px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.04);
-        overflow: hidden;
-    }
-    .header {
-        background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-        padding: 48px 40px;
-        text-align: center;
-        color: #ffffff;
-    }
-    .brand {
-        font-size: 16px;
-        font-weight: 800;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-        opacity: 0.9;
-    }
-    .header h2 {
-        font-size: 32px;
-        font-weight: 800;
-        margin: 0;
-        letter-spacing: -1px;
-    }
-    .content {
-        padding: 48px 40px;
-    }
-    h1 {
-        font-size: 26px;
-        font-weight: 800;
-        color: #0f172a;
-        margin-top: 0;
-        margin-bottom: 20px;
-        letter-spacing: -0.5px;
-    }
-    p {
-        font-size: 16px;
-        line-height: 1.7;
-        color: #475569;
-        margin-bottom: 28px;
-    }
-    .highlight {
-        color: #0f172a;
-        font-weight: 700;
-    }
-    .card {
-        background-color: #f8fafc;
-        border: 1px solid #f1f5f9;
-        border-radius: 20px;
-        padding: 32px;
-        margin: 32px 0;
-    }
-    .card-header {
-        font-size: 11px;
-        font-weight: 800;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 2.5px;
-        margin-bottom: 24px;
-    }
-    .cred-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .cred-table td {
-        padding: 12px 0;
-        border-bottom: 1px solid #f1f5f9;
-    }
-    .cred-table tr:last-child td {
-        border-bottom: none;
-    }
-    .label {
-        font-size: 14px;
-        color: #64748b;
-        font-weight: 600;
-        text-align: left;
-    }
-    .value {
-        font-size: 14px;
-        color: #4f46e5;
-        font-weight: 700;
-        text-align: right;
-        font-family: 'SF Mono', 'Monaco', monospace;
-    }
-    .btn-container {
-        text-align: center;
-        margin-top: 40px;
-    }
-    .btn {
-        display: inline-block;
-        background-color: #4f46e5;
-        color: #ffffff !important;
-        padding: 20px 56px;
-        border-radius: 18px;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 16px;
-        box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25);
-        transition: all 0.3s ease;
-    }
-    .footer {
-        padding: 40px;
-        text-align: center;
-        font-size: 12px;
-        color: #94a3b8;
-        background-color: #fafafa;
-        border-top: 1px solid #f1f5f9;
-    }
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace Ready</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4f46e5;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        .content {
+            padding: 40px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        .welcome-text {
+            font-size: 15px;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+        .welcome-text strong {
+            color: #000000;
+        }
+        .credentials-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+        }
+        .credentials-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .cred-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cred-table td {
+            padding: 6px 0;
+            font-size: 14px;
+        }
+        .label {
+            font-weight: 700;
+            color: #000000;
+            width: 100px;
+        }
+        .value {
+            color: #4f46e5;
+            font-weight: 700;
+        }
+        .button-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4f46e5;
+            color: #ffffff !important;
+            padding: 14px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .disclaimer {
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <div class="header">
-                <div class="brand">NEXORABYTE</div>
-                <h2>Provisioning Complete</h2>
+    <div class="container">
+        <div class="header">
+            <h1>NEXORABYTE</h1>
+        </div>
+        <div class="content">
+            <div class="title">Workspace Provisioned Successfully</div>
+            
+            <div class="welcome-text">
+                Welcome, <strong>{{ $user->name }}</strong>.
             </div>
-            <div class="content">
-                <h1>Welcome, {{ $user->name }}!</h1>
-                <p>Your administrative console for <span class="highlight">{{ $user->company_name }}</span> has been successfully architected and is now live on our secure infrastructure.</p>
-                
-                <div class="card">
-                    <div class="card-header">Secure Access Keys</div>
-                    <table class="cred-table">
-                        <tr>
-                            <td class="label">System ID</td>
-                            <td class="value">{{ $user->unique_id }}</td>
-                        </tr>
-                        <tr>
-                            <td class="label">Access Email</td>
-                            <td class="value">{{ $user->email }}</td>
-                        </tr>
-                        @if(isset($password))
-                        <tr>
-                            <td class="label">Initial Password</td>
-                            <td class="value">{{ $password }}</td>
-                        </tr>
-                        @endif
-                    </table>
-                </div>
-                
-                <p>Please synchronize your security protocols and store these credentials in a vault. You can now proceed to initiate your secure session.</p>
-                
-                <div class="btn-container">
-                    <a href="https://nexorabyte.in/login" class="btn">Launch Enterprise Console</a>
-                </div>
+            
+            <div class="welcome-text">
+                Your administrative console for <strong>{{ $user->company_name }}</strong> has been successfully provisioned and is ready for use.
             </div>
-            <div class="footer">
-                &copy; {{ date('Y') }} NexoraByte Intelligence Suite.<br>
-                Architecting the future of enterprise management.<br>
-                <span style="display: block; margin-top: 12px; opacity: 0.5;">This is an automated architectural transmission.</span>
+            
+            <div class="credentials-box">
+                <div class="credentials-title">YOUR ACCESS CREDENTIALS</div>
+                <table class="cred-table">
+                    <tr>
+                        <td class="label">Admin ID:</td>
+                        <td class="value">{{ $user->unique_id }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Email ID:</td>
+                        <td class="value">{{ $user->email }}</td>
+                    </tr>
+                    @if(isset($password))
+                    <tr>
+                        <td class="label">Password:</td>
+                        <td class="value">{{ $password }}</td>
+                    </tr>
+                    @endif
+                </table>
             </div>
+            
+            <div class="welcome-text">
+                Please keep these credentials secure. You can now access your workspace and begin architecting your enterprise ecosystem.
+            </div>
+            
+            <div class="button-container">
+                <a href="https://nexorabyte.in/login" class="btn" style="color: white !important;">Login to Workspace</a>
+            </div>
+            
+            <div class="disclaimer">
+                This is an automated message. If you did not authorize this registration, please contact our support team immediately.
+            </div>
+        </div>
+        <div class="footer">
+            &copy; {{ date('Y') }} NEXORABYTE - SECURE ACCESS
         </div>
     </div>
 </body>
