@@ -211,14 +211,6 @@
                         These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which nexorabyte operates. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the local courts.
                     </p>
                 </div>
-
-                <div class="mt-12 pt-12 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-6">
-
-                    <a href="javascript:void(0)" onclick="window.print()" class="text-[10px] font-black uppercase tracking-widest text-rose-600 hover:text-rose-500 transition-colors flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                        Print Terms
-                    </a>
-                </div>
             </div>
         </div>
     </main>
