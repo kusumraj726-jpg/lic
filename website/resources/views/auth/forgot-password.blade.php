@@ -49,7 +49,7 @@
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                <form method="POST" action="{{ route('password.email') }}" class="space-y-6">
+                <form method="POST" action="{{ route('password.email') }}" class="space-y-6" x-data="{ loading: false }" @submit="loading = true">
                     @csrf
                     
                     <!-- Email -->
@@ -69,8 +69,9 @@
                     </div>
 
                     <div class="space-y-4">
-                        <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98]">
-                            Dispatch Restoration Link
+                        <button type="submit" :disabled="loading" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed" :class="loading ? 'cursor-not-allowed opacity-70' : ''">
+                            <span x-show="!loading">Dispatch Restoration Link</span>
+                            <span x-show="loading" x-cloak>Processing...</span>
                         </button>
                         
                         <div class="text-center">

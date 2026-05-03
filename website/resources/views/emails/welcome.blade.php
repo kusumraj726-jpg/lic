@@ -17,6 +17,7 @@
             margin: 40px auto;
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
+            border-radius: 16px;
             overflow: hidden;
         }
         .header {
@@ -30,7 +31,7 @@
             font-size: 20px;
             font-weight: 800;
             letter-spacing: 5px;
-            text-transform: uppercase;
+            text-transform: lowercase;
         }
         .content {
             padding: 40px;
@@ -116,7 +117,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>NEXORABYTE</h1>
+            <h1>nexorabyte</h1>
         </div>
         <div class="content">
             <div class="title">Workspace Provisioned Successfully</div>
@@ -132,10 +133,6 @@
             <div class="credentials-box">
                 <div class="credentials-title">YOUR ACCESS CREDENTIALS</div>
                 <table class="cred-table">
-                    <tr>
-                        <td class="label">Admin ID:</td>
-                        <td class="value">{{ $user->unique_id }}</td>
-                    </tr>
                     <tr>
                         <td class="label">Email ID:</td>
                         <td class="value">{{ $user->email }}</td>
@@ -162,7 +159,7 @@
             </div>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} NEXORABYTE - SECURE ACCESS
+            &copy; {{ date('Y') }} nexorabyte - SECURE ACCESS
         </div>
     </div>
 </body>

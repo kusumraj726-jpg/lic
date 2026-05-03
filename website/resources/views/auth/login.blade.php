@@ -1,5 +1,5 @@
 <x-auth-split-layout title="Login">
-    <div class="w-full max-w-5xl lg:min-h-[580px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500" x-data="{ role: 'Admin' }">
+    <div class="w-full max-w-5xl lg:min-h-[580px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl rounded-[2rem] lg:rounded-[2.5rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl shadow-black/40 border border-white/20 transition-all duration-500" x-data="{ role: 'Admin', loading: false }">
         
         <!-- Left Side: Splash Hero (Hidden on Mobile) -->
         <div class="relative hidden lg:flex lg:w-[50%] min-h-[400px] lg:min-h-full overflow-hidden">
@@ -60,7 +60,7 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('login') }}" class="space-y-4" autocomplete="off">
+                <form method="POST" action="{{ route('login') }}" class="space-y-4" autocomplete="off" @submit="loading = true">
                     @csrf
                     <input type="hidden" name="login_role" :value="role.toLowerCase()">
                     
@@ -114,8 +114,9 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98]">
-                        Initiate Secure Login
+                    <button type="submit" :disabled="loading" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed" :class="loading ? 'cursor-not-allowed opacity-70' : ''">
+                        <span x-show="!loading">Initiate Secure Login</span>
+                        <span x-show="loading" x-cloak>Processing...</span>
                     </button>
                 </form>
 

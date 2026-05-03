@@ -68,7 +68,7 @@
                     <p class="text-[9px] text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em]">Provision your primary admin console</p>
                 </div>
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-4" autocomplete="off">
+                <form method="POST" action="{{ route('register') }}" class="space-y-4" autocomplete="off" x-data="{ loading: false }" @submit="loading = true">
                     @csrf
                     
                     <div class="grid grid-cols-1 gap-3">
@@ -143,8 +143,9 @@
                     </div>
 
                     <div class="pt-2">
-                        <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98]">
-                            Provision elite account
+                        <button type="submit" :disabled="loading" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-indigo-100 dark:shadow-none transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed" :class="loading ? 'cursor-not-allowed opacity-70' : ''">
+                            <span x-show="!loading">Provision elite account</span>
+                            <span x-show="loading" x-cloak>Processing...</span>
                         </button>
                     </div>
 
