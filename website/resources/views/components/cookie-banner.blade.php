@@ -1,4 +1,4 @@
-<div id="cookie-banner" class="fixed bottom-0 left-0 w-full z-[9999] transform translate-y-full transition-transform duration-1000 ease-in-out" style="display: none; pointer-events: all;">
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full z-[99999] transform translate-y-full opacity-0 transition-all duration-1000 ease-out pointer-events-none">
     <div class="max-w-7xl mx-auto px-4 pb-6">
         <div class="bg-slate-900/95 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-8">
             <div class="flex items-center gap-6">
@@ -28,29 +28,16 @@
 
 <script>
     (function() {
-        console.log('Cookie banner script initialized');
-        
         window.showCookieBanner = function() {
-            console.log('Attempting to show cookie banner...');
             const consent = localStorage.getItem('cookie-consent');
             const banner = document.getElementById('cookie-banner');
             
-            if (!banner) {
-                console.error('Cookie banner element not found!');
-                return;
-            }
+            if (!banner) return;
 
             if (!consent) {
-                console.log('No consent found, showing banner');
-                banner.style.display = 'block';
-                // Force reflow
-                banner.offsetHeight; 
-                setTimeout(() => {
-                    banner.classList.remove('translate-y-full');
-                    console.log('Banner animation triggered');
-                }, 50);
-            } else {
-                console.log('Consent already exists: ' + consent);
+                banner.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+                banner.classList.add('opacity-100');
+                banner.style.pointerEvents = 'all';
             }
         };
 
@@ -59,13 +46,7 @@
             const saleShown = sessionStorage.getItem('founderSaleShown');
             const hasSaleModal = document.getElementById('premiumSaleModal');
 
-            console.log('Banner init check:', { consent, saleShown, hasSaleModal: !!hasSaleModal });
-
-            // Show automatically if: 
-            // 1. No consent given AND 
-            // 2. Either no sale modal on this page OR sale already shown/dismissed
             if (!consent && (!hasSaleModal || saleShown)) {
-                console.log('Auto-showing banner in 2s');
                 setTimeout(window.showCookieBanner, 2000);
             }
         };
@@ -77,15 +58,12 @@
         }
 
         window.handleCookieConsent = function(choice) {
-            console.log('Cookie consent choice:', choice);
             const banner = document.getElementById('cookie-banner');
             localStorage.setItem('cookie-consent', choice);
             
             if (banner) {
-                banner.classList.add('translate-y-full');
-                setTimeout(() => {
-                    banner.style.display = 'none';
-                }, 1000);
+                banner.classList.add('translate-y-full', 'opacity-0');
+                banner.style.pointerEvents = 'none';
             }
         };
     })();
