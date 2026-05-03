@@ -204,5 +204,12 @@
                 Logout
             </button>
         </form>
+
+        <div class="px-6 py-4 mt-2">
+            <div class="flex items-center gap-2">
+                <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                <span class="text-[8px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Build v1.0.4 Secure</span>
+            </div>
+        </div>
     </div>
 </aside>

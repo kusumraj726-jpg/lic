@@ -81,6 +81,10 @@
     </svg>
 
     <div class="fixed inset-0 mesh-pattern pointer-events-none opacity-30"></div>
+    <div class="fixed bottom-4 right-4 z-[100] pointer-events-none opacity-40">
+        <span class="text-[8px] font-black text-white uppercase tracking-[0.3em]">Build v1.0.4 • System Secure</span>
+    </div>
+
     <div class="min-h-screen flex items-center justify-center p-4 lg:p-8 relative z-10">
         {{ $slot }}
     </div>

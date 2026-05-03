@@ -48,7 +48,7 @@
 
         <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
             <p class="text-[9px] font-black tracking-[0.3em] text-slate-600 uppercase">&copy; {{ date('Y') }}
-                nexorabyte. ARCHITECTING EXCELLENCE.</p>
+                nexorabyte. ARCHITECTING EXCELLENCE. <span class="ml-4 opacity-50">BUILD v1.0.4</span></p>
             <div class="flex flex-wrap gap-8">
                 <a href="{{ route('terms') }}"
                     class="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-white transition-colors">Terms</a>
